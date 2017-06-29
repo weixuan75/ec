@@ -1,12 +1,12 @@
 <?php
-namespace app\erp\util;
+
 /**
- * Created by PhpStorm.
  * User: weixuan
  * Date: 2017/6/29
  * Time: 9:33
  */
-class SysConf{
+class SysConf
+{
     /**
      * 唯一ID值
      * @param string $prefix

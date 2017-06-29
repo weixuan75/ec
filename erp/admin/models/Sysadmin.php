@@ -2,8 +2,11 @@
 
 namespace app\erp\admin\models;
 
+use app\erp\util\SysConf;
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Json;
+
 /**
  * This is the model class for table "{{%sys_admin}}".
  *
@@ -90,7 +93,31 @@ class Sysadmin extends ActiveRecord{
     public function login($data){
         $this->scenario="login";
         if ($this->load($data) && $this->validate()) {
+            $this->updateAll([
+                'login_time' => time(),
+                'login_ip' => ip2long(Yii::$app->request->userIP)
+            ], 'account = :user', [':user' => $this->account]);
 
+            $redis = Yii::$app->redis;
+            $session = Yii::$app->session;
+            $SysConf = new SysConf();
+            $uuid = $SysConf->uuid("tk-");
+
+            $user = self::find([
+                'account',
+                'email',
+                'phone',
+                'state',
+                'autho_code',
+                'login_ip',
+                'sys_group_id',
+                'login_time',
+                'create_time',
+                'update_time',
+                ])->where('account=:account',[':account'=>$this->account])->one()->toArray();
+            $session["userData"] = $user;
+            $session["userData"] =['token'=>$uuid];
+            $redis->set($uuid,Json::encode($user));
             return true;
         }
         return false;

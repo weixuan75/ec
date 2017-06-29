@@ -19,9 +19,9 @@ class PublicController extends Controller{
     {
         return $this->redirect(['public/login']);
     }
-    public function actionLogin()
-    {
+    public function actionLogin(){
         $this->layout = false;
+        $session = Yii::$app->session['username'];
         $admin = new Sysadmin();
         $post = Yii::$app->request->post();
         if(Yii::$app->request->isPost){
@@ -36,4 +36,22 @@ class PublicController extends Controller{
             'login',
             ["admin"=>$admin]);
     }
+    public function actionLogout(){
+        $this->layout = false;
+        $admin = new Sysadmin();
+        $post = Yii::$app->request->post();
+        if(Yii::$app->request->isPost){
+            if ($admin->login($post)){
+                $redis = Yii::$app->redis;
+                $redis->set("user",Json::encode($post));
+                return $redis->get("user");
+                Yii::$app->end();
+            }
+        }
+        return $this->render(
+            'login',
+            ["admin"=>$admin]
+        );
+    }
+
 }
