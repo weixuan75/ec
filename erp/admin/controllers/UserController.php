@@ -13,7 +13,6 @@ class UserController extends ConfController{
      * @return string
      */
     public function actionIndex(){
-        $this->layout = "header";
         $model = Sysadmin::find();
         $count = $model->count();
         $pageSize = 10;
@@ -47,12 +46,18 @@ class UserController extends ConfController{
         return $this->render('index');
     }
     /**
-     * 删除
+     * 激活
      * @return string
      */
-    public function actionDel()
+    public function actionctivate()
     {
         return $this->render('index');
     }
-
+    /**
+     * 删除
+     * @return string
+     */
+    public function actionDel(){
+        return $this->render('index');
+    }
 }

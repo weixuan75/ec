@@ -17,19 +17,20 @@ class PublicController extends Controller{
      */
     public function actionIndex()
     {
-        return $this->redirect(['public/login']);
+        return $this->redirect(['login']);
     }
     public function actionLogin(){
         $this->layout = false;
-        $session = Yii::$app->session['username'];
+        $session = Yii::$app->session;
+        $redis = Yii::$app->redis;
+        if((boolean)$redis->get($session['userData']['autho_code'])){
+            return $this->redirect(['/manager']);
+        };
         $admin = new Sysadmin();
         $post = Yii::$app->request->post();
         if(Yii::$app->request->isPost){
             if ($admin->login($post)){
-                $redis = Yii::$app->redis;
-                $redis->set("user",Json::encode($post));
-                return $redis->get("user");
-                Yii::$app->end();
+                return $this->redirect(['/manager']);
             }
         }
         return $this->render(
@@ -37,21 +38,10 @@ class PublicController extends Controller{
             ["admin"=>$admin]);
     }
     public function actionLogout(){
-        $this->layout = false;
-        $admin = new Sysadmin();
-        $post = Yii::$app->request->post();
-        if(Yii::$app->request->isPost){
-            if ($admin->login($post)){
-                $redis = Yii::$app->redis;
-                $redis->set("user",Json::encode($post));
-                return $redis->get("user");
-                Yii::$app->end();
-            }
-        }
-        return $this->render(
-            'login',
-            ["admin"=>$admin]
-        );
+        $session = Yii::$app->session;
+        $redis = Yii::$app->redis;
+        $redis->del($session['userData']['autho_code']);
+        $session->removeAll();
+        return $this->redirect(['login']);
     }
-
 }

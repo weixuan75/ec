@@ -32,10 +32,6 @@ use yii\bootstrap\ActiveForm;
                 <div class="card p-2">
                     <div class="card-block">
                         <?php
-                        $sysconf = new \app\erp\util\SysConf();
-                        echo $sysconf->uuid();
-                        ?>
-                        <?php
                         $form = ActiveForm::begin();
                         ?>
                         <h1>注册</h1>

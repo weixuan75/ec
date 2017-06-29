@@ -1,5 +1,5 @@
 <?php
-
+namespace app\erp\util;
 /**
  * User: weixuan
  * Date: 2017/6/29

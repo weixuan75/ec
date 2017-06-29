@@ -41,6 +41,10 @@ class Sysadmin extends ActiveRecord{
             [['password', 'autho_code'], 'string', 'max' => 250],
             [['login_ip'], 'string', 'max' => 40],
 
+            [['password'], 'validateActivate', 'on' => 'login'],
+            [['password'], 'validateBan', 'on' => 'login'],
+            [['password'], 'validateDel', 'on' => 'login'],
+
             [['password'], 'validatePass', 'on' => ['login', 'changeemail']],
             [['password'], 'required','message' => '密码不能为空', 'on' => ['login','adminadd', 'changeemail']],
             [['account'], 'required','message' => '账号不能为空','on' => ['login','adminadd']],
@@ -72,6 +76,58 @@ class Sysadmin extends ActiveRecord{
             }
         }
     }
+    /**
+     * 账户激活问题
+     */
+    public function validateActivate(){
+        if (!$this->hasErrors()) {
+            $data = self::find()
+                ->select(['state'])
+                ->where(
+                'account = :user and password = :pass',
+                [":user" => $this->account, ":pass" => md5($this->password)]
+            )->one();
+            if ($data['state']==0) {
+                $this->addError("password", "账户未激活，请联系管理员");
+            }
+        }
+    }
+    /**
+     * 账户禁用问题
+     */
+    public function validateBan(){
+        if (!$this->hasErrors()) {
+            $data = self::find()
+                ->select(['state'])
+                ->where(
+                'account = :user and password = :pass',
+                [":user" => $this->account, ":pass" => md5($this->password)]
+            )->one();
+            if ($data['state']==2) {
+                $this->addError("password", "账户被禁用，请联系管理员");
+            }
+        }
+    }
+    /**
+     * 账户删除问题
+     */
+    public function validateDel(){
+        if (!$this->hasErrors()) {
+            $data = self::find()
+                ->select(['state'])
+                ->where(
+                'account = :user and password = :pass',
+                [":user" => $this->account, ":pass" => md5($this->password)]
+            )->one();
+            if ($data['state']==3) {
+                $this->addError("password", "账户已删除，请联系管理员");
+            }
+        }
+    }
+
+
+
+
     public function attributeLabels()
     {
         return [
@@ -98,26 +154,26 @@ class Sysadmin extends ActiveRecord{
                 'login_ip' => ip2long(Yii::$app->request->userIP)
             ], 'account = :user', [':user' => $this->account]);
 
+            $userdata = self::find()
+                ->select([
+                    'id',
+                    'account',
+                    'email',
+                    'phone',
+                    'state',
+                    'autho_code',
+                    'login_ip',
+                    'login_time',
+                    'sys_group_id',
+                    'create_time',
+                    'update_time',
+                ])
+                ->where('account=:account',[':account'=>$this->account])
+                ->one()->toArray();
             $redis = Yii::$app->redis;
             $session = Yii::$app->session;
-            $SysConf = new SysConf();
-            $uuid = $SysConf->uuid("tk-");
-
-            $user = self::find([
-                'account',
-                'email',
-                'phone',
-                'state',
-                'autho_code',
-                'login_ip',
-                'sys_group_id',
-                'login_time',
-                'create_time',
-                'update_time',
-                ])->where('account=:account',[':account'=>$this->account])->one()->toArray();
-            $session["userData"] = $user;
-            $session["userData"] =['token'=>$uuid];
-            $redis->set($uuid,Json::encode($user));
+            $session["userData"] = $userdata;
+            $redis->set($userdata['autho_code'],Json::encode($userdata));
             return true;
         }
         return false;

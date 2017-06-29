@@ -28,7 +28,7 @@
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
 <header class="app-header navbar">
     <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">☰</button>
-    <a class="navbar-brand" href="#"></a>
+    <a class="navbar-brand" href="<?php echo yii\helpers\Url::to(['/manager']); ?>"></a>
     <ul class="nav navbar-nav hidden-md-down">
         <li class="nav-item">
             <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
@@ -80,7 +80,7 @@
                 <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
                 <div class="divider"></div>
                 <a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock Account</a>
-                <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+                <a class="dropdown-item" href="<?php echo yii\helpers\Url::to(['public/logout']); ?>"><i class="fa fa-lock"></i>退出</a>
             </div>
         </li>
         <li class="nav-item hidden-md-down">

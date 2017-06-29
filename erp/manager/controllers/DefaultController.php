@@ -2,6 +2,7 @@
 
 namespace app\erp\manager\controllers;
 
+use app\erp\admin\controllers\UserController;
 use yii\web\Controller;
 
 /**
