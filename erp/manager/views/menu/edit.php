@@ -9,16 +9,36 @@ use yii\bootstrap\ActiveForm;
     </div>
     <?php
     $form = ActiveForm::begin([
+//        'method' => 'post',
 //            'options' => ['class' => 'form-horizontal'],
     ]);
     ?>
     <div class="card-block">
+        <script src="/js/pinyin.js"></script>
+        <script>
+            $(function () {
+                $("#menu-name").blur(function(){
+                    $("#menu-ename").val(pinyin.getFullChars($("#menu-name").val()));
+                });
+            });
+        </script>
         <?=$form->field($menu,'name')->textInput()?>
         <?=$form->field($menu,'ename')->textInput()?>
-        <?=$form->field($menu,'menu_pid')->dropDownList(['0'=>'radio1','1'=>'radio2'])?>
+        <?=$form->field($menu,'menu_pid')->dropDownList(
+            \app\erp\models\Menu::find()->select(['name', 'id'])->orderBy('id')->column(),
+            ['prompt'=>'顶级目录']
+        )?>
+
         <?=$form->field($menu,'content')->textInput()?>
+        <?=$form->field($menu,'url')->textInput()?>
         <?=$form->field($menu,'sys_admin_id')->textInput()?>
-        <?=$form->field($menu,'state')->textInput()?>
+        <?php
+        $menu_state = 0;
+        if($menu->state!=0||$menu->state!=null){
+            $menu_state=$menu->state;
+        }
+        ?>
+        <?=$form->field($menu,'state')->radioList(Yii::$app->params['menuState'][1],['value'=>$menu_state])?>
     </div>
     <div class="card-footer">
         <?=Html::submitButton('<i class="fa fa-dot-circle-o"></i> 提 交 ',["class"=>"btn btn-bg btn-primary"])?>
@@ -27,4 +47,5 @@ use yii\bootstrap\ActiveForm;
     <?php
     ActiveForm::end();
     ?>
+
 </div>

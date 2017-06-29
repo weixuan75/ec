@@ -15,7 +15,7 @@ class UserController extends ConfController{
     public function actionIndex(){
         $model = Sysadmin::find();
         $count = $model->count();
-        $pageSize = 10;
+        $pageSize = \Yii::$app->params['admin']['list'];
         $pager = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $managers = $model->offset($pager->offset)->limit($pager->limit)->all();
         return $this->render("list", ['managers' => $managers, 'pager' => $pager]);

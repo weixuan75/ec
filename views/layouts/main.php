@@ -16,15 +16,16 @@ use yii\helpers\Json;
     <meta name="keyword" content="">
     <link rel="shortcut icon" href="img/favicon.png">
 
-    <title>Home</title>
+    <title>后台管理平台</title>
 
+    <script src="/js/jquery-3.2.1.min.js"></script>
+<!--    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">-->
     <!-- Icons -->
     <link href="coreui/css/font-awesome.min.css" rel="stylesheet">
     <link href="coreui/css/simple-line-icons.css" rel="stylesheet">
 
     <!-- Main styles for this application -->
     <link href="coreui/css/style.css" rel="stylesheet">
-
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
 <header class="app-header navbar">
@@ -163,6 +164,23 @@ use yii\helpers\Json;
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/coreui/pages-register.html" target="_top"><i class="icon-options"></i>会员菜单</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-people"></i>管理员</a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Url::to(['/admin/user']); ?>" target="_top"><i class="icon-options"></i>管理员列表</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Url::to(['/admin/']); ?>" target="_top"><i class="icon-options"></i>管理员组</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Url::to(['/admin/role']); ?>" target="_top"><i class="icon-options"></i>管理员角色</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Url::to(['/admin/fun']); ?>" target="_top"><i class="icon-options"></i>管理员功能</a>
                         </li>
                     </ul>
                 </li>
@@ -519,6 +537,7 @@ use yii\helpers\Json;
 
 <!-- GenesisUI main scripts -->
 <script src="coreui/js/app.js"></script>
+<!--<script src="../../web/js/jquery-3.2.1.min.js"></script>-->
 <!-- Plugins and scripts required by this views -->
 <!-- Custom scripts required by this view -->
 <script src="coreui/js/views/main.js"></script>

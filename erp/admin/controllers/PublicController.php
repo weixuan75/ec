@@ -23,7 +23,7 @@ class PublicController extends Controller{
         $this->layout = false;
         $session = Yii::$app->session;
         $redis = Yii::$app->redis;
-        if((boolean)$redis->get($session['userData']['auth_code'])){
+        if((boolean)$redis->get($session['userData']['user']['auth_code'])){
             return $this->redirect(['/manager']);
         };
         $admin = new Sysadmin();

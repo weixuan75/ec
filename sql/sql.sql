@@ -146,6 +146,7 @@ CREATE TABLE IF NOT EXISTS `ec_menu` (
   `name` varchar(100) NOT NULL COMMENT '名称',
   `ename` varchar(100) NOT NULL COMMENT '英文名称',
   `content` varchar(500) NOT NULL COMMENT '介绍',
+  `url` varchar(500) NOT NULL COMMENT 'url',
   `sys_admin_id` varchar(36) DEFAULT NULL COMMENT '管理员',
   `state` TINYINT DEFAULT '0' COMMENT '状态',
   `create_time` bigint DEFAULT NULL COMMENT '创建时间',

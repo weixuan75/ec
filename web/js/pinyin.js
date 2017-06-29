@@ -24,7 +24,6 @@ var pinyin = (function (){
     var Pinyin = function (ops){
             this.initialize(ops);
         },
-
         options = {
             checkPolyphone: false,
             charcase: 'default'
