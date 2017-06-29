@@ -294,31 +294,16 @@ CREATE TABLE IF NOT EXISTS `ec_TVListings` (
   `type` TINYINT NOT NULL COMMENT '类型：1图片，2视频',
   `pay_time` TINYINT NOT NULL COMMENT '播放时间（秒）',
   `shop_id` varchar(100) NOT NULL COMMENT '播放的店铺：0/null,全部店铺播放，[1,2,3,4]',
-
-  `content` varchar(500) NOT NULL COMMENT '介绍',
-  `sys_admin_id` varchar(36) DEFAULT NULL COMMENT '管理员',
   `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `is_conf` TINYINT DEFAULT '0' COMMENT '设置默认，等于1时，失效的店铺播放默认的电视节目单',
+  `content` varchar(500) NOT NULL COMMENT '介绍',
+  `user_id` BIGINT DEFAULT NULL COMMENT '操作员',
   `create_time` bigint DEFAULT NULL COMMENT '创建时间',
   `update_time` bigint DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `menu_name` (`name`),
-  UNIQUE KEY `menu_ename` (`ename`)
+  UNIQUE KEY `TVListings_name` (`name`),
+  UNIQUE KEY `TVListings_ename` (`ename`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='电视节目主单';
-
-
-# 电视节目主单
-# 名称
-# 时间周一至周日
-# 时间：0~24
-# 类型：图片或者视频
-#
-# 图片或者图片集——轮播时间
-#
-# 视频，播放时间
-# 针对的店铺
-#
-# 设置默认节目单
-#
 # 电视节目单播放情况
 
 
