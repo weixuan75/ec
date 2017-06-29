@@ -42,6 +42,7 @@ class Sysadmin extends ActiveRecord{
             [['password'], 'required','message' => '密码不能为空', 'on' => ['login','adminadd', 'changeemail']],
             [['account'], 'required','message' => '账号不能为空','on' => ['login','adminadd']],
             [['email'], 'required','message' => '邮箱不能为空','on' => 'adminadd'],
+            [['email'], 'email','message' => '邮箱格式错误','on' => 'adminadd'],
             [['phone'], 'required','message' => '手机号不能为空','on' => 'adminadd'],
             [['autho_code'],'required','message' => '授权码不能为空','on' => 'adminadd'],
 
@@ -85,5 +86,13 @@ class Sysadmin extends ActiveRecord{
             'create_time' => '创建时间',
             'update_time' => '修改时间',
         ];
+    }
+    public function login($data){
+        $this->scenario="login";
+        if ($this->load($data) && $this->validate()) {
+
+            return true;
+        }
+        return false;
     }
 }
