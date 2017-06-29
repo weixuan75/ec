@@ -24,9 +24,6 @@ use yii\helpers\Url;
     <link href="coreui/css/style.css" rel="stylesheet">
 
 </head>
-
-
-
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
 <header class="app-header navbar">
     <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">☰</button>
@@ -35,15 +32,14 @@ use yii\helpers\Url;
         <li class="nav-item">
             <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
         </li>
-
         <li class="nav-item px-1">
-            <a class="nav-link" href="#">Dashboard</a>
+            <a class="nav-link" href="#">控制台</a>
         </li>
         <li class="nav-item px-1">
-            <a class="nav-link" href="#">Users</a>
+            <a class="nav-link" href="#">用户</a>
         </li>
         <li class="nav-item px-1">
-            <a class="nav-link" href="#">Settings</a>
+            <a class="nav-link" href="#">设置</a>
         </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -73,11 +69,11 @@ use yii\helpers\Url;
                 <a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comments<span class="badge badge-warning">42</span></a>
 
                 <div class="dropdown-header text-center">
-                    <strong>Settings</strong>
+                    <strong>设置</strong>
                 </div>
 
                 <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
-                <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>
+                <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> 设置</a>
                 <a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span class="badge badge-default">42</span></a>
                 <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
                 <div class="divider"></div>
@@ -97,7 +93,7 @@ use yii\helpers\Url;
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html"><i class="icon-speedometer"></i> Dashboard <span class="badge badge-info">NEW</span></a>
+                    <a class="nav-link" href="index.html"><i class="icon-speedometer"></i> 控制台 <span class="badge badge-info">NEW</span></a>
                 </li>
 
                 <li class="nav-title">
@@ -177,36 +173,26 @@ use yii\helpers\Url;
 
     <!-- Main content -->
     <main class="main">
-
         <!-- Breadcrumb -->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">Home</li>
             <li class="breadcrumb-item"><a href="#">Admin</a>
             </li>
-            <li class="breadcrumb-item active">Dashboard</li>
+            <li class="breadcrumb-item active">控制台</li>
 
             <!-- Breadcrumb Menu-->
             <li class="breadcrumb-menu hidden-md-down">
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                     <a class="btn btn-secondary" href="#"><i class="icon-speech"></i></a>
-                    <a class="btn btn-secondary" href="./"><i class="icon-graph"></i> &nbsp;Dashboard</a>
-                    <a class="btn btn-secondary" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+                    <a class="btn btn-secondary" href="./"><i class="icon-graph"></i> &nbsp;控制台</a>
+                    <a class="btn btn-secondary" href="#"><i class="icon-settings"></i> &nbsp;设置</a>
                 </div>
             </li>
         </ol>
-
-
         <div class="container-fluid">
-
-
-
-
-
             <div class="animated fadeIn">
                 <?= $content ?>
             </div>
-
-
         </div>
         <!-- /.conainer-fluid -->
     </main>
