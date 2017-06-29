@@ -1,3 +1,4 @@
+# 系统管理员
 DROP TABLE IF EXISTS `ec_sys_admin`;
 CREATE TABLE IF NOT EXISTS `ec_sys_admin` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '系统会员ID',
@@ -21,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `ec_sys_admin` (
   KEY `sys_admin_phone_password` (`phone`,`password`),
   UNIQUE KEY `sys_admin_autho_code` (`autho_code`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统管理员主表';
-
+# 系统管理员详细表
 DROP TABLE IF EXISTS `ec_sys_admin_date`;
 CREATE TABLE IF NOT EXISTS `ec_sys_admin_date` (
   `sys_admin_id` bigint NOT NULL COMMENT '系统会员ID',
@@ -33,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `ec_sys_admin_date` (
   PRIMARY KEY (`sys_admin_id`),
   UNIQUE KEY `sys_admin_date_nickname` (`nickname`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统管理员资料';
-
+# 系统会员组
 DROP TABLE IF EXISTS `ec_sys_group`;
 CREATE TABLE IF NOT EXISTS `ec_sys_group` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '会员组ID',
@@ -49,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `ec_sys_group` (
   UNIQUE KEY `sys_group_name` (`name`),
   UNIQUE KEY `sys_group_ename` (`ename`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统会员组';
-
+#系统角色组
 DROP TABLE IF EXISTS `ec_sys_role`;
 CREATE TABLE IF NOT EXISTS `ec_sys_role` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '组ID',
@@ -65,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `ec_sys_role` (
   UNIQUE KEY `sys_role_name` (`name`),
   UNIQUE KEY `sys_role_ename` (`ename`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统角色';
-
+#系统组对角色
 DROP TABLE IF EXISTS `ec_sys_group_role`;
 CREATE TABLE IF NOT EXISTS `ec_sys_group_role` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -74,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `ec_sys_group_role` (
   `update_time` bigint DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统会员组和角色的中间表';
-
+#系统功能
 DROP TABLE IF EXISTS `ec_sys_function`;
 CREATE TABLE IF NOT EXISTS `ec_sys_function` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '方法ID',
@@ -90,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `ec_sys_function` (
   UNIQUE KEY `sys_function_name` (`name`),
   UNIQUE KEY `sys_function_name_ename` (`ename`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统方法';
-
+#系统功能角色
 DROP TABLE IF EXISTS `ec_sys_role_function`;
 CREATE TABLE IF NOT EXISTS `ec_sys_role_function` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -152,92 +153,6 @@ CREATE TABLE IF NOT EXISTS `ec_model_product` (
   UNIQUE KEY `ename` (`ename`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='产品参数';
 
--- ---------------------
-# 店铺
-DROP TABLE IF EXISTS `ec_store`;
-CREATE TABLE IF NOT EXISTS `ec_store` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '店铺ID',
-  `code` varchar(200) NOT NULL COMMENT '店铺编号',
-  `name` varchar(100) NOT NULL COMMENT '店铺名称',
-  `ename` varchar(100) NOT NULL COMMENT '店铺英文名称',
-  `image` varchar(200) NOT NULL COMMENT '店铺照片',
-  `images` varchar(1000) NOT NULL COMMENT '店内照片',
-  `content` varchar(1000) NOT NULL COMMENT '店铺介绍',
-  `phone` varchar(200) NOT NULL COMMENT '店铺联系电话',
-  `map_location` varchar(200) NOT NULL COMMENT '地图定位',
-  `adress` varchar(200) NOT NULL COMMENT '店铺地址',
-  `shop_use_id` BIGINT DEFAULT NULL COMMENT '店铺负责人ID',
-  `state` TINYINT DEFAULT '0' COMMENT '状态',
-  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
-  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ec_store_name` (`name`),
-  UNIQUE KEY `ec_store_ename` (`ename`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='店铺主表';
-
-DROP TABLE IF EXISTS `ec_store_user`;
-CREATE TABLE IF NOT EXISTS `ec_store_user` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `store_id` BIGINT NOT NULL COMMENT '店铺ID',
-  `user_id` BIGINT NOT NULL COMMENT '用户ID',
-  `state` TINYINT DEFAULT '0' COMMENT '状态',
-  `job` TINYINT DEFAULT '0' COMMENT '职位：1、老板，2、店员',
-  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
-  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='店铺会员关联';
--- --------------------------------------------------------------------
-/**
-用户
- */
-DROP TABLE IF EXISTS `ec_user`;
-CREATE TABLE IF NOT EXISTS `ec_user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `account` varchar(20) NOT NULL COMMENT '账号',
-  `email` varchar(50) NOT NULL COMMENT '电子邮件',
-  `phone` varchar(15) NOT NULL COMMENT '电话',
-  `password` varchar(500) DEFAULT NULL COMMENT '密码',
-  `state` TINYINT(4) DEFAULT '0' COMMENT '状态',
-  `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
-  `login_ip` varchar(40) DEFAULT NULL COMMENT '登陆IP地址',
-  `login_time` bigint(20) DEFAULT NULL COMMENT '登陆时间',
-  `sys_group_id` int(11) DEFAULT NULL COMMENT '会员组',
-  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
-  `update_time` bigint(20) DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ec_user_account` (`account`),
-  UNIQUE KEY `ec_user_email` (`email`),
-  UNIQUE KEY `ec_user_phone` (`phone`),
-  UNIQUE KEY `ec_user_autho_code` (`autho_code`),
-  KEY `ec_user_account_password` (`account`,`password`),
-  KEY `ec_user_email_password` (`email`,`password`),
-  KEY `ec_user_phone_password` (`phone`,`password`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='会员主表';
-
-DROP TABLE IF EXISTS `ec_user_date`;
-CREATE TABLE IF NOT EXISTS `ec_user_date` (
-  `user_id` BIGINT NOT NULL COMMENT '会员ID',
-  `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
-  `nickname` varchar(20) NOT NULL COMMENT '昵称',
-  `birthday` BIGINT NOT NULL COMMENT '生日',
-  `head_portrait` varchar(300) DEFAULT NULL COMMENT '头像',
-  `adress` varchar(200) DEFAULT NULL COMMENT '家庭住址',
-  `tabbing` varchar(40) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `sys_admin_date_nickname` (`nickname`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统管理员资料';
-
-DROP TABLE IF EXISTS `ec_user_adress`;
-CREATE TABLE IF NOT EXISTS `ec_user_adress` (
-  `user_id` BIGINT NOT NULL COMMENT '会员ID',
-  `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
-  `adress` text NOT NULL COMMENT '地址JSON',
-  `time` bigint DEFAULT NULL COMMENT '创建修改时间',
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `ec_user_adress_autho_code` (`autho_code`),
-  KEY `ec_user_adress_autho_code` (`user_id`,`autho_code`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='用户地址表';
-
 /**
 广告
  */
@@ -270,13 +185,18 @@ CREATE TABLE IF NOT EXISTS `ec_user_adress` (
 --   文字提示
 
 #广告参数表
+
 #广告列表
 
 # 附件表
-# 菜单表
-# 会员群组表
-# 会员积分表
 
+# 菜单表
+
+# 平台表
+
+# 仓库主表
+# 仓库会员表
+# 仓库操作日志表
 # 仓库入库订单表
 # 仓库入库记录表
 
@@ -285,11 +205,121 @@ CREATE TABLE IF NOT EXISTS `ec_user_adress` (
 # 仓库出库记录表
 # 仓库出库订单表
 
+# 店铺
+DROP TABLE IF EXISTS `ec_store`;
+CREATE TABLE IF NOT EXISTS `ec_store` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '店铺ID',
+  `code` varchar(200) NOT NULL COMMENT '店铺编号',
+  `name` varchar(100) NOT NULL COMMENT '店铺名称',
+  `ename` varchar(100) NOT NULL COMMENT '店铺英文名称',
+  `image` varchar(200) NOT NULL COMMENT '店铺照片',
+  `images` varchar(1000) NOT NULL COMMENT '店内照片',
+  `content` varchar(1000) NOT NULL COMMENT '店铺介绍',
+  `phone` varchar(200) NOT NULL COMMENT '店铺联系电话',
+  `map_location` varchar(200) NOT NULL COMMENT '地图定位',
+  `adress` varchar(200) NOT NULL COMMENT '店铺地址',
+  `shop_use_id` BIGINT DEFAULT NULL COMMENT '店铺负责人ID',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ec_store_name` (`name`),
+  UNIQUE KEY `ec_store_ename` (`ename`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='店铺主表';
+# 店铺用户表
+DROP TABLE IF EXISTS `ec_store_user`;
+CREATE TABLE IF NOT EXISTS `ec_store_user` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `store_id` BIGINT NOT NULL COMMENT '店铺ID',
+  `user_id` BIGINT NOT NULL COMMENT '用户ID',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `job` TINYINT DEFAULT '0' COMMENT '职位：1、老板，2、店员',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='店铺会员关联';
+# 店铺购物车
+# 店铺收藏记录表
 # 店铺销货订单表
 # 店铺进货订单表
+# 店铺销货记录表
+# 店铺进货记录表
 
-# 会员订单表
+-- --------------------------------------------------------------------
+# 用户主表
+DROP TABLE IF EXISTS `ec_user`;
+CREATE TABLE IF NOT EXISTS `ec_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `account` varchar(20) NOT NULL COMMENT '账号',
+  `email` varchar(50) NOT NULL COMMENT '电子邮件',
+  `phone` varchar(15) NOT NULL COMMENT '电话',
+  `password` varchar(500) DEFAULT NULL COMMENT '密码',
+  `state` TINYINT(4) DEFAULT '0' COMMENT '状态',
+  `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
+  `login_ip` varchar(40) DEFAULT NULL COMMENT '登陆IP地址',
+  `login_time` bigint(20) DEFAULT NULL COMMENT '登陆时间',
+  `sys_group_id` int(11) DEFAULT NULL COMMENT '会员组',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint(20) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ec_user_account` (`account`),
+  UNIQUE KEY `ec_user_email` (`email`),
+  UNIQUE KEY `ec_user_phone` (`phone`),
+  UNIQUE KEY `ec_user_autho_code` (`autho_code`),
+  KEY `ec_user_account_password` (`account`,`password`),
+  KEY `ec_user_email_password` (`email`,`password`),
+  KEY `ec_user_phone_password` (`phone`,`password`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='会员主表';
+# 用户资料
+DROP TABLE IF EXISTS `ec_user_date`;
+CREATE TABLE IF NOT EXISTS `ec_user_date` (
+  `user_id` BIGINT NOT NULL COMMENT '会员ID',
+  `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
+  `nickname` varchar(20) NOT NULL COMMENT '昵称',
+  `birthday` BIGINT NOT NULL COMMENT '生日',
+  `head_portrait` varchar(300) DEFAULT NULL COMMENT '头像',
+  `adress` varchar(200) DEFAULT NULL COMMENT '家庭住址',
+  `tabbing` varchar(40) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `sys_admin_date_nickname` (`nickname`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统管理员资料';
+# 用户地址
+DROP TABLE IF EXISTS `ec_user_adress`;
+CREATE TABLE IF NOT EXISTS `ec_user_adress` (
+  `user_id` BIGINT NOT NULL COMMENT '会员ID',
+  `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
+  `adress` text NOT NULL COMMENT '地址JSON',
+  `time` bigint DEFAULT NULL COMMENT '创建修改时间',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `ec_user_adress_autho_code` (`autho_code`),
+  KEY `ec_user_adress_autho_code` (`user_id`,`autho_code`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='用户地址表';
+# 用户群组表
+# 用户等级表
+# 用户等级表
+# 用户积分表
+# 用户余额表
+# 用户购物车
+# 用户订单表
+# 用户支付记录表
+# 用户浏览表
+# 用户收藏表
 
+
+# 电视节目主单
+# 名称
+# 时间周一至周日
+# 时间：0~24
+# 类型：图片或者视频
+#
+# 图片或者图片集——轮播时间
+#
+# 视频，播放时间
+# 针对的店铺
+#
+# 设置默认节目单
+#
+# 电视节目单播放情况
 
 
 

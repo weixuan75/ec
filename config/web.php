@@ -6,6 +6,7 @@ $db = require(__DIR__ . '/db.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    'defaultRoute' => 'index',
     'bootstrap' => ['log'],
     'components' => [
         'request' => [
@@ -49,6 +50,28 @@ $config = [
         */
     ],
     'params' => $params,
+    'modules' => [
+//        首页
+        'index' => [
+            'class' => 'app\erp\index\Index',
+        ],
+//        接口
+        'app' => [
+            'class' => 'app\erp\app\Index',
+        ],
+//        管理后台
+        'manager' => [
+            'class' => 'app\erp\manager\Index',
+        ],
+//        店铺入口
+        'shop' => [
+            'class' => 'app\erp\shop\Index',
+        ],
+//        系统后台
+        'admin' => [
+            'class' => 'app\erp\admin\Index',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
