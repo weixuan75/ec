@@ -1,5 +1,7 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Json;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,13 +54,15 @@ use yii\helpers\Url;
         <li class="nav-item hidden-md-down">
             <a class="nav-link" href="#"><i class="icon-location-pin"></i></a>
         </li>
+        <?php
+        $auth_code = Yii::$app->session['userData']['user']['auth_code'];
+        $redis = Yii::$app->redis;
+        $user = Json::decode($redis->get($auth_code),true);
+        ?>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <img src="coreui/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                <?php
-                    var_dump(Yii::$app->session['userData']['auth_code'])
-                ?>
-                <span class="hidden-md-down">admin</span>
+                <span class="hidden-md-down"><?=$user['data']['nickname']?></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
 
@@ -98,7 +102,6 @@ use yii\helpers\Url;
                 <li class="nav-item">
                     <a class="nav-link" href="index.html"><i class="icon-speedometer"></i> 控制台 <span class="badge badge-info">NEW</span></a>
                 </li>
-
                 <li class="nav-title">
                     UI Elements
                 </li>
@@ -151,6 +154,17 @@ use yii\helpers\Url;
                 <li class="divider"></li>
                 <li class="nav-title">
                     附加页面
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-menu"></i>菜单管理</a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Url::to(['/manager/menu']); ?>" target="_top"><i class="icon-options"></i>系统后台</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/coreui/pages-register.html" target="_top"><i class="icon-options"></i>会员菜单</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-star"></i>网页</a>

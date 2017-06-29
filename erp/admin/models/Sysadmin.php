@@ -2,6 +2,7 @@
 
 namespace app\erp\admin\models;
 
+use app\erp\models\Sysadmindate;
 use app\erp\util\SysConf;
 use Yii;
 use yii\db\ActiveRecord;
@@ -16,7 +17,7 @@ use yii\helpers\Json;
  * @property string $phone
  * @property string $password
  * @property integer $state
- * @property string $autho_code
+ * @property string $auth_code
  * @property string $login_ip
  * @property string $login_time
  * @property integer $sys_group_id
@@ -38,7 +39,7 @@ class Sysadmin extends ActiveRecord{
             [['account'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 100],
             [['phone'], 'string', 'max' => 15],
-            [['password', 'autho_code'], 'string', 'max' => 250],
+            [['password', 'auth_code'], 'string', 'max' => 250],
             [['login_ip'], 'string', 'max' => 40],
 
             [['password'], 'validateActivate', 'on' => 'login'],
@@ -58,7 +59,7 @@ class Sysadmin extends ActiveRecord{
             [['account'], 'unique','message' => '账号已注册','on' => 'adminadd'],
             [['email'], 'unique','message' => '邮箱已注册','on' => 'adminadd'],
             [['phone'], 'unique','message' => '电子邮箱已注册','on' => 'adminadd'],
-            [['autho_code'],'unique','message' => '授权码已注册','on' => 'adminadd'],
+            [['auth_code'],'unique','message' => '授权码已注册','on' => 'adminadd'],
         ];
     }
 
@@ -154,7 +155,7 @@ class Sysadmin extends ActiveRecord{
                 'login_ip' => ip2long(Yii::$app->request->userIP)
             ], 'account = :user', [':user' => $this->account]);
 
-            $userdata = self::find()
+            $user = self::find()
                 ->select([
                     'id',
                     'account',
@@ -169,13 +170,23 @@ class Sysadmin extends ActiveRecord{
                     'update_time',
                 ])
                 ->where('account=:account',[':account'=>$this->account])
+                ->one()
+                ->toArray();
+            $userdate = Sysadmindate::find()
+                ->where("sys_admin_id=:id",[':id'=>$user['id']])
                 ->one()->toArray();
             $redis = Yii::$app->redis;
             $session = Yii::$app->session;
-            $session["userData"] = $userdata;
-            $redis->set($userdata['auth_code'],Json::encode($userdata));
+            $session["userData"] = [
+                'user'=>$user,
+                'data'=>$userdate
+            ];
+            $redis->set($user['auth_code'],Json::encode($session["userData"]));
             return true;
         }
         return false;
+    }
+    public function getSysadmindata(){
+        return $this->hasOne(Sysadmindate::className(), ['sys_admin_id' => 'id']);
     }
 }

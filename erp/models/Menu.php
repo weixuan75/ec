@@ -33,7 +33,7 @@ class Menu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['menu_pid', 'name', 'ename', 'content'], 'required'],
+            [['menu_pid', 'name', 'ename', 'content', 'create_time', 'update_time'], 'required',"不可以为空"],
             [['menu_pid', 'state', 'create_time', 'update_time'], 'integer'],
             [['name', 'ename'], 'string', 'max' => 100],
             [['content'], 'string', 'max' => 500],

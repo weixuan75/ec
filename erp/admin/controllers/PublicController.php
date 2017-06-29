@@ -40,7 +40,7 @@ class PublicController extends Controller{
     public function actionLogout(){
         $session = Yii::$app->session;
         $redis = Yii::$app->redis;
-        $redis->del($session['userData']['auth_code']);
+        $redis->del($session['userData']['user']['auth_code']);
         $session->removeAll();
         return $this->redirect(['login']);
     }
