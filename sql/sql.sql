@@ -101,58 +101,6 @@ CREATE TABLE IF NOT EXISTS `ec_sys_role_function` (
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统方法组和角色的中间表';
 
-
-
-# 产品主表
-DROP TABLE IF EXISTS `ec_product`;
-CREATE TABLE IF NOT EXISTS `ec_product` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '方法ID',
-  `one_image` int NOT NULL COMMENT '父级方法ID',
-  `title` varchar(20) NOT NULL COMMENT '方法名称',
-  `ename` varchar(50) NOT NULL COMMENT '组英文名称',
-  `content` varchar(15) NOT NULL COMMENT '组介绍',
-  `url` varchar(36) DEFAULT NULL COMMENT '角色管理员',
-  `state` TINYINT DEFAULT '0' COMMENT '状态',
-  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
-  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`title`),
-  UNIQUE KEY `ename` (`ename`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='产品基本信息';
-# 产品资料
-DROP TABLE IF EXISTS `ec_product_data`;
-CREATE TABLE IF NOT EXISTS `ec_product_data` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '方法ID',
-  `sys_fun_pid` int NOT NULL COMMENT '父级方法ID',
-  `name` varchar(20) NOT NULL COMMENT '方法名称',
-  `ename` varchar(50) NOT NULL COMMENT '组英文名称',
-  `content` varchar(15) NOT NULL COMMENT '组介绍',
-  `url` varchar(36) DEFAULT NULL COMMENT '角色管理员',
-  `state` TINYINT DEFAULT '0' COMMENT '状态',
-  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
-  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `ename` (`ename`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='产品详细信息';
-
-# 产品模型
-DROP TABLE IF EXISTS `ec_model_product`;
-CREATE TABLE IF NOT EXISTS `ec_model_product` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '方法ID',
-  `sys_fun_pid` int NOT NULL COMMENT '父级方法ID',
-  `name` varchar(20) NOT NULL COMMENT '方法名称',
-  `ename` varchar(50) NOT NULL COMMENT '组英文名称',
-  `content` varchar(200) NOT NULL COMMENT '组介绍',
-  `url` varchar(36) DEFAULT NULL COMMENT '角色管理员',
-  `state` TINYINT DEFAULT '0' COMMENT '状态',
-  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
-  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `ename` (`ename`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='产品参数';
-
 /**
 广告
  */
@@ -191,8 +139,38 @@ CREATE TABLE IF NOT EXISTS `ec_model_product` (
 # 附件表
 
 # 菜单表
+DROP TABLE IF EXISTS `ec_menu`;
+CREATE TABLE IF NOT EXISTS `ec_menu` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `menu_pid` int NOT NULL COMMENT '父级ID',
+  `name` varchar(100) NOT NULL COMMENT '名称',
+  `ename` varchar(100) NOT NULL COMMENT '英文名称',
+  `content` varchar(500) NOT NULL COMMENT '介绍',
+  `sys_admin_id` varchar(36) DEFAULT NULL COMMENT '管理员',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `menu_name` (`name`),
+  UNIQUE KEY `menu_ename` (`ename`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='菜单';
 
 # 平台表
+DROP TABLE IF EXISTS `ec_platform`;
+CREATE TABLE IF NOT EXISTS `ec_platform` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(100) NOT NULL COMMENT '名称',
+  `ename` varchar(100) NOT NULL COMMENT '英文名称',
+  `content` varchar(500) NOT NULL COMMENT '介绍',
+  `sys_admin_id` varchar(36) DEFAULT NULL COMMENT '管理员',
+  `auth_code` varchar(36) DEFAULT NULL COMMENT '授权码',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `platform_name` (`name`),
+  UNIQUE KEY `platform_ename` (`ename`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='平台';
 
 # 仓库主表
 # 仓库会员表
@@ -305,6 +283,28 @@ CREATE TABLE IF NOT EXISTS `ec_user_adress` (
 # 用户浏览表
 # 用户收藏表
 
+DROP TABLE IF EXISTS `ec_TVListings`;
+CREATE TABLE IF NOT EXISTS `ec_TVListings` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `menu_pid` int NOT NULL COMMENT '父级ID',
+  `name` varchar(100) NOT NULL COMMENT '名称',
+  `ename` varchar(100) NOT NULL COMMENT '英文名称',
+  `weeks` varchar(100) NOT NULL COMMENT '周{0，1，2，3，4，5，6}',
+  `day` varchar(100) NOT NULL COMMENT '天{[开始时间，结束时间]，[12321354，12321354]，[12321354，12321354]}',
+  `type` TINYINT NOT NULL COMMENT '类型：1图片，2视频',
+  `pay_time` TINYINT NOT NULL COMMENT '播放时间（秒）',
+  `shop_id` varchar(100) NOT NULL COMMENT '播放的店铺：0/null,全部店铺播放，[1,2,3,4]',
+
+  `content` varchar(500) NOT NULL COMMENT '介绍',
+  `sys_admin_id` varchar(36) DEFAULT NULL COMMENT '管理员',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `menu_name` (`name`),
+  UNIQUE KEY `menu_ename` (`ename`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='电视节目主单';
+
 
 # 电视节目主单
 # 名称
@@ -322,9 +322,55 @@ CREATE TABLE IF NOT EXISTS `ec_user_adress` (
 # 电视节目单播放情况
 
 
+# 产品主表
+DROP TABLE IF EXISTS `ec_product`;
+CREATE TABLE IF NOT EXISTS `ec_product` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '方法ID',
+  `one_image` int NOT NULL COMMENT '父级方法ID',
+  `title` varchar(20) NOT NULL COMMENT '方法名称',
+  `ename` varchar(50) NOT NULL COMMENT '组英文名称',
+  `content` varchar(15) NOT NULL COMMENT '组介绍',
+  `url` varchar(36) DEFAULT NULL COMMENT '角色管理员',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`title`),
+  UNIQUE KEY `ename` (`ename`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='产品基本信息';
+# 产品资料
+DROP TABLE IF EXISTS `ec_product_data`;
+CREATE TABLE IF NOT EXISTS `ec_product_data` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '方法ID',
+  `sys_fun_pid` int NOT NULL COMMENT '父级方法ID',
+  `name` varchar(20) NOT NULL COMMENT '方法名称',
+  `ename` varchar(50) NOT NULL COMMENT '组英文名称',
+  `content` varchar(15) NOT NULL COMMENT '组介绍',
+  `url` varchar(36) DEFAULT NULL COMMENT '角色管理员',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `ename` (`ename`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='产品详细信息';
 
-
-
+# 产品模型
+DROP TABLE IF EXISTS `ec_model_product`;
+CREATE TABLE IF NOT EXISTS `ec_model_product` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '方法ID',
+  `sys_fun_pid` int NOT NULL COMMENT '父级方法ID',
+  `name` varchar(20) NOT NULL COMMENT '方法名称',
+  `ename` varchar(50) NOT NULL COMMENT '组英文名称',
+  `content` varchar(200) NOT NULL COMMENT '组介绍',
+  `url` varchar(36) DEFAULT NULL COMMENT '角色管理员',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `ename` (`ename`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='产品参数';
 
 
 
