@@ -45,7 +45,7 @@ class Sysadmin extends \yii\db\ActiveRecord
             [['account'], 'unique'],
             [['email'], 'unique'],
             [['phone'], 'unique'],
-            [['autho_code'], 'unique'],
+            [['auth_code'], 'unique'],
         ];
     }
 
@@ -61,7 +61,7 @@ class Sysadmin extends \yii\db\ActiveRecord
             'phone' => '电话',
             'password' => '密码',
             'state' => '状态',
-            'autho_code' => '认证码',
+            'auth_code' => '认证码',
             'login_ip' => '登陆IP地址',
             'login_time' => '登陆时间',
             'sys_group_id' => '会员组',

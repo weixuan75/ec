@@ -55,6 +55,9 @@ use yii\helpers\Url;
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <img src="coreui/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <?php
+                    var_dump(Yii::$app->session['userData']['auth_code'])
+                ?>
                 <span class="hidden-md-down">admin</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -140,14 +143,14 @@ use yii\helpers\Url;
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/coreui/widgets.html"><i class="icon-calculator"></i> Widgets <span class="badge badge-info">NEW</span></a>
+                    <a class="nav-link" href="/coreui/widgets.html"><i class="icon-calculator"></i> 组件 <span class="badge badge-info">NEW</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/coreui/charts.html"><i class="icon-pie-chart"></i> Charts</a>
+                    <a class="nav-link" href="/coreui/charts.html"><i class="icon-pie-chart"></i> 图表</a>
                 </li>
                 <li class="divider"></li>
                 <li class="nav-title">
-                    Extras
+                    附加页面
                 </li>
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-star"></i>网页</a>

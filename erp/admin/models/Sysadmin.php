@@ -51,7 +51,7 @@ class Sysadmin extends ActiveRecord{
             [['email'], 'required','message' => '邮箱不能为空','on' => 'adminadd'],
             [['email'], 'email','message' => '邮箱格式错误','on' => 'adminadd'],
             [['phone'], 'required','message' => '手机号不能为空','on' => 'adminadd'],
-            [['autho_code'],'required','message' => '授权码不能为空','on' => 'adminadd'],
+            [['auth_code'],'required','message' => '授权码不能为空','on' => 'adminadd'],
 
             [['repass'], 'required', 'message' => '确认密码不能为空', 'on' => ['changepass', 'adminadd']],
             [['repass'], 'compare', 'compareAttribute' => 'password', 'message' => '两次密码输入不一致', 'on' => ['changepass', 'adminadd']],
@@ -138,7 +138,7 @@ class Sysadmin extends ActiveRecord{
             'password' => '密码',
             'repass' => '确认密码',
             'state' => '状态',
-            'autho_code' => '认证码',
+            'auth_code' => '认证码',
             'login_ip' => '登陆IP地址',
             'login_time' => '登陆时间',
             'sys_group_id' => '会员组',
@@ -161,7 +161,7 @@ class Sysadmin extends ActiveRecord{
                     'email',
                     'phone',
                     'state',
-                    'autho_code',
+                    'auth_code',
                     'login_ip',
                     'login_time',
                     'sys_group_id',
@@ -173,7 +173,7 @@ class Sysadmin extends ActiveRecord{
             $redis = Yii::$app->redis;
             $session = Yii::$app->session;
             $session["userData"] = $userdata;
-            $redis->set($userdata['autho_code'],Json::encode($userdata));
+            $redis->set($userdata['auth_code'],Json::encode($userdata));
             return true;
         }
         return false;

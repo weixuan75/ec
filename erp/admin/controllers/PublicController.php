@@ -23,7 +23,7 @@ class PublicController extends Controller{
         $this->layout = false;
         $session = Yii::$app->session;
         $redis = Yii::$app->redis;
-        if((boolean)$redis->get($session['userData']['autho_code'])){
+        if((boolean)$redis->get($session['userData']['auth_code'])){
             return $this->redirect(['/manager']);
         };
         $admin = new Sysadmin();
@@ -40,7 +40,7 @@ class PublicController extends Controller{
     public function actionLogout(){
         $session = Yii::$app->session;
         $redis = Yii::$app->redis;
-        $redis->del($session['userData']['autho_code']);
+        $redis->del($session['userData']['auth_code']);
         $session->removeAll();
         return $this->redirect(['login']);
     }
