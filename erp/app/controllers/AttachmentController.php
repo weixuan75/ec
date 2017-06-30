@@ -105,9 +105,9 @@ class AttachmentController extends ConfController {
         $redis = Yii::$app->redis;
         if(!(boolean)$redis->get($session['userData']['user']['auth_code'])){
             return false;
-        }
+        }+
             $SysAttachment = new SysAttachment();
-//            'name' => '附件名称',
+//             'name' => '附件名称',
             $SysAttachment->name = $name;
 //            'oldname' => '文件原名称',
             $SysAttachment->oldname = $oldname;
