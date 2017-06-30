@@ -35,10 +35,11 @@ class Sysadmin extends ActiveRecord{
     public function rules()
     {
         return [
-            [['state', 'login_time', 'sys_group_id', 'create_time', 'update_time'], 'integer'],
+            [['state', 'login_time', 'sys_group_id', 'create_time', 'update_time','phone'], 'integer'],
             [['account'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 100],
-            [['phone'], 'string', 'max' => 15],
+            [['phone'], 'string', 'max' => 11],
+            [['phone'], 'string', 'min' => 11],
             [['password', 'auth_code'], 'string', 'max' => 250],
             [['login_ip'], 'string', 'max' => 40],
 
@@ -58,7 +59,7 @@ class Sysadmin extends ActiveRecord{
             [['repass'], 'compare', 'compareAttribute' => 'password', 'message' => '两次密码输入不一致', 'on' => ['changepass', 'add']],
             [['account'], 'unique','message' => '账号已注册','on' => 'add'],
             [['email'], 'unique','message' => '邮箱已注册','on' => 'add'],
-            [['phone'], 'unique','message' => '电子邮箱已注册','on' => 'add'],
+            [['phone'], 'unique','message' => '电话已注册','on' => 'add'],
             [['auth_code'],'unique','message' => '授权码已注册','on' => 'add'],
         ];
     }
@@ -183,9 +184,18 @@ class Sysadmin extends ActiveRecord{
     }
     public function add($data){
         $this->scenario="add";
+        $conf = new SysConf();
+        $uuid = $conf->uuid();
+        $this->auth_code=$uuid;
+        $time =time();
+        $this->create_time=$time;
+        $this->update_time=$time;
         if ($this->load($data) && $this->validate()) {
-            
-            return true;
+            $this->password=md5($this->password);
+            if($this->save(false)){
+                return true;
+            }
+            return false;
         }
         return false;
     }

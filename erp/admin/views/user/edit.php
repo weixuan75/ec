@@ -4,7 +4,7 @@ use yii\bootstrap\ActiveForm;
 ?>
 <div class="card">
     <div class="card-header">
-        <strong>添加菜单</strong>
+        <strong>添加会员</strong>
     </div>
     <?php
     $form = ActiveForm::begin();
@@ -22,7 +22,6 @@ use yii\bootstrap\ActiveForm;
         }
         ?>
         <?=$form->field($admin,'state')->radioList(Yii::$app->params['sysadmin']['state'][1],['value'=>$sysadmin_state])?>
-        'sys_group_id' => '会员组',
         <?=$form->field($admin,'sys_group_id')->textInput()?>
     </div>
     <div class="card-footer">

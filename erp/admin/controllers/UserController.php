@@ -21,6 +21,19 @@ class UserController extends ConfController{
         $managers = $model->offset($pager->offset)->limit($pager->limit)->all();
         return $this->render("index", ['managers' => $managers, 'pager' => $pager]);
     }
+    public function actionShow(){
+        $id = Yii::$app->request->get("id");
+        $admin = Sysadmin::find()
+            ->with("sysadmindata")
+            ->where("id=:id",[':id'=>$id])
+            ->one();
+        $admindata = $admin->sysadmindata;
+        return $this->render(
+            "show", [
+                'admin' => $admin,
+                'admindata' => $admindata
+            ]);
+    }
 
     /**
      * 添加
@@ -30,10 +43,10 @@ class UserController extends ConfController{
         $admin = new Sysadmin();
         $post = Yii::$app->request->post();
         if(Yii::$app->request->isPost){
-            $admin->add($post);
-//            $admin->save();
+            if($admin->add($post)){
+                return $this->redirect(['/admin/user']);
+            }
 //            var_dump($admin->errors);
-//            Yii::$app->end();
         }
         return $this->render(
             'edit',[
@@ -46,7 +59,17 @@ class UserController extends ConfController{
      * @return string
      */
     public function actionEdit(){
-        return $this->render('edit');
+        $id = Yii::$app->request->get("id");
+        $admin = Sysadmin::find()
+            ->with("sysadmindata")
+            ->where("id=:id",[':id'=>$id])
+            ->one();
+        $admindata = $admin->sysadmindata;
+        return $this->render(
+            'edit',[
+                '$admin'=>$admin,
+                'sysadmindata'=>$admindata
+        ]);
     }
     /**
      * 禁用

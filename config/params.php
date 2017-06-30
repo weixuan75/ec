@@ -26,4 +26,23 @@ return [
             ]
         ],
     ],
+//    菜单状态
+    'tvlistings'=>[
+        'list'=>10,
+        'state'=>[
+            ['启动','禁用'],
+            [
+                '<span class="badge badge-success">激活</span>',
+                '<span class="badge badge-danger">禁用</span>',
+            ]
+        ],
+        'is_conf'=>[
+            ['默认','关闭'],
+            [
+                '<span class="badge badge-success">默认</span>',
+                '<span class="badge badge-danger">关闭</span>',
+            ]
+        ],
+        'weeks'=>["周日","周一","周二","周三","周四","周五","周六",],
+    ],
 ];

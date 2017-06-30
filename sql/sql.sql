@@ -101,6 +101,36 @@ CREATE TABLE IF NOT EXISTS `ec_sys_role_function` (
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统方法组和角色的中间表';
 
+# 管理员日志表
+DROP TABLE IF EXISTS `ec_sys_function`;
+CREATE TABLE IF NOT EXISTS `ec_sys_function` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '方法ID',
+  `name` varchar(20) NOT NULL COMMENT '方法名称',
+  `ename` varchar(50) NOT NULL COMMENT '组英文名称',
+  `content` varchar(15) NOT NULL COMMENT '组介绍',
+  `url` varchar(36) DEFAULT NULL COMMENT '授权URL',
+  `fun_code` VARCHAR(500) DEFAULT NULL COMMENT '方法代码',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  `update_time` bigint DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sys_function_name` (`name`),
+  UNIQUE KEY `sys_function_name_ename` (`ename`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统方法';
+
+# 管理员日志表
+DROP TABLE IF EXISTS `ec_log_sys_admin`;
+CREATE TABLE IF NOT EXISTS `ec_log_sys_admin` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `admin_id` BIGINT NOT NULL COMMENT '管理员ID',
+  `content` TEXT NOT NULL COMMENT '操作内容',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `tag` TINYINT DEFAULT NULL COMMENT '操作标签',
+  `time` bigint DEFAULT NULL COMMENT '时间',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='管理员登陆日志表';
+
+
 /**
 广告
  */
@@ -284,17 +314,15 @@ CREATE TABLE IF NOT EXISTS `ec_user_adress` (
 # 用户浏览表
 # 用户收藏表
 
+# 电视节目表
 DROP TABLE IF EXISTS `ec_TVListings`;
 CREATE TABLE IF NOT EXISTS `ec_TVListings` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `menu_pid` int NOT NULL COMMENT '父级ID',
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(100) NOT NULL COMMENT '名称',
   `ename` varchar(100) NOT NULL COMMENT '英文名称',
   `weeks` varchar(100) NOT NULL COMMENT '周{0，1，2，3，4，5，6}',
   `day` varchar(100) NOT NULL COMMENT '天{[开始时间，结束时间]，[12321354，12321354]，[12321354，12321354]}',
-  `type` TINYINT NOT NULL COMMENT '类型：1图片，2视频',
-  `pay_time` TINYINT NOT NULL COMMENT '播放时间（秒）',
-  `shop_id` varchar(100) NOT NULL COMMENT '播放的店铺：0/null,全部店铺播放，[1,2,3,4]',
+  `shop_id` varchar(500) NOT NULL COMMENT '播放的店铺：0/null,全部店铺播放，[1,2,3,4]',
   `state` TINYINT DEFAULT '0' COMMENT '状态',
   `is_conf` TINYINT DEFAULT '0' COMMENT '设置默认，等于1时，失效的店铺播放默认的电视节目单',
   `content` varchar(500) NOT NULL COMMENT '介绍',
@@ -305,8 +333,24 @@ CREATE TABLE IF NOT EXISTS `ec_TVListings` (
   UNIQUE KEY `TVListings_name` (`name`),
   UNIQUE KEY `TVListings_ename` (`ename`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='电视节目主单';
-# 电视节目单播放情况
 
+# 电视节目表
+DROP TABLE IF EXISTS `ec_TVListings_data`;
+CREATE TABLE IF NOT EXISTS `ec_TVListings_data` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `sort` BIGINT NOT NULL COMMENT '排序',
+  `tv_id` BIGINT NOT NULL COMMENT '父级ID',
+  `name` varchar(100) NOT NULL COMMENT '名称',
+  `type` TINYINT NOT NULL COMMENT '类型：1图片，2视频',
+  `pay_time` TINYINT NOT NULL COMMENT '播放时间（秒）',
+  `state` TINYINT DEFAULT '0' COMMENT '状态',
+  `content` varchar(500) NOT NULL COMMENT '介绍',
+  `user_id` BIGINT DEFAULT NULL COMMENT '操作员',
+  `create_time` bigint DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `TVListings_name` (`name`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='电视节目详细内容';
+# 电视节目单播放情况
 
 # 产品主表
 DROP TABLE IF EXISTS `ec_product`;
