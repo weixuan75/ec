@@ -2,9 +2,11 @@
 
 namespace app\erp\app\controllers;
 use app\erp\admin\controllers\ConfController;
+use app\erp\models\SysAttachment;
 use app\erp\models\UploadForm;
 use app\erp\util\Uploader;
 use Yii;
+use yii\helpers\Json;
 use yii\web\UploadedFile;
 
 /**
@@ -27,7 +29,6 @@ class AttachmentController extends ConfController {
         return $this->render("index",['model' => $model]);
     }
     public function actionUpload(){
-
         $model = new UploadForm();
         $CONFIG = Yii::$app->params['uploadFileCon'];
 //        $action = Yii::$app->request->post('action');
@@ -88,5 +89,48 @@ class AttachmentController extends ConfController {
             return json_encode($up->getFileInfo());
         }
         return $this->render("up",['model' => $model]);
+    }
+    /**
+     * Ajax 添加附件数据库信息
+     * @param $name 附件名称
+     * @param $oldname 文件原名称
+     * @param $path 附件路径
+     * @param $size 附件大小
+     * @param $ext 扩展名
+     * @param $uploadtime 上传时间
+     * @param $upload_ip 上传IP
+     */
+    public function ajaxAtt($name,$oldname,$path,$size,$ext,$uploadtime,$upload_ip){
+        $session = Yii::$app->session;
+        $redis = Yii::$app->redis;
+        if(!(boolean)$redis->get($session['userData']['user']['auth_code'])){
+            return false;
+        }
+            $SysAttachment = new SysAttachment();
+//            'name' => '附件名称',
+            $SysAttachment->name = $name;
+//            'oldname' => '文件原名称',
+            $SysAttachment->oldname = $oldname;
+//            'path' => '附件路径',
+            $SysAttachment->path = $path;
+//            'size' => '附件大小',
+            $SysAttachment->size = $size;
+//            'ext' => '扩展名',
+            $SysAttachment->ext = $ext;
+//            'user_id' => '操作员ID',
+            $SysAttachment->user_id = $redis->get($session['userData']['user']['id']);
+//            'uploadtime' => '上传时间',
+            $SysAttachment->uploadtime = $uploadtime;
+//            'upload_ip' => '上传IP',
+            $SysAttachment->upload_ip = $upload_ip;
+//            'state' => '状态',
+            $SysAttachment->state = 1;
+//            'authcode' => '附件路径MD5值',
+            $SysAttachment->authcode = md5($path);
+
+            if($SysAttachment->save()){
+                return true;
+            }
+        return false;
     }
 }

@@ -36,7 +36,7 @@ class SysAttachment extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'name', 'path', 'ext', 'upload_ip', 'authcode'], 'required'],
-            [['id', 'size', 'user_id', 'uploadtime', 'stat'], 'integer'],
+            [['id', 'size', 'user_id', 'uploadtime', 'state'], 'integer'],
             [['name', 'oldname'], 'string', 'max' => 255],
             [['path'], 'string', 'max' => 200],
             [['ext'], 'string', 'max' => 10],
@@ -60,7 +60,7 @@ class SysAttachment extends \yii\db\ActiveRecord
             'user_id' => '操作员ID',
             'uploadtime' => '上传时间',
             'upload_ip' => '上传IP',
-            'stat' => '状态',
+            'state' => '状态',
             'authcode' => '附件路径MD5值',
         ];
     }
