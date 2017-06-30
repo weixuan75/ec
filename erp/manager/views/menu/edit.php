@@ -38,7 +38,7 @@ use yii\bootstrap\ActiveForm;
             $menu_state=$menu->state;
         }
         ?>
-        <?=$form->field($menu,'state')->radioList(Yii::$app->params['menuState'][1],['value'=>$menu_state])?>
+        <?=$form->field($menu,'state')->radioList(Yii::$app->params['menu']['state'][1],['value'=>$menu_state])?>
     </div>
     <div class="card-footer">
         <?=Html::submitButton('<i class="fa fa-dot-circle-o"></i> 提 交 ',["class"=>"btn btn-bg btn-primary"])?>

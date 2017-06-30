@@ -63,6 +63,29 @@ class Sysadmin extends ActiveRecord{
         ];
     }
 
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => '系统会员ID',
+            'account' => '账号',
+            'email' => '电子邮件',
+            'phone' => '电话',
+            'password' => '密码',
+            'repass' => '确认密码',
+            'state' => '状态',
+            'auth_code' => '认证码',
+            'login_ip' => '登陆IP地址',
+            'login_time' => '登陆时间',
+            'sys_group_id' => '会员组',
+            'create_time' => '创建时间',
+            'update_time' => '修改时间',
+        ];
+    }
+
+
+
+
     /**
      * 密码是否正确
      */
@@ -129,24 +152,6 @@ class Sysadmin extends ActiveRecord{
 
 
 
-    public function attributeLabels()
-    {
-        return [
-            'id' => '系统会员ID',
-            'account' => '账号',
-            'email' => '电子邮件',
-            'phone' => '电话',
-            'password' => '密码',
-            'repass' => '确认密码',
-            'state' => '状态',
-            'auth_code' => '认证码',
-            'login_ip' => '登陆IP地址',
-            'login_time' => '登陆时间',
-            'sys_group_id' => '会员组',
-            'create_time' => '创建时间',
-            'update_time' => '修改时间',
-        ];
-    }
     public function login($data){
         $this->scenario="login";
         if ($this->load($data) && $this->validate()) {

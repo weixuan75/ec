@@ -324,6 +324,7 @@ CREATE TABLE IF NOT EXISTS `ec_product` (
   UNIQUE KEY `name` (`title`),
   UNIQUE KEY `ename` (`ename`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='产品基本信息';
+
 # 产品资料
 DROP TABLE IF EXISTS `ec_product_data`;
 CREATE TABLE IF NOT EXISTS `ec_product_data` (

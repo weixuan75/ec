@@ -433,7 +433,7 @@
 //                        </td>
                         ?>
                         <td class="text-center">
-                            <?=Yii::$app->params['sysadmin'][1][$manager->state];?>
+                            <?=Yii::$app->params['sysadmin']['state'][1][$manager->state];?>
                         </td>
                         <td class="text-center">
                             <i class="fa fa-phone fa-lg"></i>

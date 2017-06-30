@@ -12,7 +12,7 @@ class ConfController extends Controller{
         $session = Yii::$app->session;
         $redis = Yii::$app->redis;
         if(!(boolean)$redis->get($session['userData']['user']['auth_code'])){
-            return $this->redirect(['public/login']);
+            return $this->redirect(['/admin/public/login']);
         };
     }
 }
