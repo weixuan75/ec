@@ -13,7 +13,7 @@ class MenuController extends ConfController {
     public function actionIndex(){
         $model = Menu::find();
         $count = $model->count();
-        $pageSize = Yii::$app->params['admin']['list'];
+        $pageSize = Yii::$app->params['menu']['list'];
         $pager = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $managers = $model->offset($pager->offset)->limit($pager->limit)->all();
         return $this->render("index", ['managers' => $managers, 'pager' => $pager]);

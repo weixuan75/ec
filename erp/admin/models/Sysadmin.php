@@ -47,23 +47,21 @@ class Sysadmin extends ActiveRecord{
             [['password'], 'validateDel', 'on' => 'login'],
 
             [['password'], 'validatePass', 'on' => ['login', 'changeemail']],
-            [['password'], 'required','message' => '密码不能为空', 'on' => ['login','adminadd', 'changeemail']],
-            [['account'], 'required','message' => '账号不能为空','on' => ['login','adminadd']],
-            [['email'], 'required','message' => '邮箱不能为空','on' => 'adminadd'],
-            [['email'], 'email','message' => '邮箱格式错误','on' => 'adminadd'],
-            [['phone'], 'required','message' => '手机号不能为空','on' => 'adminadd'],
-            [['auth_code'],'required','message' => '授权码不能为空','on' => 'adminadd'],
+            [['password'], 'required','message' => '密码不能为空', 'on' => ['login','', 'changeemail']],
+            [['account'], 'required','message' => '账号不能为空','on' => ['login','add']],
+            [['email'], 'required','message' => '邮箱不能为空','on' => 'add'],
+            [['email'], 'email','message' => '邮箱格式错误','on' => 'add'],
+            [['phone'], 'required','message' => '手机号不能为空','on' => 'add'],
+            [['auth_code'],'required','message' => '授权码不能为空','on' => 'add'],
 
-            [['repass'], 'required', 'message' => '确认密码不能为空', 'on' => ['changepass', 'adminadd']],
-            [['repass'], 'compare', 'compareAttribute' => 'password', 'message' => '两次密码输入不一致', 'on' => ['changepass', 'adminadd']],
-            [['account'], 'unique','message' => '账号已注册','on' => 'adminadd'],
-            [['email'], 'unique','message' => '邮箱已注册','on' => 'adminadd'],
-            [['phone'], 'unique','message' => '电子邮箱已注册','on' => 'adminadd'],
-            [['auth_code'],'unique','message' => '授权码已注册','on' => 'adminadd'],
+            [['repass'], 'required', 'message' => '确认密码不能为空', 'on' => ['changepass', 'add']],
+            [['repass'], 'compare', 'compareAttribute' => 'password', 'message' => '两次密码输入不一致', 'on' => ['changepass', 'add']],
+            [['account'], 'unique','message' => '账号已注册','on' => 'add'],
+            [['email'], 'unique','message' => '邮箱已注册','on' => 'add'],
+            [['phone'], 'unique','message' => '电子邮箱已注册','on' => 'add'],
+            [['auth_code'],'unique','message' => '授权码已注册','on' => 'add'],
         ];
     }
-
-
     public function attributeLabels()
     {
         return [
@@ -82,10 +80,6 @@ class Sysadmin extends ActiveRecord{
             'update_time' => '修改时间',
         ];
     }
-
-
-
-
     /**
      * 密码是否正确
      */
@@ -148,10 +142,6 @@ class Sysadmin extends ActiveRecord{
             }
         }
     }
-
-
-
-
     public function login($data){
         $this->scenario="login";
         if ($this->load($data) && $this->validate()) {
@@ -187,6 +177,14 @@ class Sysadmin extends ActiveRecord{
                 'data'=>$userdate
             ];
             $redis->set($user['auth_code'],Json::encode($session["userData"]));
+            return true;
+        }
+        return false;
+    }
+    public function add($data){
+        $this->scenario="add";
+        if ($this->load($data) && $this->validate()) {
+            
             return true;
         }
         return false;

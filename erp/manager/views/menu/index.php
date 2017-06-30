@@ -5,11 +5,11 @@ use yii\helpers\Url;
 <div class="row">
     <div class="col-md-12">
         <div class="card-footer">
-            <a href="<?=Url::to(['/admin/user/add']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 菜 单 </a>
+            <a href="<?=Url::to(['menu/add']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 菜 单 </a>
         </div>
         <div class="card">
             <div class="card-header">
-                Traffic &amp; Sales
+                菜单列表
             </div>
             <div class="card-block">
                 <table class="table table-hover table-outline mb-0 hidden-sm-down">

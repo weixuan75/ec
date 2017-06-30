@@ -16,7 +16,7 @@ class UserController extends ConfController{
     public function actionIndex(){
         $model = Sysadmin::find();
         $count = $model->count();
-        $pageSize = Yii::$app->params['admin']['list'];
+        $pageSize = Yii::$app->params['sysadmin']['list'];
         $pager = new Pagination(['totalCount' => $count, 'pageSize' => $pageSize]);
         $managers = $model->offset($pager->offset)->limit($pager->limit)->all();
         return $this->render("index", ['managers' => $managers, 'pager' => $pager]);
@@ -28,7 +28,13 @@ class UserController extends ConfController{
      */
     public function actionAdd(){
         $admin = new Sysadmin();
-
+        $post = Yii::$app->request->post();
+        if(Yii::$app->request->isPost){
+            $admin->add($post);
+//            $admin->save();
+//            var_dump($admin->errors);
+//            Yii::$app->end();
+        }
         return $this->render(
             'edit',[
                 'admin'=>$admin,

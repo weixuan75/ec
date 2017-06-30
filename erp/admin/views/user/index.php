@@ -1,10 +1,15 @@
 <?php
+use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 <div class="row">
     <div class="col-md-12">
+        <div class="card-footer">
+            <a href="<?=Url::to(['/admin/user/add']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 管 理 员 </a>
+        </div>
         <div class="card">
             <div class="card-header">
-                Traffic &amp; Sales
+                会员列表
             </div>
             <div class="card-block">
                 <?php
