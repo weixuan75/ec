@@ -9,6 +9,7 @@ use Yii;
  *
  * @property string $id
  * @property string $name
+ * @property string $oldname
  * @property string $path
  * @property string $size
  * @property string $ext
@@ -36,7 +37,7 @@ class SysAttachment extends \yii\db\ActiveRecord
         return [
             [['id', 'name', 'path', 'ext', 'upload_ip', 'authcode'], 'required'],
             [['id', 'size', 'user_id', 'uploadtime', 'stat'], 'integer'],
-            [['name'], 'string', 'max' => 50],
+            [['name', 'oldname'], 'string', 'max' => 255],
             [['path'], 'string', 'max' => 200],
             [['ext'], 'string', 'max' => 10],
             [['upload_ip'], 'string', 'max' => 30],
@@ -52,6 +53,7 @@ class SysAttachment extends \yii\db\ActiveRecord
         return [
             'id' => '附件ID',
             'name' => '附件名称',
+            'oldname' => 'Oldname',
             'path' => '附件路径',
             'size' => '附件大小',
             'ext' => '扩展名',
