@@ -168,6 +168,21 @@ CREATE TABLE IF NOT EXISTS `ec_log_sys_admin` (
 
 # 附件表
 
+DROP TABLE IF EXISTS `ec_sys_attachment`;
+CREATE TABLE IF NOT EXISTS `ec_sys_attachment` (
+  `id` int(10) UNSIGNED NOT NULL  COMMENT '附件ID',
+  `name` char(50) NOT NULL  COMMENT '附件名称',
+  `path` char(200) NOT NULL  COMMENT '附件路径',
+  `size` int(10) UNSIGNED NOT NULL DEFAULT '0'  COMMENT '附件大小',
+  `ext` char(10) NOT NULL  COMMENT '扩展名',
+  `user_id` BIGINT UNSIGNED NOT NULL DEFAULT '0'  COMMENT '操作员ID',
+  `uploadtime` BIGINT UNSIGNED NOT NULL DEFAULT '0'  COMMENT '上传时间',
+  `upload_ip` VARCHAR(30) NOT NULL  COMMENT '上传IP',
+  `stat` tinyint NOT NULL DEFAULT '0'  COMMENT '状态',
+  `authcode` char(32) NOT NULL  COMMENT '附件路径MD5值',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='附件表';
+
 # 菜单表
 DROP TABLE IF EXISTS `ec_menu`;
 CREATE TABLE IF NOT EXISTS `ec_menu` (
@@ -341,6 +356,7 @@ CREATE TABLE IF NOT EXISTS `ec_TVListings_data` (
   `sort` BIGINT NOT NULL COMMENT '排序',
   `tv_id` BIGINT NOT NULL COMMENT '父级ID',
   `name` varchar(100) NOT NULL COMMENT '名称',
+  `path` varchar(300) NOT NULL COMMENT '路径',
   `type` TINYINT NOT NULL COMMENT '类型：1图片，2视频',
   `pay_time` TINYINT NOT NULL COMMENT '播放时间（秒）',
   `state` TINYINT DEFAULT '0' COMMENT '状态',

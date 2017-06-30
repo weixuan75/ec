@@ -40,6 +40,16 @@ class TvlistingsController extends ConfController {
             ->orderBy("id DESC")
             ->one();
         var_dump((boolean)$model);
+
+        $tv_id = Yii::$app->request->get('tv_id');
+        $tvs = Tvlistings::find()
+            ->with("tvlistingsData")
+            ->where("id=:id",[':id'=>$tv_id])
+            ->one();
+//       var_dump($tvs);
+//        $arr = $tvs->toArray();
+//        $arr['tvlistingsData']=$tvs['tvlistingsData'];
+//       echo Json::encode($arr);
         return Json::encode($model);
     }
 }

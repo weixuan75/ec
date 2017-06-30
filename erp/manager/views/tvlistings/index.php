@@ -26,7 +26,7 @@ use yii\helpers\Url;
                     </thead>
                     <tbody>
                     <?php foreach($managers as $manager): ?>
-                        <tr>
+                        <tr id="list_<?=$manager->id?>">
                             <td class="text-center"><?=$manager->id?></td>
                             <td class="text-center"><?=$manager->name?></td>
                             <td class="text-center"><?=$manager->content?></td>
@@ -36,9 +36,10 @@ use yii\helpers\Url;
                                 <?=date("Y-m-d H:i:s", $manager->create_time)?>~<?=date("m-d H:i:s", $manager->update_time)?>
                             </td>
                             <td class="text-center">
+                                <a href="<?=Url::to(['tvlistings/showlist', 'tv_id' => $manager->id,'reqURL'=>($hostURL."#list_".$manager->id)]) ?>">详情</a>
                                 禁用
                                 激活
-                                <a href="<?=Url::to(['user/del', 'id' => $manager->id]) ?>">删除</a>
+                                <a href="<?=Url::to(['tvlistings/del', 'id' => $manager->id]) ?>">删除</a>
                                 编辑
                             </td>
                         </tr>
@@ -53,6 +54,33 @@ use yii\helpers\Url;
                         'nextPageLabel' => '&#8250;'
                     ]); ?>
                 </div>
+                <?php
+//
+//                echo "获取域名或主机地址"."<br>";
+//                echo $_SERVER['HTTP_HOST']."<br>"; #localhost
+//
+//                echo "获取网页地址"."<br>";
+//                echo $_SERVER['PHP_SELF']."<br>"; #/blog/testurl.php
+//
+//                echo "获取网址参数"."<br>";
+//                echo $_SERVER["QUERY_STRING"]."<br>"; #id=5
+//
+//                echo "获取用户代理"."<br>";
+//                echo $_SERVER['HTTP_REFERER']."<br>";
+//
+//                echo "获取完整的url"."<br>";
+//                echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."<br>";
+//                echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']."<br>";
+//                #http://localhost/blog/testurl.php?id=5
+//
+//                echo "包含端口号的完整url"."<br>";
+//                echo 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"]."<br>";
+//                #http://localhost:80/blog/testurl.php?id=5
+//
+//                echo "只取路径"."<br>";
+//                $url='http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"]."<br>";
+//                echo dirname($url);
+                ?>
             </div>
         </div>
     </div>
