@@ -54,13 +54,18 @@ class TvlistingsController extends ConfController {
             ->where("tv_id=:id",[':id'=>$tv_id])->all();
         $tv_data = null;
         if((boolean)$tvd){
-            $tv_data = $tvd;
+            $tvd = $tvd;
+        }else{
+            $tvd = null;
         }
-        return $this->render(
-            'showlist',[
-                'tvs'=>$tvs,
-                'reqURL' => $reqURL,
-                'tv_data' => $tv_data,
-        ]);
+//        if((boolean)$tvd){
+//            $tv_data = $tvd;
+//        }
+//        return $this->render(
+//            'showlist',[
+//                'tvs'=>$tvs,
+//                'reqURL' => $reqURL,
+//                'tv_data' => $tv_data,
+//        ]);
     }
 }

@@ -31,15 +31,15 @@ use yii\bootstrap\ActiveForm;
         ?>
 
         <?php
-        $tv_state = 0;
-        if($tv->state!=0||$tv->state!=null){
+        $tv_state = 1;
+        if($tv->state!=1&&$tv->state=null){
             $tv_state=$tv->state;
         }
         ?>
         <?=$form->field($tv,'state')->radioList(Yii::$app->params['tvlistings']['state'][1],['value'=>$tv_state])?>
         <?php
         $tv_is_conf = 0;
-        if($tv->is_conf!=0||$tv->is_conf!=null){
+        if($tv->is_conf!=0){
             $tv_is_conf=$tv->is_conf;
         }
         ?>

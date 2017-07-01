@@ -181,7 +181,7 @@ use yii\bootstrap\ActiveForm;
                                 if ((boolean)$td->state) {
                                     ?>
                                     <a href="<?= Url::to(['tvlistings/tvdEdit', 'id' => $td->id]) ?>"
-                                       class="btn btn-bg btn-primary">禁用</a>
+                                       class="btn btn-bg btn-danger">禁用</a>
                                     <?php
                                 } else {
                                     ?>
