@@ -48,10 +48,14 @@ class TvlistingsController extends ConfController {
         $reqURL = Yii::$app->request->get('reqURL');
         $tv_id = Yii::$app->request->get('tv_id');
         $tvs = Tvlistings::find()
-            ->with("tvlistingsData")
             ->where("id=:id",[':id'=>$tv_id])
             ->one();
-        $tv_data = new TvlistingsData();
+        $tvd = TvlistingsData::find()
+            ->where("tv_id=:id",[':id'=>$tv_id])->all();
+        $tv_data = null;
+        if((boolean)$tvd){
+            $tv_data = $tvd;
+        }
         return $this->render(
             'showlist',[
                 'tvs'=>$tvs,
