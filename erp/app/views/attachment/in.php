@@ -1,55 +1,17 @@
-<?php
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\bootstrap\ActiveForm;
-?>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <i class="icon-film"></i><?=$tvs->name ?>
-            </div>
-            <div class="card-block">
-                'ID',<?=$tvs->id ?>
-                <br>'名称',<?=$tvs->name ?>
-                <br>'周{0，1，2，3，4，5，6}',<?=$tvs->weeks ?>
-                <br>'天{[开始时间，结束时间]，[12321354，12321354]，[12321354，12321354]}',<?=$tvs->day ?>
-                <br>'播放的店铺：0/null,全部店铺播放，[1,2,3,4]',<?=$tvs->shop_id ?>
-                <br> '状态',<?=$tvs->state ?>
-                <br>'设置默认，等于1时，失效的店铺播放默认的电视节目单',<?=$tvs->is_conf ?>
-                <br>'介绍',<?=$tvs->content ?>
-                <br>'操作员',<?=$tvs->user_id ?>
-                <br>'创建时间',<?=$tvs->create_time ?>
-                <br>'修改时间',<?=$tvs->update_time ?>
-            </div>
-            <div class="card-footer">
-                <a href="<?=Url::to(['tvlistings/add']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 内 容 </a>
-                <a href="<?=$reqURL = (boolean)$reqURL ? $reqURL : Url::to(['manager/tvlistings']) ?>" class="btn btn-bg btn-danger"><i class="fa fa-dot-circle-o"></i> 返 回 列 表 </a>
-            </div>
-        </div>
-    </div>
-    <!--/.col-->
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                节目内容列表
-            </div>
-            <div class="card-block">
-                <div class="card-block">
-                    <div class="col-sm-6 col-md-4">
-                        <div class="btn btn-secondary btn-lg btn-block text-center">
-                            <i class="icon-plus icons d-block" style="font-size: 10em"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/.col-->
-</div>
-
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layer弹层组件移动版</title>
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link href="demo.css" type="text/css" rel="stylesheet">
+</head>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<body>
 <style>
     .btn {margin: 3px;}
     .imagelistAll>ul {list-style: none}
@@ -107,7 +69,6 @@ use yii\bootstrap\ActiveForm;
         </div>
     </div>
 </div>
-
 <script>
     $(function () {
         var bar = $('.bar');
@@ -155,3 +116,93 @@ use yii\bootstrap\ActiveForm;
         });
     });
 </script>
+<?php
+//ActiveForm::end()
+?>
+<input type="submit" value="保存fileUploadAdd" onclick='fileUploadAdd(
+"fileName",
+"fileUrl",
+"filePath",
+26565,
+"fileExt",
+1
+        );'>
+<script>
+    function fileUploadAdd(
+        fileUrl,
+        fileName,
+        filePath,
+        fileSize,
+        fileExt,
+        fileState,
+    ){
+        $.ajax({
+            url:"<?= \yii\helpers\Url::to(['/app/attachment/add'])?>",
+            type:"post",
+            data:{
+                "_csrf":"<?= Yii::$app->request->csrfToken ?>",
+                'name':fileName,
+                'url':fileUrl,
+                'path':filePath,
+                'size':fileSize,
+                'ext':fileExt,
+                'state':fileState
+            },
+            success:function (result,status,xhr) {
+                alert("result:【"+result.state+"】【"+result.data+"】");
+                alert("status:【"+status+"】");
+                alert("xhr:【"+xhr+"】");
+//                location.href("index.php?r=app/attachment/addtd");
+            }});
+    }
+</script>
+
+<input type="submit" value="保存addtd" onclick='TvlistingsDataAdd(
+        1,
+        1,
+        "name11111111111",
+        "webURL",
+        "rootPath",
+        1,
+        3,
+        1,
+        "content",
+        45820
+        );'>
+<script>
+    function TvlistingsDataAdd(
+        sort,
+        tv_id,
+        name,
+        webURL,
+        rootPath,
+        type,
+        payTime,
+        pState,
+        content
+    ){
+        $.ajax({
+            url:"index.php?r=app/tvlistings/addtd",
+            type:"post",
+            data:{
+                "_csrf":"<?= Yii::$app->request->csrfToken ?>",
+                "sort":sort,
+                "tv_id":tv_id,
+                "name":name,
+                "url":webURL,
+                "path":rootPath,
+                "type":type,
+                "pay_time": payTime,
+                "state" : pState,
+                "content":content
+            },
+            success:function (result,status,xhr) {
+                alert("result:【"+result.state+"】【"+result.data+"】");
+                alert("status:【"+status+"】");
+                alert("xhr:【"+xhr+"】");
+//                location.href("index.php?r=app/attachment/addtd");
+            }});
+    }
+</script>
+</body>
+</html>

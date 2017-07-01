@@ -45,14 +45,6 @@ use yii\bootstrap\ActiveForm;
         ?>
         <?=$form->field($tv,'is_conf')->radioList(Yii::$app->params['tvlistings']['is_conf'][1],['value'=>$tv_is_conf])?>
         <?=$form->field($tv,'content')->textInput()?>
-        <?php
-//        $form->field($tv,'user_id')->textInput()
-        ?>
-<!--        <label class="switch switch-lg switch-3d switch-primary">-->
-<!--            <input type="checkbox" class="switch-input" checked="none">-->
-<!--            <span class="switch-label"></span>-->
-<!--            <span class="switch-handle"></span>-->
-<!--        </label>-->
     </div>
     <div class="card-footer">
         <?=Html::submitButton('<i class="fa fa-dot-circle-o"></i> 提 交 ',["class"=>"btn btn-bg btn-primary"])?>
@@ -61,5 +53,4 @@ use yii\bootstrap\ActiveForm;
     <?php
     ActiveForm::end();
     ?>
-
 </div>

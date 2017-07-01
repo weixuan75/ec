@@ -40,7 +40,6 @@ class TvlistingsData extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 100],
             [['path'], 'string', 'max' => 300],
             [['content'], 'string', 'max' => 500],
-            [['name'], 'unique'],
         ];
     }
 

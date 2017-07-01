@@ -5,19 +5,19 @@ namespace app\erp\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%sys_attachment}}".
+ * This is the model class for table "ec_sys_attachment".
  *
- * @property string $id
+ * @property integer $id
  * @property string $name
- * @property string $oldname
+ * @property string $url
  * @property string $path
  * @property string $size
  * @property string $ext
  * @property string $user_id
- * @property string $uploadtime
+ * @property string $upload_time
  * @property string $upload_ip
- * @property integer $stat
- * @property string $authcode
+ * @property integer $state
+ * @property string $auth_code
  */
 class SysAttachment extends \yii\db\ActiveRecord
 {
@@ -26,7 +26,7 @@ class SysAttachment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%sys_attachment}}';
+        return 'ec_sys_attachment';
     }
 
     /**
@@ -35,13 +35,13 @@ class SysAttachment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name', 'path', 'ext', 'upload_ip', 'authcode'], 'required'],
-            [['id', 'size', 'user_id', 'uploadtime', 'state'], 'integer'],
-            [['name', 'oldname'], 'string', 'max' => 255],
+            [['name', 'url', 'path', 'ext', 'upload_ip', 'auth_code'], 'required'],
+            [['size', 'user_id', 'upload_time', 'state'], 'integer'],
+            [['name', 'url'], 'string', 'max' => 255],
             [['path'], 'string', 'max' => 200],
             [['ext'], 'string', 'max' => 10],
             [['upload_ip'], 'string', 'max' => 30],
-            [['authcode'], 'string', 'max' => 32],
+            [['auth_code'], 'string', 'max' => 32],
         ];
     }
 
@@ -53,15 +53,15 @@ class SysAttachment extends \yii\db\ActiveRecord
         return [
             'id' => '附件ID',
             'name' => '附件名称',
-            'oldname' => 'Oldname',
+            'url' => 'web地址',
             'path' => '附件路径',
             'size' => '附件大小',
             'ext' => '扩展名',
             'user_id' => '操作员ID',
-            'uploadtime' => '上传时间',
+            'upload_time' => '上传时间',
             'upload_ip' => '上传IP',
             'state' => '状态',
-            'authcode' => '附件路径MD5值',
+            'auth_code' => '附件路径MD5值',
         ];
     }
 }

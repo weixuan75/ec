@@ -3,7 +3,9 @@
 namespace app\erp\app\controllers;
 use app\erp\admin\controllers\ConfController;
 use app\erp\models\SysAttachment;
+use app\erp\models\TvlistingsData;
 use app\erp\models\UploadForm;
+use app\erp\util\Upload;
 use app\erp\util\Uploader;
 use Yii;
 use yii\helpers\Json;
@@ -21,116 +23,90 @@ class AttachmentController extends ConfController {
             echo "<br>————————————————————————————————————————<br>";
             print_r($arr);
             Yii::$app->end();
-//            if ($model->upload()) {
-//                // 文件上传成功
-//                return;
-//            }
         }
         return $this->render("index",['model' => $model]);
     }
-    public function actionUpload(){
-        $model = new UploadForm();
-        $CONFIG = Yii::$app->params['uploadFileCon'];
-//        $action = Yii::$app->request->post('action');
-        $action = 'uploadimage';
-        if(Yii::$app->request->isPost){
-            $base64 = "upload";
-            switch (htmlspecialchars($action)) {
-                case 'uploadimage':
-                    $config = array(
-                        "pathFormat" => $CONFIG['imagePathFormat'],
-                        "maxSize" => $CONFIG['imageMaxSize'],
-                        "allowFiles" => $CONFIG['imageAllowFiles']
-                    );
-                    $fieldName = $CONFIG['imageFieldName'];
-                    break;
-                case 'uploadscrawl':
-                    $config = array(
-                        "pathFormat" => $CONFIG['scrawlPathFormat'],
-                        "maxSize" => $CONFIG['scrawlMaxSize'],
-                        "allowFiles" => $CONFIG['scrawlAllowFiles'],
-                        "oriName" => "scrawl.png"
-                    );
-                    $fieldName = $CONFIG['scrawlFieldName'];
-                    $base64 = "base64";
-                    break;
-                case 'uploadvideo':
-                    $config = array(
-                        "pathFormat" => $CONFIG['videoPathFormat'],
-                        "maxSize" => $CONFIG['videoMaxSize'],
-                        "allowFiles" => $CONFIG['videoAllowFiles']
-                    );
-                    $fieldName = $CONFIG['videoFieldName'];
-                    break;
-                case 'uploadfile':
-                default:
-                    $config = array(
-                        "pathFormat" => $CONFIG['filePathFormat'],
-                        "maxSize" => $CONFIG['fileMaxSize'],
-                        "allowFiles" => $CONFIG['fileAllowFiles']
-                    );
-                    $fieldName = $CONFIG['fileFieldName'];
-                    break;
-            }
-            /* 生成上传实例对象并完成上传 */
-            $up = new Uploader($fieldName, $config, $base64);
-            /**
-             * 得到上传文件所对应的各个参数,数组结构
-             * array(
-             *     "state" => "",          //上传状态，上传成功时必须返回"SUCCESS"
-             *     "url" => "",            //返回的地址
-             *     "title" => "",          //新文件名
-             *     "original" => "",       //原始文件名
-             *     "type" => ""            //文件类型
-             *     "size" => "",           //文件大小
-             * )
-             */
-            /* 返回数据 */
-            return json_encode($up->getFileInfo());
-        }
-        return $this->render("up",['model' => $model]);
+    public function actionIn(){
+        $model = new TvlistingsData();
+    $this->layout = false;
+        return $this->render("in",['model' => $model]);
     }
-    /**
-     * Ajax 添加附件数据库信息
-     * @param $name 附件名称
-     * @param $oldname 文件原名称
-     * @param $path 附件路径
-     * @param $size 附件大小
-     * @param $ext 扩展名
-     * @param $uploadtime 上传时间
-     * @param $upload_ip 上传IP
-     */
-    public function ajaxAtt($name,$oldname,$path,$size,$ext,$uploadtime,$upload_ip){
-        $session = Yii::$app->session;
-        $redis = Yii::$app->redis;
-        if(!(boolean)$redis->get($session['userData']['user']['auth_code'])){
-            return false;
-        }+
-            $SysAttachment = new SysAttachment();
-//             'name' => '附件名称',
-            $SysAttachment->name = $name;
-//            'oldname' => '文件原名称',
-            $SysAttachment->oldname = $oldname;
-//            'path' => '附件路径',
-            $SysAttachment->path = $path;
-//            'size' => '附件大小',
-            $SysAttachment->size = $size;
-//            'ext' => '扩展名',
-            $SysAttachment->ext = $ext;
-//            'user_id' => '操作员ID',
-            $SysAttachment->user_id = $redis->get($session['userData']['user']['id']);
-//            'uploadtime' => '上传时间',
-            $SysAttachment->uploadtime = $uploadtime;
-//            'upload_ip' => '上传IP',
-            $SysAttachment->upload_ip = $upload_ip;
-//            'state' => '状态',
-            $SysAttachment->state = 1;
-//            'authcode' => '附件路径MD5值',
-            $SysAttachment->authcode = md5($path);
 
-            if($SysAttachment->save()){
-                return true;
+    public function actionAdd(){
+        $response = Yii::$app->response;
+        $response->format = yii\web\Response::FORMAT_JSON;
+        $model = new SysAttachment();
+        $post = Yii::$app->request->post();
+        if(Yii::$app->request->isPost){
+            $session = Yii::$app->session;
+            $redis = Yii::$app->redis;
+            $userData = Json::decode($redis->get($session['userData']['user']['auth_code']),true);
+            $userId = $userData['user']['id'];
+            $model->name = $post['name'];
+            $model->url = $post['url'];
+            $model->path = $post['path'];
+            $model->size = $post['size'];
+            $model->ext = $post['ext'];
+            $model->user_id = $userId;
+            $model->upload_time = time();
+            $model->upload_ip = (string)ip2long(Yii::$app->request->userIP);
+            $model->state = $post['state'];
+            $model->auth_code = md5($post['url']);
+            if($model->save()){
+                $response->data=['state' => '200','data'=>"保存成功"];
+                Yii::$app->end();
             }
-        return false;
+            $response->data = $model->errors;
+        }
+    }
+
+    public function actionUp(){
+        $response = Yii::$app->response;
+        $response->format = yii\web\Response::FORMAT_JSON;
+        if(Yii::$app->request->isPost){
+            $transaction = Yii::$app->db->beginTransaction();
+            try{
+                $model = new SysAttachment();
+                $date = date("Y/m/d");
+                $upload=new Upload('UploadForm','uploders/image/'.$date);
+                $dest=$upload->uploadFile();
+                if(!(boolean)$dest){
+                    throw new \Exception();
+                }
+                $arr = array();
+                $arr["name"]=$upload->getName();
+                $arr["size"]=$upload->getSize();
+                $arr["type"]=$upload->getType();
+                $arr["webURL"]="http://".$_SERVER['SERVER_NAME']."/".$dest;
+                $arr["rootPath"]=$dest;
+
+                $session = Yii::$app->session;
+                $redis = Yii::$app->redis;
+                $userData = Json::decode($redis->get($session['userData']['user']['auth_code']),true);
+                if(!(boolean)$userData){
+                    throw new \Exception();
+                }
+                $userId = $userData['user']['id'];
+                $model->name = $upload->getName();
+                $model->url = "http://".$_SERVER['SERVER_NAME']."/".$dest;
+                $model->path = $dest;
+                $model->size = $upload->getSize();
+                $model->ext = $upload->getType();
+                $model->user_id = $userId;
+                $model->upload_time = time();
+                $model->upload_ip = (string)ip2long(Yii::$app->request->userIP);
+                $model->state = 1;
+                $model->auth_code = md5($dest);
+                if(!$model->save()){
+                    throw new \Exception();
+                }
+                $transaction->commit();
+                $response->data=['state' => '200','data'=>$model];
+                Yii::$app->end();
+            }catch (\Exception $e){
+                $response->data = $e;
+                $transaction->rollBack();
+            }
+        }
     }
 }

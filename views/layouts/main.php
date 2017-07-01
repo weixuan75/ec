@@ -21,7 +21,7 @@ use yii\helpers\Json;
     <script src="/js/jquery-3.2.1.min.js"></script>
 <!--    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">-->
     <!-- Icons -->
-<!--    <link href="coreui/css/font-awesome.min.css" rel="stylesheet">-->
+    <link href="coreui/css/font-awesome.min.css" rel="stylesheet">
     <link href="coreui/css/simple-line-icons.css" rel="stylesheet">
 
     <!-- Main styles for this application -->
@@ -545,19 +545,18 @@ use yii\helpers\Json;
 </footer>
 
 <!-- Bootstrap and necessary plugins -->
-<script src="coreui/assets/js/libs/jquery.min.js"></script>
 <script src="coreui/assets/js/libs/tether.min.js"></script>
 <script src="coreui/assets/js/libs/bootstrap.min.js"></script>
 <script src="coreui/assets/js/libs/pace.min.js"></script>
 <!-- Plugins and scripts required by all views -->
-<script src="coreui/assets/js/libs/Chart.min.js"></script>
+<!--<script src="coreui/assets/js/libs/Chart.min.js"></script>-->
 
 <!-- GenesisUI main scripts -->
 <script src="coreui/js/app.js"></script>
 <!--<script src="../../web/js/jquery-3.2.1.min.js"></script>-->
 <!-- Plugins and scripts required by this views -->
 <!-- Custom scripts required by this view -->
-<script src="coreui/js/views/main.js"></script>
+<!--<script src="coreui/js/views/main.js"></script>-->
 
 </body>
 </html>

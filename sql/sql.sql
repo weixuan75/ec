@@ -318,8 +318,13 @@ CREATE TABLE IF NOT EXISTS `ec_user_adress` (
   UNIQUE KEY `ec_user_adress_autho_code` (`autho_code`),
   KEY `ec_user_adress_autho_code` (`user_id`,`autho_code`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='用户地址表';
+
 # 用户群组表
+
 # 用户等级表
+
+# 用户分销表
+
 # 用户等级表
 # 用户积分表
 # 用户余额表
