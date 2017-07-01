@@ -12,7 +12,7 @@ use Yii;
  * @property string $tv_id
  * @property string $name
  * @property string $path
- * @property integer $type
+ * @property string $type
  * @property integer $pay_time
  * @property integer $state
  * @property string $content
@@ -35,10 +35,11 @@ class TvlistingsData extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sort', 'tv_id', 'name', 'path', 'type', 'pay_time', 'content'], 'required'],
-            [['sort', 'tv_id', 'type', 'pay_time', 'state', 'user_id', 'create_time'], 'integer'],
+            [['sort', 'tv_id', 'name', 'path', 'type'], 'required'],
+            [['sort', 'tv_id', 'pay_time', 'state', 'user_id', 'create_time'], 'integer'],
             [['name'], 'string', 'max' => 100],
             [['path'], 'string', 'max' => 300],
+            [['type'], 'string', 'max' => 20],
             [['content'], 'string', 'max' => 500],
         ];
     }

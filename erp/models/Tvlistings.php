@@ -79,4 +79,9 @@ class Tvlistings extends \yii\db\ActiveRecord
     public function getTvlistingsData(){
         return $this->hasMany(TvlistingsData::className(), ['tv_id' => 'id']);
     }
+    public function getTvlistingsDataS(){
+        return $this->hasMany(TvlistingsData::className(), ['tv_id' => 'id'])
+            ->where('state=1')
+            ->orderBy('sort');
+    }
 }

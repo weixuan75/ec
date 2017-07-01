@@ -2,6 +2,7 @@
 
 namespace app\erp\app\controllers;
 use app\erp\admin\controllers\ConfController;
+use app\erp\models\Tvlistings;
 use app\erp\models\TvlistingsData;
 use Yii;
 use yii\helpers\Json;
@@ -11,7 +12,13 @@ use yii\helpers\Json;
  */
 class TvlistingsController extends ConfController {
     public function actionIndex(){
-
+        $response = Yii::$app->response;
+        $response->format = yii\web\Response::FORMAT_JSON;
+        $tvModel = new Tvlistings();
+        $tvs = $tvModel::find()->with('tvlistingsDataS')->where("state=1")->one();
+        $arr = $tvs->toArray();
+        $arr['tvlistingsData'] = $tvs->tvlistingsDataS;
+        $response->data= $arr;
     }
     public function actionAddtd(){
         $response = Yii::$app->response;
@@ -34,7 +41,7 @@ class TvlistingsController extends ConfController {
             $model->user_id = $userId;
             $model->create_time = time();
             if($model->save()){
-                $response->data=['state' => '200','data'=>"保存成功"];
+                $response->data=['state' => '200','data'=>$model];
                 Yii::$app->end();
             }
             $response->data = $model->errors;
