@@ -180,17 +180,17 @@ use yii\bootstrap\ActiveForm;
                                 <?php
                                 if ((boolean)$td->state) {
                                     ?>
-                                    <a href="<?= Url::to(['tvlistings/tvdEdit', 'id' => $td->id]) ?>"
+                                    <a href="<?= Url::to(['/app/tvlistings/tvdEdit', 'id' => $td->id,'state'=>0,'reqURL'=>($hostURL."#list_".$td->id)]) ?>"
                                        class="btn btn-bg btn-danger">禁用</a>
                                     <?php
                                 } else {
                                     ?>
-                                    <a href="<?= Url::to(['tvlistings/tvdEdit', 'id' => $td->id]) ?>"
+                                    <a href="<?= Url::to(['/app/tvlistings/tvdEdit', 'id' => $td->id,'state'=>1,'reqURL'=>($hostURL."#list_".$td->id)]) ?>"
                                        class="btn btn-bg btn-primary">启动</a>
                                     <?php
                                 }
                                 ?>
-                                <a href="<?= Url::to(['tvlistings/tvdDel', 'id' => $td->id]) ?>"
+                                <a href="<?= Url::to(['/app/tvlistings/tvdDel', 'id' => $td->id]) ?>"
                                    class="btn btn-bg btn-primary">删除</a>
                             </td>
                         </tr>

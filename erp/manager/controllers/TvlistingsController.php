@@ -45,6 +45,7 @@ class TvlistingsController extends ConfController {
         ]);
     }
     public function actionShowlist(){
+        $hostURL = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $reqURL = Yii::$app->request->get('reqURL');
         $tv_id = Yii::$app->request->get('tv_id');
         $tvs = Tvlistings::find()
@@ -52,20 +53,17 @@ class TvlistingsController extends ConfController {
             ->one();
         $tvd = TvlistingsData::find()
             ->where("tv_id=:id",[':id'=>$tv_id])->all();
-        $tv_data = null;
         if((boolean)$tvd){
             $tvd = $tvd;
         }else{
             $tvd = null;
         }
-//        if((boolean)$tvd){
-//            $tv_data = $tvd;
-//        }
-//        return $this->render(
-//            'showlist',[
-//                'tvs'=>$tvs,
-//                'reqURL' => $reqURL,
-//                'tv_data' => $tv_data,
-//        ]);
+        return $this->render(
+            'showlist',[
+                'tvs'=>$tvs,
+                'reqURL' => $reqURL,
+                'tv_data' => $tvd,
+                'hostURL' => $hostURL,
+        ]);
     }
 }

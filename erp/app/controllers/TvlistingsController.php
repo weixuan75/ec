@@ -60,10 +60,12 @@ class TvlistingsController extends ConfController {
         }
     }
     public function actionTvdEdit(){
-//
-//        $response = Yii::$app->response;
-//        $response->format = yii\web\Response::FORMAT_JSON;
-//        $model = new TvlistingsData();
+//        id=32
+        $id = Yii::$app->request->get('id');
+//        state=0
+        $state = Yii::$app->request->get('id');
+        $model = TvlistingsData::findOne($id);
+
 //        $post = Yii::$app->request->post();
 //        if(Yii::$app->request->isPost){
 //            $session = Yii::$app->session;
