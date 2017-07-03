@@ -3,6 +3,7 @@
 namespace app\erp\models;
 
 use Yii;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "{{%tvlistings}}".
@@ -65,7 +66,11 @@ class Tvlistings extends \yii\db\ActiveRecord
 
 
     public function add($data){
+        $session = Yii::$app->session;
+        $redis = Yii::$app->redis;
+        $user_id = Json::decode($redis->get($session['userData']['user']['auth_code']));
         $time =time();
+        $this->user_id=(int)$user_id;
         $this->create_time=$time;
         $this->update_time=$time;
         if ($this->load($data) && $this->validate()) {

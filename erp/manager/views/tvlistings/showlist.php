@@ -22,8 +22,8 @@ use yii\bootstrap\ActiveForm;
                     <br>'设置默认，等于1时，失效的店铺播放默认的电视节目单',<?=$tvs->is_conf ?>
                     <br>'介绍',<?=$tvs->content ?>
                     <br>'操作员',<?=$tvs->user_id ?>
-                    <br>'创建时间',<?=$tvs->create_time ?>
-                    <br>'修改时间',<?=$tvs->update_time ?>
+                    <br>'创建时间',<?=date("Y\年m\月d\日 H:i:s", $tvs->create_time)?>
+                    <br>'修改时间',<?=date("Y\年m\月d\日 H:i:s", $tvs->update_time)?>
                 </div>
                 <div class="col-md-4">
                     <ul class="nav nav-tabs" role="tablist">
@@ -131,7 +131,11 @@ use yii\bootstrap\ActiveForm;
             </div>
             </div>
             <div class="card-footer">
-                <a href="<?=Url::to(['/manager/tvlistings/edit','id'=>$tvs->id ]) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>
+                <a href="<?=Url::to(
+                        ['/manager/tvlistings/edit',
+                            'id'=>$tvs->id,
+                            "reqURL"=>
+                                $reqURL = ((boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']))]); ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>
                 <a href="<?=$reqURL = (boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']) ?>" class="btn btn-bg btn-danger"><i class="fa fa-dot-circle-o"></i> 返 回 列 表 </a>
             </div>
         </div>

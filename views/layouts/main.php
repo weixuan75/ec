@@ -190,9 +190,9 @@ use yii\helpers\Json;
                         <li class="nav-item">
                             <a class="nav-link" href="<?= Url::to(['/manager/tvlistings']); ?>" target="_top"><i class="icon-options"></i>节目列表</a>
                         </li>
-<!--                        <li class="nav-item">-->
-<!--                            <a class="nav-link" href="--><?//= Url::to(['/admin/']); ?><!--" target="_top"><i class="icon-options"></i>管理员组</a>-->
-<!--                        </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= Url::to(['/admin/']); ?>" target="_top"><i class="icon-options"></i>节目日志表</a>
+                        </li>
 <!--                        <li class="nav-item">-->
 <!--                            <a class="nav-link" href="--><?//= Url::to(['/admin/role']); ?><!--" target="_top"><i class="icon-options"></i>管理员角色</a>-->
 <!--                        </li>-->
@@ -540,8 +540,7 @@ use yii\helpers\Json;
 </div>
 
 <footer class="app-footer">
-    Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://www.17sucai.com/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-    </span>
+    Copyright &copy; 2017.Company EnchangCN 恩优畅品 All rights reserved
 </footer>
 
 <!-- Bootstrap and necessary plugins -->

@@ -43,7 +43,8 @@ if (Yii::$app->session->hasFlash('info')) {
                                 禁用
                                 激活
                                 <a href="<?=Url::to(['tvlistings/del', 'id' => $manager->id]) ?>">删除</a>
-                                编辑
+                                <a href="<?=Url::to(['/manager/tvlistings/edit','id'=>$manager->id ]) ?>"><i class="fa fa-dot-circle-o"></i>编辑</a>
+
                             </td>
                         </tr>
                     <?php endforeach; ?>

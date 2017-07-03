@@ -36,11 +36,12 @@ class TvlistingsController extends ConfController {
         $post = Yii::$app->request->post();
         if(Yii::$app->request->isPost){
             $tv->add($post);
-            var_dump($tv->errors);
+            $reqURL = (boolean)$reqURL ? $reqURL : ["/manager/tvlistings/index"];
+            return $this->redirect($reqURL);
         }
         return $this->render(
             'edit',[
-                'tv'=>$tv,
+            'tv'=>$tv,
             'reqURL' => $reqURL,
         ]);
     }
@@ -51,11 +52,11 @@ class TvlistingsController extends ConfController {
         $post = Yii::$app->request->post();
         if(Yii::$app->request->isPost){
             $tv->load($post);
-//            if ($tv->save()){
-////                Yii::$app->session->setFlash('info', '修改成功');
-////                return $this->redirect(['tvlistings/edit']);
-//            }
-            var_dump((boolean)$tv->save(),$tv->errors);
+            if ($tv->save()){
+                Yii::$app->session->setFlash('info', '修改成功');
+                $reqURL = (boolean)$reqURL ? $reqURL : ["/manager/tvlistings/index"];
+                return $this->redirect($reqURL);
+            }
         }
         return $this->render(
             'edit',[
