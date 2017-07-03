@@ -24,7 +24,7 @@ use yii\bootstrap\ActiveForm;
                     <br>天：<?=$tvs->day ?>
                     <br>播放的店铺：<?= (boolean)$tvs->shop_id ? $tvs->shop_id : '全部' ?>
                     <br>状态：<?=$tvs->state ?>
-                    <br>设置默认：等于1时，失效的店铺播放默认的电视节目单',<?=$tvs->is_conf ?>
+                    <br>设置默认：<?=Yii::$app->params['tvlistings']['is_conf'][1][$tvs->is_conf]?><i>等于1时，失效的店铺播放默认的电视节目单</i>
                     <br>介绍：<?=$tvs->content ?>
                     <br>操作员：<?=\app\erp\models\Sysadmindate::findOne($tvs->user_id)['nickname']?>
                     <br>创建时间：<?=date("Y\年m\月d\日 H:i:s", $tvs->create_time)?>
@@ -101,13 +101,13 @@ use yii\bootstrap\ActiveForm;
                                     <label class="control-label">状态</label>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="tvlistingData-state" value="0" checked="">
+                                            <input type="radio" name="tvlistingData-state" value="1" checked="">
                                             <span class="badge badge-success">激活</span>
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="tvlistingData-state" value="1">
+                                            <input type="radio" name="tvlistingData-state" value="0">
                                             <span class="badge badge-danger">禁用</span>
                                         </label>
                                     </div>
@@ -120,14 +120,15 @@ use yii\bootstrap\ActiveForm;
                             </div>
                         </div>
                         <div class="card-footer">
-                            <input type="submit" value="保存addtd" class="btn btn-bg btn-primary" onclick='TvlistingsDataAdd(
+                            <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAdd(
                     $("#tvlistingData-sort").val(),
                     $("#tvlistingData-name").val(),
+
                     $("#tvlistingData-path").html(),
                     $("#tvlistingData-type").html(),
 
                     $("#tvlistingData-pay_time").val(),
-                    0,
+                    1,
                     $("#tvlistingData-content").html()
         );'>
                         </div>
