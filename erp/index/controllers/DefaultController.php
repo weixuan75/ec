@@ -2,12 +2,12 @@
 
 namespace app\erp\index\controllers;
 
-use yii\web\Controller;
+use app\erp\admin\controllers\ConfController;
 
 /**
  * Default controller for the `index` module
  */
-class DefaultController extends Controller
+class DefaultController extends ConfController
 {
     /**
      * Renders the index view for the module

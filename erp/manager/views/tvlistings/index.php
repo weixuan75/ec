@@ -1,6 +1,9 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+if (Yii::$app->session->hasFlash('info')) {
+    echo Yii::$app->session->getFlash('info');
+}
 ?>
 <div class="row">
     <div class="col-md-12">

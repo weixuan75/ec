@@ -131,8 +131,8 @@ use yii\bootstrap\ActiveForm;
             </div>
             </div>
             <div class="card-footer">
-                <a href="<?=Url::to(['tvlistings/edit']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>
-                <a href="<?=$reqURL = (boolean)$reqURL ? $reqURL : Url::to(['manager/tvlistings']) ?>" class="btn btn-bg btn-danger"><i class="fa fa-dot-circle-o"></i> 返 回 列 表 </a>
+                <a href="<?=Url::to(['/manager/tvlistings/edit','id'=>$tvs->id ]) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>
+                <a href="<?=$reqURL = (boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']) ?>" class="btn btn-bg btn-danger"><i class="fa fa-dot-circle-o"></i> 返 回 列 表 </a>
             </div>
         </div>
     </div>
@@ -180,12 +180,12 @@ use yii\bootstrap\ActiveForm;
                                 <?php
                                 if ((boolean)$td->state) {
                                     ?>
-                                    <a href="<?= Url::to(['/app/tvlistings/tvdEdit', 'id' => $td->id,'state'=>0,'reqURL'=>($hostURL."#list_".$td->id)]) ?>"
+                                    <a href="<?= Url::to(['/manager/tvlistings/tvdstate', 'id' => $td->id,'state'=>0,'reqURL'=>(Url::to(['/manager/tvlistings/showlist','tv_id' => $tvs->id])."#tvData_".$td->id)]) ?>"
                                        class="btn btn-bg btn-danger">禁用</a>
                                     <?php
                                 } else {
                                     ?>
-                                    <a href="<?= Url::to(['/app/tvlistings/tvdEdit', 'id' => $td->id,'state'=>1,'reqURL'=>($hostURL."#list_".$td->id)]) ?>"
+                                    <a href="<?= Url::to(['/manager/tvlistings/tvdstate', 'id' => $td->id,'state'=>1,'reqURL'=>(Url::to(['/manager/tvlistings/showlist','tv_id' => $tvs->id])."#tvData_".$td->id)]) ?>"
                                        class="btn btn-bg btn-primary">启动</a>
                                     <?php
                                 }

@@ -11,6 +11,12 @@ use yii\helpers\Json;
  */
 class TvlistingsController extends ConfController {
     public function actionIndex(){
+        /**
+         * 店铺ID
+         * 内容状态 = 1
+         * 播放时间周期
+         * 待修改
+         */
         $response = Yii::$app->response;
         $response->format = yii\web\Response::FORMAT_JSON;
         $tvModel = TvlistingsData::find()->select(["name","path","type","pay_time"])->all();
@@ -60,34 +66,15 @@ class TvlistingsController extends ConfController {
         }
     }
     public function actionTvdEdit(){
+//        id=32&state=0&reqURL
 //        id=32
         $id = Yii::$app->request->get('id');
 //        state=0
-        $state = Yii::$app->request->get('id');
+        $state = Yii::$app->request->get('state');
+        $reqURL = Yii::$app->request->get('reqURL');
         $model = TvlistingsData::findOne($id);
-
-//        $post = Yii::$app->request->post();
-//        if(Yii::$app->request->isPost){
-//            $session = Yii::$app->session;
-//            $redis = Yii::$app->redis;
-//            $userData = Json::decode($redis->get($session['userData']['user']['auth_code']),true);
-//            $userId = $userData['user']['id'];
-//            $model->sort = $post['sort'];
-//            $model->tv_id = $post['tv_id'];
-//            $model->name = $post['name'];
-//            $model->path = $post['path'];
-//            $model->type = $post['type'];
-//            $model->pay_time = $post['pay_time'];
-//            $model->state = $post['state'];
-//            $model->content = $post['content'];
-//            $model->user_id = $userId;
-//            $model->create_time = time();
-//            if($model->save()){
-//                $response->data=['state' => '200','data'=>$model];
-//                Yii::$app->end();
-//            }
-//            $response->data = $model->errors;
-//        }
+        $model->state = $state;
+        $model->save();
     }
     public function actionTvdDel(){
 //        $response = Yii::$app->response;
