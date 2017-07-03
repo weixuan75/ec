@@ -37,7 +37,6 @@ class TvlistingsController extends ConfController {
 //        }
 //        $response->data= null;
     }
-
     public function actionAddtd(){
         $response = Yii::$app->response;
         $response->format = yii\web\Response::FORMAT_JSON;

@@ -26,7 +26,7 @@ use yii\bootstrap\ActiveForm;
                     <br> '状态',<?=$tvs->state ?>
                     <br>'设置默认，等于1时，失效的店铺播放默认的电视节目单',<?=$tvs->is_conf ?>
                     <br>'介绍',<?=$tvs->content ?>
-                    <br>'操作员',<?=$tvs->user_id ?>
+                    <br>'操作员',<?=\app\erp\models\Sysadmindate::findOne($tvs->user_id)['nickname']?>
                     <br>'创建时间',<?=date("Y\年m\月d\日 H:i:s", $tvs->create_time)?>
                     <br>'修改时间',<?=date("Y\年m\月d\日 H:i:s", $tvs->update_time)?>
                 </div>

@@ -50,7 +50,7 @@ class AttachmentController extends ConfController {
             $model->user_id = $userId;
             $model->upload_time = time();
             $model->upload_ip = (string)ip2long(Yii::$app->request->userIP);
-            $model->state = $post['state'];
+            $model->state = 1;
             $model->auth_code = md5($post['url']);
             if($model->save()){
                 $response->data=['state' => '200','data'=>"保存成功"];

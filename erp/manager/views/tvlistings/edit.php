@@ -101,6 +101,57 @@ use yii\bootstrap\ActiveForm;
 //            删除
         </script>
         <?=$form->field($tv,'day')->textInput()?>
+        <script src="/layui/layui.js"></script>
+        <link href="/layui/css/layui.css" rel="stylesheet">
+        <div class="layui-form-pane" style="margin-top: 15px;">
+            <div class="layui-form-item">
+                <label class="layui-form-label">范围选择</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+                </div>
+                <div class="layui-input-inline">
+                    <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+                </div>
+            </div>
+        </div>
+        <div class="Days">
+            <time>
+                <span>08</span>
+                <span></span>
+            </time>
+        </div>
+        <script>
+            layui.use('laydate', function(){
+                var laydate = layui.laydate;
+                var start = {
+                    min: laydate.now()
+                    ,max: '2099-06-16 23:59:59'
+                    ,istoday: false
+                    ,choose: function(datas){
+                        end.min = datas; //开始日选好后，重置结束日的最小日期
+                        end.start = datas //将结束日的初始值设定为开始日
+                    }
+                };
+                var end = {
+                    min: laydate.now()
+                    ,max: '2099-06-16 23:59:59'
+                    ,istoday: false
+                    ,choose: function(datas){
+                        start.max = datas; //结束日选好后，重置开始日的最大日期
+                    }
+                };
+                document.getElementById('LAY_demorange_s').onclick = function(){
+                    start.elem = this;
+                    laydate(start);
+                }
+                document.getElementById('LAY_demorange_e').onclick = function(){
+                    end.elem = this
+                    laydate(end);
+                }
+
+            });
+        </script>
+
         <?php
 //        form->field($tv,'shop_id')->dropDownList(
 //            \app\erp\models\Menu::find()->select(['name', 'id'])->orderBy('id')->column(),
