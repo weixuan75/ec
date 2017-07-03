@@ -33,7 +33,7 @@ if (Yii::$app->session->hasFlash('info')) {
                             <td class="text-center"><?=$manager->id?></td>
                             <td class="text-center"><?=$manager->name?></td>
                             <td class="text-center"><?=$manager->content?></td>
-                            <td class="text-center"><?=$manager->user_id?></td>
+                            <td class="text-center"><?=\app\erp\models\Sysadmindate::findOne($manager->user_id)['nickname']?></td>
                             <td class="text-center"><?=Yii::$app->params['tvlistings']['state'][1][$manager->state]?></td>
                             <td class="text-center">
                                 <?=date("Y-m-d H:i:s", $manager->create_time)?>~<?=date("m-d H:i:s", $manager->update_time)?>

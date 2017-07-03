@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `ec_sys_admin` (
   `phone` varchar(15) NOT NULL COMMENT '电话',
   `password` varchar(500) DEFAULT NULL COMMENT '密码',
   `state` TINYINT(4) DEFAULT '0' COMMENT '状态',
+  `token_code` varchar(200) DEFAULT NULL COMMENT 'token码',
   `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
   `login_ip` varchar(40) DEFAULT NULL COMMENT '登陆IP地址',
   `login_time` bigint(20) DEFAULT NULL COMMENT '登陆时间',
@@ -279,7 +280,8 @@ CREATE TABLE IF NOT EXISTS `ec_user` (
   `phone` varchar(15) NOT NULL COMMENT '电话',
   `password` varchar(500) DEFAULT NULL COMMENT '密码',
   `state` TINYINT(4) DEFAULT '0' COMMENT '状态',
-  `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
+  `autho_code` varchar(36) DEFAULT NULL COMMENT '认证码',
+  `token_code` varchar(36) DEFAULT NULL COMMENT 'token码',
   `login_ip` varchar(40) DEFAULT NULL COMMENT '登陆IP地址',
   `login_time` bigint(20) DEFAULT NULL COMMENT '登陆时间',
   `sys_group_id` int(11) DEFAULT NULL COMMENT '会员组',
@@ -290,6 +292,7 @@ CREATE TABLE IF NOT EXISTS `ec_user` (
   UNIQUE KEY `ec_user_email` (`email`),
   UNIQUE KEY `ec_user_phone` (`phone`),
   UNIQUE KEY `ec_user_autho_code` (`autho_code`),
+  UNIQUE KEY `ec_user_token_code` (`token_code`),
   KEY `ec_user_account_password` (`account`,`password`),
   KEY `ec_user_email_password` (`email`,`password`),
   KEY `ec_user_phone_password` (`phone`,`password`)
@@ -298,7 +301,7 @@ CREATE TABLE IF NOT EXISTS `ec_user` (
 DROP TABLE IF EXISTS `ec_user_date`;
 CREATE TABLE IF NOT EXISTS `ec_user_date` (
   `user_id` BIGINT NOT NULL COMMENT '会员ID',
-  `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
+  `autho_code` varchar(36) DEFAULT NULL COMMENT '认证码',
   `nickname` varchar(20) NOT NULL COMMENT '昵称',
   `birthday` BIGINT NOT NULL COMMENT '生日',
   `head_portrait` varchar(300) DEFAULT NULL COMMENT '头像',
@@ -306,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `ec_user_date` (
   `tabbing` varchar(40) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `sys_admin_date_nickname` (`nickname`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='系统管理员资料';
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='会员资料';
 # 用户地址
 DROP TABLE IF EXISTS `ec_user_adress`;
 CREATE TABLE IF NOT EXISTS `ec_user_adress` (
@@ -320,6 +323,16 @@ CREATE TABLE IF NOT EXISTS `ec_user_adress` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='用户地址表';
 
 # 用户群组表
+DROP TABLE IF EXISTS `ec_user_group`;
+CREATE TABLE IF NOT EXISTS `ec_user_group` (
+  `user_id` BIGINT NOT NULL COMMENT '会员ID',
+  `autho_code` varchar(200) DEFAULT NULL COMMENT '认证码',
+  `adress` text NOT NULL COMMENT '地址JSON',
+  `time` bigint DEFAULT NULL COMMENT '创建修改时间',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `ec_user_adress_autho_code` (`autho_code`),
+  KEY `ec_user_adress_autho_code` (`user_id`,`autho_code`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='用户地址表';
 
 # 用户等级表
 
