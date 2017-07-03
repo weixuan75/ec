@@ -56,7 +56,7 @@ class Tvlistings extends \yii\db\ActiveRecord
             'day' => '天',
             'shop_id' => '播放的店铺',
             'state' => '状态',
-            'is_conf' => '设置默认，等于1时，失效的店铺播放默认的电视节目单',
+            'is_conf' => '设置默认',
             'content' => '介绍',
             'user_id' => '操作员',
             'create_time' => '创建时间',

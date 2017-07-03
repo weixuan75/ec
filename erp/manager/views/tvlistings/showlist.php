@@ -13,22 +13,22 @@ use yii\bootstrap\ActiveForm;
             <div class="card-block">
                 <div class="row">
                 <div class="col-md-4">
-                    'ID',<?=$tvs->id ?>
-                    <br>'名称',<?=$tvs->name ?>
-                    <br>'周',<?php
+                    ID：<?=$tvs->id ?>
+                    <br>名称：<?=$tvs->name ?>
+                    <br>周：<?php
                         $weeks = explode(",",$tvs->weeks);
                         foreach ($weeks as $k){
                             echo "<a class='btn btn-secondary'>".Yii::$app->params['tvlistings']['weeks'][$k]."</a>";
                         }
                         ?>
-                    <br>'天{[开始时间，结束时间]，[12321354，12321354]，[12321354，12321354]}',<?=$tvs->day ?>
-                    <br>'播放的店铺：0/null,全部店铺播放，[1,2,3,4]',<?=$tvs->shop_id ?>
-                    <br> '状态',<?=$tvs->state ?>
-                    <br>'设置默认，等于1时，失效的店铺播放默认的电视节目单',<?=$tvs->is_conf ?>
-                    <br>'介绍',<?=$tvs->content ?>
-                    <br>'操作员',<?=\app\erp\models\Sysadmindate::findOne($tvs->user_id)['nickname']?>
-                    <br>'创建时间',<?=date("Y\年m\月d\日 H:i:s", $tvs->create_time)?>
-                    <br>'修改时间',<?=date("Y\年m\月d\日 H:i:s", $tvs->update_time)?>
+                    <br>天：<?=$tvs->day ?>
+                    <br>播放的店铺：<?= (boolean)$tvs->shop_id ? $tvs->shop_id : '全部' ?>
+                    <br>状态：<?=$tvs->state ?>
+                    <br>设置默认：等于1时，失效的店铺播放默认的电视节目单',<?=$tvs->is_conf ?>
+                    <br>介绍：<?=$tvs->content ?>
+                    <br>操作员：<?=\app\erp\models\Sysadmindate::findOne($tvs->user_id)['nickname']?>
+                    <br>创建时间：<?=date("Y\年m\月d\日 H:i:s", $tvs->create_time)?>
+                    <br>修改时间：<?=date("Y\年m\月d\日 H:i:s", $tvs->update_time)?>
                 </div>
                 <div class="col-md-4">
                     <ul class="nav nav-tabs" role="tablist">
