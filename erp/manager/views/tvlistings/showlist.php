@@ -15,7 +15,12 @@ use yii\bootstrap\ActiveForm;
                 <div class="col-md-4">
                     'ID',<?=$tvs->id ?>
                     <br>'名称',<?=$tvs->name ?>
-                    <br>'周{0，1，2，3，4，5，6}',<?=$tvs->weeks ?>
+                    <br>'周',<?php
+                        $weeks = explode(",",$tvs->weeks);
+                        foreach ($weeks as $k){
+                            echo "<a class='btn btn-secondary'>".Yii::$app->params['tvlistings']['weeks'][$k]."</a>";
+                        }
+                        ?>
                     <br>'天{[开始时间，结束时间]，[12321354，12321354]，[12321354，12321354]}',<?=$tvs->day ?>
                     <br>'播放的店铺：0/null,全部店铺播放，[1,2,3,4]',<?=$tvs->shop_id ?>
                     <br> '状态',<?=$tvs->state ?>

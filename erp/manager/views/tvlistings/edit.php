@@ -13,20 +13,13 @@ use yii\bootstrap\ActiveForm;
     <div class="card-block">
         <?=$form->field($tv,'name')->textInput()?>
         <?php
-        $tv_weeks = "0,4,5,6";
+        $tv_weeks = "0,1,2,3,4,5,6";
         if(!is_null($tv->state)){
-            $tv_weeks=$tv->state;
+            $tv_weeks=$tv->weeks;
         }
         ?>
-        <?=$form->field($tv,'weeks')->textInput(['value'=>$tv_weeks])?>
+        <?=$form->field($tv,'weeks')->hiddenInput(['value'=>$tv_weeks])?>
         <div class="form-group field-tvlistings-weeks required" id="weeks_bt">
-<!--            <button type="button" class="btn btn-secondary">周日</button>-->
-<!--            <button type="button" class="btn btn-secondary">周一</button>-->
-<!--            <button type="button" class="btn btn-secondary">周二</button>-->
-<!--            <button type="button" class="btn btn-secondary">周三</button>-->
-<!--            <button type="button" class="btn btn-secondary">周四</button>-->
-<!--            <button type="button" class="btn btn-primary">周五</button>-->
-<!--            <button type="button" class="btn btn-primary">周六</button>-->
             <button type="button" class="btn" onclick="editWeeks(this)">周日</button>
             <button type="button" class="btn" onclick="editWeeks(this)">周一</button>
             <button type="button" class="btn" onclick="editWeeks(this)">周二</button>
@@ -89,12 +82,20 @@ use yii\bootstrap\ActiveForm;
             }
 
 //            添加
+            var num = 0;
             function editWeeks(obj){
                 $(obj).toggleClass("btn-primary");
                 if($(obj).attr("class").indexOf("btn-primary")>0){
-
+//                    表单数组累加值
+                    tvlistings_weeks.push($(obj).index());
+                    tvlistings_weeks = tvlistings_weeks.sort();
+                    console.log(tvlistings_weeks);
+                    $("#tvlistings-weeks").val(tvlistings_weeks.join(","));
                 }else{
-                    
+                    tvlistings_weeks.pop($(obj).index());
+                    tvlistings_weeks = tvlistings_weeks.sort();
+                    console.log(tvlistings_weeks);
+                    $("#tvlistings-weeks").val(tvlistings_weeks.join(","));
                 }
             }
 //            删除

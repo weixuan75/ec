@@ -52,7 +52,7 @@ class Tvlistings extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => '名称',
-            'weeks' => '周{0，1，2，3，4，5，6}',
+            'weeks' => '周',
             'day' => '天{[开始时间，结束时间]，[12321354，12321354]，[12321354，12321354]}',
             'shop_id' => '播放的店铺：0/null,全部店铺播放，[1,2,3,4]',
             'state' => '状态',
