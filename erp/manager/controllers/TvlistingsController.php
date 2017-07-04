@@ -51,18 +51,34 @@ class TvlistingsController extends ConfController {
         $tv = Tvlistings::findOne($id);
         $post = Yii::$app->request->post();
         if(Yii::$app->request->isPost){
-            $tv->load($post);
-            if ($tv->save()){
-                Yii::$app->session->setFlash('info', '修改成功');
-                $reqURL = (boolean)$reqURL ? $reqURL : ["/manager/tvlistings/index"];
-                return $this->redirect($reqURL);
-            }
+            var_dump($post);
+//            $tv->load($post);
+//            if ($tv->save()){
+//                Yii::$app->session->setFlash('info', '修改成功');
+//                $reqURL = (boolean)$reqURL ? $reqURL : ["/manager/tvlistings/index"];
+//                return $this->redirect($reqURL);
+//            }
         }
         return $this->render(
             'edit',[
             'tv'=>$tv,
             'reqURL' => $reqURL,
         ]);
+    }
+    public function actionTvstate(){
+        if(!(boolean)Yii::$app->request->get('id')
+            &&!(Yii::$app->request->get('state')==1||Yii::$app->request->get('state')==0)){
+            return $this->redirect(['/manager/tvlistings']);
+        }
+        $id = Yii::$app->request->get('id');
+        $state = Yii::$app->request->get('state');
+        $reqURL = (boolean)Yii::$app->request->get('reqURL') ? Yii::$app->request->get('reqURL'): '/manager/tvlistings';
+        $model = Tvlistings::findOne($id);
+        $model->state = $state;
+        if($model->save()){
+            return $this->redirect($reqURL);
+        }
+        return $this->redirect($reqURL);
     }
     public function actionTvdstate(){
         if(!(boolean)Yii::$app->request->get('id')
@@ -107,5 +123,20 @@ class TvlistingsController extends ConfController {
                 'tv_data' => $tvd,
                 'hostURL' => $hostURL,
         ]);
+    }
+    public function actionDel(){
+        if(!(boolean)Yii::$app->request->get('id')
+            &&!(Yii::$app->request->get('state')==1||Yii::$app->request->get('state')==0)){
+            return $this->redirect(['/manager/tvlistings']);
+        }
+        $id = Yii::$app->request->get('id');
+        $state = Yii::$app->request->get('state');
+        $reqURL = (boolean)Yii::$app->request->get('reqURL') ? Yii::$app->request->get('reqURL'): '/manager/tvlistings';
+        $model = Tvlistings::findOne($id);
+        $model->state = $state;
+        if($model->save()){
+            return $this->redirect($reqURL);
+        }
+        return $this->redirect($reqURL);
     }
 }

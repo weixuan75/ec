@@ -29,10 +29,11 @@ return [
     'tvlistings'=>[
         'list'=>10,
         'state'=>[
-            ['禁用','启动'],
+            ['禁用','启动','删除'],
             [
                 '<span class="badge badge-danger">禁用</span>',
                 '<span class="badge badge-success">启动</span>',
+                '<span class="badge badge-danger" disabled="disabled">删除</span>',
             ]
         ],
         'is_conf'=>[

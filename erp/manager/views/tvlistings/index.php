@@ -40,11 +40,21 @@ if (Yii::$app->session->hasFlash('info')) {
                             </td>
                             <td class="text-center">
                                 <a href="<?=Url::to(['tvlistings/showlist', 'tv_id' => $manager->id,'reqURL'=>($hostURL."#list_".$manager->id)]) ?>">详情</a>
-                                禁用
-                                激活
-                                <a href="<?=Url::to(['tvlistings/del', 'id' => $manager->id]) ?>">删除</a>
-                                <a href="<?=Url::to(['/manager/tvlistings/edit','id'=>$manager->id ]) ?>"><i class="fa fa-dot-circle-o"></i>编辑</a>
-
+                                <?php
+                                if ((boolean)$manager->state) {
+                                    ?>
+                                    <a href="<?= Url::to(['/manager/tvlistings/tvstate', 'id' => $manager->id,'state'=>0,'reqURL'=>(Url::to(['/manager/tvlistings'])."#list_".$manager->id)]) ?>"
+                                       >禁用</a>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <a href="<?= Url::to(['/manager/tvlistings/tvstate', 'id' => $manager->id,'state'=>1,'reqURL'=>(Url::to(['/manager/tvlistings'])."#list_".$manager->id)]) ?>"
+                                       >启动</a>
+                                    <?php
+                                }
+                                ?>
+                                <a href="<?=Url::to(['tvlistings/del', 'id' => $manager->id,'reqURL'=>(Url::to(['/manager/tvlistings'])."#tvData_".$manager->id)]) ?>">删除</a>
+                                <a href="<?=Url::to(['/manager/tvlistings/edit','id'=>$manager->id,'reqURL'=>(Url::to(['/manager/tvlistings'])."#tvData_".$manager->id)]) ?>">编辑</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

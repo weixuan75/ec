@@ -60,18 +60,47 @@ use yii\bootstrap\ActiveForm;
                             </div>
                         </div>
                         <div class="tab-pane" id="profile2" role="tabpanel" aria-expanded="false">
-                            <div class="form-group field-sysattachment-name required">
-                                <label class="control-label" for="sysattachment-name">附件名称</label>
-                                <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
-                                <input id="sysattachment-name" class="form-control" name="UploadForm" aria-required="true">
-                                <div class="help-block"></div>
+
+                            <div class="card" id="new">
+                                <div class="card-header">添加视频</div>
+                                <div class="card-block">
+                                    <div class="row text-center">
+                                        <div class="form-group field-tvlistings-name required">
+                                            <label class="control-label" for="mp4-sort">排序</label>
+                                            <input type="text" id="mp4-sort" value="0">
+                                            <br>
+                                            <label class="control-label" for="mp4-name">名称</label>
+                                            <input type="text" id="mp4-name" >
+                                            <br>
+                                            <label class="control-label" for="mp4-path">路径</label>
+                                            <input id="mp4-path" type="text"/>
+                                            <br>
+                                            <label class="control-label" for="mp4-pay_time">播放时间</label>
+                                            <input type="text" id="mp4-pay_time" value="">（秒）
+                                            <br>
+                                            <label class="control-label" for="mp4-type">类型</label>
+                                            <span id="mp4-type">mp4</span>
+                                            <br>
+                                        </div>
+                                        <div class="form-group field-tvlistings-name required">
+                                            <label class="control-label" for="mp4-content">介绍</label>
+                                            <input id="mp4-content" value="<?=$tvs->name ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAddmp4(
+                    $("#mp4-sort").val(),
+                    $("#mp4-name").val(),
+                    $("#mp4-path").val(),
+                    $("#mp4-type").html(),
+                    $("#mp4-pay_time").val(),
+                    1,
+                    $("#mp4-content").html()
+        );'>
+                                </div>
                             </div>
-                            <div class="form-group field-sysattachment-url required">
-                                <label class="control-label" for="sysattachment-url">web地址</label>
-                                <input id="sysattachment-url" class="form-control" name="SysAttachment[url]" aria-required="true">
-                                <div class="help-block"></div>
-                            </div>
-                        </div>
+                           </div>
                     </div>
                 </div>
                 <div class="col-md-4" id="addTVD">
@@ -79,7 +108,6 @@ use yii\bootstrap\ActiveForm;
                         <div class="card-header">添加内容</div>
                         <div class="card-block">
                             <div class="row text-center">
-
                                 <div class="form-group field-tvlistings-name required">
                                     <label class="control-label" for="tvlistingData-sort">排序</label>
                                     <input type="text" id="tvlistingData-sort">
@@ -280,15 +308,7 @@ use yii\bootstrap\ActiveForm;
 </script>
 
 <script>
-    function TvlistingsDataAdd(
-        sort,
-        name,
-        rootPath,
-        type,
-        payTime,
-        pState,
-        content
-    ){
+    function TvlistingsDataAdd(sort,name,rootPath,type,payTime,pState,content){
         $.ajax({
             url:"index.php?r=app/tvlistings/addtd",
             type:"post",
@@ -310,8 +330,36 @@ use yii\bootstrap\ActiveForm;
                 alert("status:【"+status+"】");
                 alert("xhr:【"+xhr+"】");
                 $("#tvlistingData-name").val(null);
-                    $("#tvlistingData-path").html(null);
-                    $("#tvlistingData-type").html(null);
+                $("#tvlistingData-path").html(null);
+                $("#tvlistingData-type").html(null);
+//                location.href("index.php?r=app/attachment/addtd");
+            }
+        });
+    }
+    function TvlistingsDataAddmp4(sort,name,rootPath,type,payTime,pState,content){
+        $.ajax({
+            url:"index.php?r=app/tvlistings/addtd",
+            type:"post",
+            data:{
+                "_csrf":"<?= Yii::$app->request->csrfToken ?>",
+                "sort":sort,
+                "tv_id":<?=$tvs->id ?>,
+                "name":name,
+                "path":rootPath,
+                "type":type,
+                "pay_time": payTime,
+                "state" : pState,
+                "content":content
+            },
+            success:function (result,status,xhr) {
+                TvList();
+                $("#addTVD").hide();
+                alert("result:【"+result.state+"】【"+result.data+"】");
+                alert("status:【"+status+"】");
+                alert("xhr:【"+xhr+"】");
+                $("#tvlistingData-name").val(null);
+                $("#tvlistingData-path").html(null);
+                $("#tvlistingData-type").html(null);
 //                location.href("index.php?r=app/attachment/addtd");
             }
         });
