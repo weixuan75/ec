@@ -39,7 +39,7 @@ if (Yii::$app->session->hasFlash('info')) {
                                 <?=date("Y-m-d H:i:s", $manager->create_time)?>~<?=date("m-d H:i:s", $manager->update_time)?>
                             </td>
                             <td class="text-center">
-                                <a href="<?=Url::to(['tvlistings/showlist', 'tv_id' => $manager->id,'reqURL'=>($hostURL."#list_".$manager->id)]) ?>">详情</a>
+                                <a href="<?=Url::to(['tvlistings/tvlist', 'tv_id' => $manager->id,'reqURL'=>($hostURL."#list_".$manager->id)]) ?>">详情</a>
                                 <?php
                                 if ((boolean)$manager->state) {
                                     ?>

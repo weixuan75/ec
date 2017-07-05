@@ -63,4 +63,7 @@ class TvlistingsData extends \yii\db\ActiveRecord
             'create_time' => '创建时间',
         ];
     }
+    public function getTvlistings(){
+        return $this->hasOne(Tvlistings::className(), ['id' => 'tv_id']);
+    }
 }

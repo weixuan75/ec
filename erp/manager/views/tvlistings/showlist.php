@@ -15,16 +15,7 @@ use yii\bootstrap\ActiveForm;
                 <div class="col-md-4">
                     ID：<?=$tvs->id ?>
                     <br>名称：<?=$tvs->name ?>
-                    <br>周：<?php
-                        $weeks = explode(",",$tvs->weeks);
-                        foreach ($weeks as $k){
-                            echo "<a class='btn btn-secondary'>".Yii::$app->params['tvlistings']['weeks'][$k]."</a>";
-                        }
-                        ?>
-                    <br>天：<?=$tvs->day ?>
-                    <br>播放的店铺：<?= (boolean)$tvs->shop_id ? $tvs->shop_id : '全部' ?>
                     <br>状态：<?=$tvs->state ?>
-                    <br>设置默认：<?=Yii::$app->params['tvlistings']['is_conf'][1][$tvs->is_conf]?><i>等于1时，失效的店铺播放默认的电视节目单</i>
                     <br>介绍：<?=$tvs->content ?>
                     <br>操作员：<?=\app\erp\models\Sysadmindate::findOne($tvs->user_id)['nickname']?>
                     <br>创建时间：<?=date("Y\年m\月d\日 H:i:s", $tvs->create_time)?>
@@ -166,7 +157,7 @@ use yii\bootstrap\ActiveForm;
             </div>
             <div class="card-footer">
                 <a href="<?=Url::to(
-                        ['/manager/tvlistings/edit',
+                        ['/manager/tvlistings/editl',
                             'id'=>$tvs->id,
                             "reqURL"=>
                                 $reqURL = ((boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']))]); ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>

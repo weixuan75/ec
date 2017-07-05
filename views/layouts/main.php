@@ -188,17 +188,14 @@ use yii\helpers\Json;
                     <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-people"></i>电视节目管理</a>
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
+                            <a class="nav-link" href="<?= Url::to(['/manager/tv']); ?>" target="_top"><i class="icon-options"></i>电视列表</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="<?= Url::to(['/manager/tvlistings']); ?>" target="_top"><i class="icon-options"></i>节目列表</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= Url::to(['/admin/']); ?>" target="_top"><i class="icon-options"></i>节目日志表</a>
                         </li>
-<!--                        <li class="nav-item">-->
-<!--                            <a class="nav-link" href="--><?//= Url::to(['/admin/role']); ?><!--" target="_top"><i class="icon-options"></i>管理员角色</a>-->
-<!--                        </li>-->
-<!--                        <li class="nav-item">-->
-<!--                            <a class="nav-link" href="--><?//= Url::to(['/admin/fun']); ?><!--" target="_top"><i class="icon-options"></i>管理员功能</a>-->
-<!--                        </li>-->
                     </ul>
                 </li>
                 <li class="nav-item nav-dropdown">
