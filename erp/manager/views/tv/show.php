@@ -52,7 +52,6 @@ use yii\bootstrap\ActiveForm;
                         <script src="/layui/layui.js"></script>
                         <link href="/layui/css/layui.css" rel="stylesheet">
                         <script>
-
                             function changS() {
                                 var va = $("#day_time_inp").val();
                                 if(va.indexOf(":")){
@@ -76,17 +75,17 @@ use yii\bootstrap\ActiveForm;
                                     $(obj.parentNode.parentNode).remove();
                                 }
                             }
-                            function TvAdd(obj,tvl_id,day_time){
+                            function TvAdd(obj){
                                 var inp =$(obj.parentNode.parentNode).find("#day_time_inp").val();
+                                var tvlop =$(obj.parentNode.parentNode).find("#tvl_op").val();
                                 if(inp && inp!=0){
                                     $.ajax({
                                         url:"index.php?r=app/tv/add",
-                                        type:"post",
+                                        type:"get",
                                         data:{
-                                            "_csrf":"<?= Yii::$app->request->csrfToken ?>",
                                             "tv_id":<?=$tvs->id ?>,
-                                            'tvl_id': inp,
-                                            'day_time':day_time
+                                            'tvl_id': tvlop,
+                                            'day_time':inp
                                         },
                                         success:function (result,status,xhr) {
                                             TvList();

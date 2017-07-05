@@ -15,8 +15,8 @@ class TvController extends Controller {
     public function actionIndex(){
     }
     public function actionAdd(){
-//        $response = Yii::$app->response;
-//        $response->format = yii\web\Response::FORMAT_JSON;
+        $response = Yii::$app->response;
+        $response->format = yii\web\Response::FORMAT_JSON;
         $post = Yii::$app->request->get();
 //        if(Yii::$app->request->isPost){
             $model = new Tvandtvlistings();
@@ -30,10 +30,10 @@ class TvController extends Controller {
             $model->user_id = $userId;
             $model->time = time();
             if($model->save()){
-//                $response->data=['state' => '200','data'=>$model];
+                $response->data=['state' => '200','data'=>$model];
                 Yii::$app->end();
             }
-            var_dump($model->errors);
+        $response->data=$model->errors;
 //        }
     }
     public function actionTvdEdit(){
