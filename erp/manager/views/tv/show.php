@@ -107,11 +107,12 @@ use yii\bootstrap\ActiveForm;
             </div>
             <div class="card-footer">
                 <a href="<?=Url::to(
-                    ['/manager/tv/edit',
+                    ['tv/edit',
                         'id'=>$tvs->id,
                         "reqURL"=>
-                            $reqURL = ((boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']))]); ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>
-                <a href="<?=$reqURL = (boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']) ?>" class="btn btn-bg btn-danger"><i class="fa fa-dot-circle-o"></i> 返 回 列 表 </a>
+                            $reqURL3 = ((boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']))
+                    ]); ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 电 视 </a>
+                <a href="<?=Url::to(['/manager/tv']) ?>" class="btn btn-bg btn-danger"><i class="fa fa-dot-circle-o"></i> 返 回 列 表 </a>
             </div>
         </div>
     </div>

@@ -30,7 +30,6 @@ class TvController extends ConfController {
         ]);
     }
     public function actionShow(){
-        $hostURL = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         if(!(boolean)Yii::$app->request->get('reqURL')
             &&!(boolean)Yii::$app->request->get('tv_id')){
             return $this->redirect(['/manager/tvlistings']);
@@ -41,12 +40,25 @@ class TvController extends ConfController {
         return $this->render(
             'show',[
             'tvs'=>$tvs,
-            'reqURL' => $reqURL,
-            'hostURL' => $hostURL,
+            'reqURL' => $reqURL
         ]);
     }
     public function actionAdd(){
-        
+        $reqURL = Yii::$app->request->get('reqURL');
+        $tv = new Tv();
+        $post = Yii::$app->request->post();
+        $reqURL = (boolean)$reqURL ? $reqURL : ["tv/index"];
+        if(Yii::$app->request->isPost){
+            if($tv->add($post)){
+                return $this->redirect(["tv/show",'tv_id'=>$tv->getPrimaryKey(),'reqURL'=>$reqURL]);
+            }
+            var_dump($tv->errors);
+        }
+        return $this->render(
+            'edit',[
+            'tv'=>$tv,
+            'reqURL' => $reqURL,
+        ]);
     }
     public function actionTv(){
         $model = Tv::find()->with('tvlistings')->where("id=1")->one();
