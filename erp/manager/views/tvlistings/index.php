@@ -8,7 +8,7 @@ if (Yii::$app->session->hasFlash('info')) {
 <div class="row">
     <div class="col-md-12">
         <div class="card-footer">
-            <a href="<?=Url::to(['tvlistings/add']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 节 目 </a>
+            <a href="<?=Url::to(['tvlistings/add','reqURL'=>Url::to(['/manager/tvlistings'])]) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 节 目 </a>
         </div>
         <div class="card">
             <div class="card-header">
@@ -39,7 +39,7 @@ if (Yii::$app->session->hasFlash('info')) {
                                 <?=date("Y-m-d H:i:s", $manager->create_time)?>~<?=date("m-d H:i:s", $manager->update_time)?>
                             </td>
                             <td class="text-center">
-                                <a href="<?=Url::to(['tvlistings/tvlist', 'tv_id' => $manager->id,'reqURL'=>($hostURL."#list_".$manager->id)]) ?>">详情</a>
+                                <a href="<?=Url::to(['tvlistings/showlist', 'tv_id' => $manager->id,'reqURL'=>($hostURL."#list_".$manager->id)]) ?>">详情</a>
                                 <?php
                                 if ((boolean)$manager->state) {
                                     ?>

@@ -63,7 +63,7 @@ class Tvlistings extends \yii\db\ActiveRecord
         $this->create_time=$time;
         $this->update_time=$time;
         if ($this->load($data) && $this->validate()) {
-            if($this->save(false)){
+            if($this->save()){
                 return true;
             }
             return false;

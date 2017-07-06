@@ -56,6 +56,7 @@ class TvController extends Controller {
                 $td = TvlistingsData::find();
                 $td = $td->select(['name','path','type','pay_time'])
                     ->where(["tv_id"=>$tl['id'],"state"=>1])
+                    ->orderBy("sort ASC")
                     ->all();
                 $arr2[]=$td;
             }

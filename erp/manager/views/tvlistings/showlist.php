@@ -12,75 +12,75 @@ use yii\bootstrap\ActiveForm;
             </div>
             <div class="card-block">
                 <div class="row">
-                <div class="col-md-4">
-                    ID：<?=$tvs->id ?>
-                    <br>名称：<?=$tvs->name ?>
-                    <br>状态：<?=$tvs->state ?>
-                    <br>介绍：<?=$tvs->content ?>
-                    <br>操作员：<?=\app\erp\models\Sysadmindate::findOne($tvs->user_id)['nickname']?>
-                    <br>创建时间：<?=date("Y\年m\月d\日 H:i:s", $tvs->create_time)?>
-                    <br>修改时间：<?=date("Y\年m\月d\日 H:i:s", $tvs->update_time)?>
-                </div>
-                <div class="col-md-4">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active  font-2xl" data-toggle="tab" href="#home2" role="tab" aria-controls="home" aria-expanded="true"><i class="icon-picture icons"></i> 图 片</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  font-2xl" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile" aria-expanded="false"><i class="icon-film icons "></i> 视 频</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="home2" role="tabpanel" aria-expanded="true">
-                            <script src="/js/jquery.form.js"></script>
-                            <div class="row col-xs-12">
-                                <div id="main"  class="row col-xs-12">
-                                    <div class="demo">
-                                        <div class="btn2" style="background: #09c">
-                                            <span>添加图片</span>
-                                            <div id="fileuploada">
-                                                <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
-                                                <input id="fileupload" type="file" name="UploadForm">
+                    <div class="col-md-4">
+                        ID：<?=$tvs->id ?>
+                        <br>名称：<?=$tvs->name ?>
+                        <br>状态：<?=$tvs->state ?>
+                        <br>介绍：<?=$tvs->content ?>
+                        <br>操作员：<?=\app\erp\models\Sysadmindate::findOne($tvs->user_id)['nickname']?>
+                        <br>创建时间：<?=date("Y\年m\月d\日 H:i:s", $tvs->create_time)?>
+                        <br>修改时间：<?=date("Y\年m\月d\日 H:i:s", $tvs->update_time)?>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active  font-2xl" data-toggle="tab" href="#home2" role="tab" aria-controls="home" aria-expanded="true"><i class="icon-picture icons"></i> 图 片</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link  font-2xl" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile" aria-expanded="false"><i class="icon-film icons "></i> 视 频</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="home2" role="tabpanel" aria-expanded="true">
+                                <script src="/js/jquery.form.js"></script>
+                                <div class="row col-xs-12">
+                                    <div id="main"  class="row col-xs-12">
+                                        <div class="demo">
+                                            <div class="btn2" style="background: #09c">
+                                                <span>添加图片</span>
+                                                <div id="fileuploada">
+                                                    <input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
+                                                    <input id="fileupload" type="file" name="UploadForm">
+                                                </div>
+                                            </div>
+                                            <div id="filesStr"></div>
+                                            <div id="showimg"></div>
+                                        </div>
+                                    </div>
+                                    <div class="imagelistFile text-center row col-xs-12" id="imagelistFile"></div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="profile2" role="tabpanel" aria-expanded="false">
+
+                                <div class="card" id="new">
+                                    <div class="card-header">添加视频</div>
+                                    <div class="card-block">
+                                        <div class="row text-center">
+                                            <div class="form-group field-tvlistings-name required">
+                                                <label class="control-label" for="mp4-sort">排序</label>
+                                                <input type="text" id="mp4-sort" value="0">
+                                                <br>
+                                                <label class="control-label" for="mp4-name">名称</label>
+                                                <input type="text" id="mp4-name" >
+                                                <br>
+                                                <label class="control-label" for="mp4-path">路径</label>
+                                                <input id="mp4-path" type="text"/>
+                                                <br>
+                                                <label class="control-label" for="mp4-pay_time">播放时间</label>
+                                                <input type="text" id="mp4-pay_time" value="">（秒）
+                                                <br>
+                                                <label class="control-label" for="mp4-type">类型</label>
+                                                <span id="mp4-type">mp4</span>
+                                                <br>
+                                            </div>
+                                            <div class="form-group field-tvlistings-name required">
+                                                <label class="control-label" for="mp4-content">介绍</label>
+                                                <input id="mp4-content" value="<?=$tvs->name ?>">
                                             </div>
                                         </div>
-                                        <div id="filesStr"></div>
-                                        <div id="showimg"></div>
                                     </div>
-                                </div>
-                                <div class="imagelistFile text-center row col-xs-12" id="imagelistFile"></div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="profile2" role="tabpanel" aria-expanded="false">
-
-                            <div class="card" id="new">
-                                <div class="card-header">添加视频</div>
-                                <div class="card-block">
-                                    <div class="row text-center">
-                                        <div class="form-group field-tvlistings-name required">
-                                            <label class="control-label" for="mp4-sort">排序</label>
-                                            <input type="text" id="mp4-sort" value="0">
-                                            <br>
-                                            <label class="control-label" for="mp4-name">名称</label>
-                                            <input type="text" id="mp4-name" >
-                                            <br>
-                                            <label class="control-label" for="mp4-path">路径</label>
-                                            <input id="mp4-path" type="text"/>
-                                            <br>
-                                            <label class="control-label" for="mp4-pay_time">播放时间</label>
-                                            <input type="text" id="mp4-pay_time" value="">（秒）
-                                            <br>
-                                            <label class="control-label" for="mp4-type">类型</label>
-                                            <span id="mp4-type">mp4</span>
-                                            <br>
-                                        </div>
-                                        <div class="form-group field-tvlistings-name required">
-                                            <label class="control-label" for="mp4-content">介绍</label>
-                                            <input id="mp4-content" value="<?=$tvs->name ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAddmp4(
+                                    <div class="card-footer">
+                                        <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAddmp4(
                     $("#mp4-sort").val(),
                     $("#mp4-name").val(),
                     $("#mp4-path").val(),
@@ -89,57 +89,57 @@ use yii\bootstrap\ActiveForm;
                     1,
                     $("#mp4-content").html()
         );'>
-                                </div>
-                            </div>
-                           </div>
-                    </div>
-                </div>
-                <div class="col-md-4" id="addTVD">
-                    <div class="card" id="new">
-                        <div class="card-header">添加内容</div>
-                        <div class="card-block">
-                            <div class="row text-center">
-                                <div class="form-group field-tvlistings-name required">
-                                    <label class="control-label" for="tvlistingData-sort">排序</label>
-                                    <input type="text" id="tvlistingData-sort">
-                                    <br>
-                                    <label class="control-label" for="tvlistingData-name">名称</label>
-                                    <input type="text" id="tvlistingData-name" >
-                                    <br>
-                                    <label class="control-label" for="tvlistingData-path">路径</label>
-                                    <span id="tvlistingData-path"></span>
-                                    <br>
-                                    <label class="control-label" for="tvlistingData-type">类型</label>
-                                    <span id="tvlistingData-type"></span>
-                                    <br>
-                                    <label class="control-label" for="tvlistingData-pay_time">播放时间</label>
-                                    <input type="text" id="tvlistingData-pay_time" value="5">（秒）
-                                    <br>
-                                </div>
-                                <div class="form-group field-tvlistings-state">
-                                    <label class="control-label">状态</label>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="tvlistingData-state" value="1" checked="">
-                                            <span class="badge badge-success">激活</span>
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="tvlistingData-state" value="0">
-                                            <span class="badge badge-danger">禁用</span>
-                                        </label>
                                     </div>
                                 </div>
-                                <div class="form-group field-tvlistings-name required">
-                                    <label class="control-label" for="tvlistingData-content">介绍</label>
-                                    <input id="tvlistingData-content" value="<?=$tvs->name ?>">
-                                </div>
-
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAdd(
+                    </div>
+                    <div class="col-md-4" id="addTVD">
+                        <div class="card" id="new">
+                            <div class="card-header">添加内容</div>
+                            <div class="card-block">
+                                <div class="row text-center">
+                                    <div class="form-group field-tvlistings-name required">
+                                        <label class="control-label" for="tvlistingData-sort">排序</label>
+                                        <input type="text" id="tvlistingData-sort">
+                                        <br>
+                                        <label class="control-label" for="tvlistingData-name">名称</label>
+                                        <input type="text" id="tvlistingData-name" >
+                                        <br>
+                                        <label class="control-label" for="tvlistingData-path">路径</label>
+                                        <span id="tvlistingData-path"></span>
+                                        <br>
+                                        <label class="control-label" for="tvlistingData-type">类型</label>
+                                        <span id="tvlistingData-type"></span>
+                                        <br>
+                                        <label class="control-label" for="tvlistingData-pay_time">播放时间</label>
+                                        <input type="text" id="tvlistingData-pay_time" value="5">（秒）
+                                        <br>
+                                    </div>
+                                    <div class="form-group field-tvlistings-state">
+                                        <label class="control-label">状态</label>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="tvlistingData-state" value="1" checked="">
+                                                <span class="badge badge-success">激活</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="tvlistingData-state" value="0">
+                                                <span class="badge badge-danger">禁用</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group field-tvlistings-name required">
+                                        <label class="control-label" for="tvlistingData-content">介绍</label>
+                                        <input id="tvlistingData-content" value="<?=$tvs->name ?>">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAdd(
                     $("#tvlistingData-sort").val(),
                     $("#tvlistingData-name").val(),
 
@@ -150,17 +150,17 @@ use yii\bootstrap\ActiveForm;
                     1,
                     $("#tvlistingData-content").html()
         );'>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
             <div class="card-footer">
                 <a href="<?=Url::to(
-                        ['/manager/tvlistings/editl',
-                            'id'=>$tvs->id,
-                            "reqURL"=>
-                                $reqURL = ((boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']))]); ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>
+                    ['tvlistings/edit',
+                        'id'=>$tvs->id,
+                        "reqURL"=>
+                            $reqURL = ((boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']))]); ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>
                 <a href="<?=$reqURL = (boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']) ?>" class="btn btn-bg btn-danger"><i class="fa fa-dot-circle-o"></i> 返 回 列 表 </a>
             </div>
         </div>
@@ -175,8 +175,8 @@ use yii\bootstrap\ActiveForm;
                 <thead class="thead-default">
                 <tr>
                     <th class="text-center">排序</th>
-                    <th class="text-center">路径</th>
                     <th class="text-center">名称</th>
+                    <th class="text-center">路径</th>
                     <th class="text-center">状态</th>
                     <th class="text-center">类型</th>
                     <th class="text-center">播放时间</th>
@@ -186,53 +186,13 @@ use yii\bootstrap\ActiveForm;
                     <th class="text-center">操作</th>
                 </tr>
                 </thead>
-                <tbody>
-                <?php
-                if((boolean)$tv_data) {
-                    foreach ($tv_data as $td):
-                        ?>
-                        <tr id="tvData_<?= $td->id ?>">
-                            <td class="text-center"><?= $td->sort ?></td>
-                            <td class="text-center">
-                                <div class="avatar">
-                                    <img src="<?= $td->path ?>" class="img-avatar">
-                                </div>
-                            </td>
-                            <td class="text-center"><?= $td->name ?></td>
-                            <td class="text-center"><?= Yii::$app->params['tvlistings']['state'][1][$td->state] ?></td>
-                            <td class="text-center"><?= $td->type ?></td>
-                            <td class="text-center"><?= $td->pay_time ?></td>
-                            <td class="text-center"><?= $td->content ?></td>
-                            <td class="text-center"><?= $td->user_id ?></td>
-                            <td class="text-center"><?= date("Y-m-d H:i:s", $td->create_time) ?></td>
-                            <td class="text-center">
-                                <?php
-                                if ((boolean)$td->state) {
-                                    ?>
-                                    <a href="<?= Url::to(['/manager/tvlistings/tvdstate', 'id' => $td->id,'state'=>0,'reqURL'=>(Url::to(['/manager/tvlistings/showlist','tv_id' => $tvs->id])."#tvData_".$td->id)]) ?>"
-                                       class="btn btn-bg btn-danger">禁用</a>
-                                    <?php
-                                } else {
-                                    ?>
-                                    <a href="<?= Url::to(['/manager/tvlistings/tvdstate', 'id' => $td->id,'state'=>1,'reqURL'=>(Url::to(['/manager/tvlistings/showlist','tv_id' => $tvs->id])."#tvData_".$td->id)]) ?>"
-                                       class="btn btn-bg btn-primary">启动</a>
-                                    <?php
-                                }
-                                ?>
-                                <a href="<?= Url::to(['/app/tvlistings/tvdDel', 'id' => $td->id]) ?>"
-                                   class="btn btn-bg btn-primary">删除</a>
-                            </td>
-                        </tr>
-                        <?php
-                    endforeach;
-                }
-                ?>
+                <tbody id="showlist">
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-    <!--/.col-->
+<!--/.col-->
 </div>
 <style>
     .btn {margin: 3px;}
@@ -297,7 +257,6 @@ use yii\bootstrap\ActiveForm;
         });
     });
 </script>
-
 <script>
     function TvlistingsDataAdd(sort,name,rootPath,type,payTime,pState,content){
         $.ajax({
@@ -316,14 +275,11 @@ use yii\bootstrap\ActiveForm;
             },
             success:function (result,status,xhr) {
                 TvList();
+                showAjax();
                 $("#addTVD").hide();
-                alert("result:【"+result.state+"】【"+result.data+"】");
-                alert("status:【"+status+"】");
-                alert("xhr:【"+xhr+"】");
                 $("#tvlistingData-name").val(null);
                 $("#tvlistingData-path").html(null);
                 $("#tvlistingData-type").html(null);
-//                location.href("index.php?r=app/attachment/addtd");
             }
         });
     }
@@ -366,14 +322,202 @@ use yii\bootstrap\ActiveForm;
             },
             success:function (result,status,xhr) {
                 alert(status);
-//                $("#addTVD").hide();
+            }
+        });
+    }
+</script>
+<script>
+    $(function () {
+        showAjax();
+    });
+
+    function showAjax(){
+        $.ajax({
+            url:"index.php?r=app/tvlistings/showlist",
+            type:"get",
+            data:{
+                "tv_id":<?=$tvs->id ?>,
+            },
+            success:function (result,status,xhr) {
+                //"id":4,
+                // "sort":"0",
+                // "tv_id":"13",
+                // "name":"b58f8c5494eef01f3e82aae8eafe9925bc317d0c.jpg",
+                // "path":"http://a.com/uploders/image/2017/07/06/175c53c2a44f285c1093f43763a2f42c.jpg",
+                // "type":"image/jpeg",
+                // "pay_time":5,
+                // "state":1,
+                // "content":"",
+                // "user_id":"1",
+                // "create_time":"1499326932"
+
 //                alert("result:【"+result.state+"】【"+result.data+"】");
-//                alert("status:【"+status+"】");
-//                alert("xhr:【"+xhr+"】");
-//                $("#tvlistingData-name").val(null);
-//                $("#tvlistingData-path").html(null);
-//                $("#tvlistingData-type").html(null);
-////                location.href("index.php?r=app/attachment/addtd");
+                var html = '';
+                for (i=0;i<result.length;i++){
+                    html +=tempshowlist(
+                        result[i].id,
+                        result[i].tvId,
+                        result[i].sort,
+                        result[i].path,
+                        result[i].name,
+                        result[i].state,
+                        result[i].type,
+                        result[i].pay_time,
+                        result[i].user,
+                        result[i].create_time,
+                    result[i].content);
+                }
+                $("#showlist").html(html);
+                html = '';
+            }
+        });
+    }
+    /**
+     * 模板遍历
+     * @param sort 排序
+     * @param path 路径
+     * @param name 名称
+     * @param state 状态
+     * @param type 格式
+     * @param payTime 播放时间
+     * @param user 用户名
+     * @param uptime 上传时间
+     */
+    function tempshowlist(id,tvid,sort,path,name,state,type,payTime,user,uptime,content) {
+        var html ='<tr id="tvData_'+id+'">' +
+            '<td class="text-center">'+sort+'</td>' +
+            '<td class="text-center">' +
+            '   <div class="avatar">' +
+            '       <img src="'+path+'" class="img-avatar">' +
+            '   </div>' +
+            '</td>' +
+            '<td class="text-center">'+name+'</td>' +
+            '<td class="text-center">';
+        if(state==1){
+            html+='<span class="badge badge-success">启动</span>';
+        }else {
+            html+='<span class="badge badge-success">启动</span>';
+        }
+        html+='</td>' +
+            '<td class="text-center">'+type+'</td>' +
+            '<td class="text-center">'+payTime+'</td>' +
+            '<td class="text-center"></td>' +
+            '<td class="text-center">'+user+'</td>' +
+            '<td class="text-center">'+uptime+'</td>' +
+            '<td class="text-center"><a href="javascript:;" onclick="editData(\''+id+'\',\''+tvid+'\',\''+sort+'\',\''+path+'\',\''+name+'\',\''+state+'\',\''+type+'\',\''+payTime+'\',\''+content+'\')" class="btn btn-bg btn-primary">编辑</a>';
+        if(state==1){
+            html+='<a href="/index.php?r=manager/tvlistings/tvdstate&id='+id+'&state=0&reqURL=/index.php%3Fr%3Dmanager%252Ftvlistings%252Fshowlist%26tv_id%3D'+tvid+'%23tvData_4" class="btn btn-bg btn-danger">禁用</a>';
+        }else {
+            html+='<a href="/index.php?r=manager/tvlistings/tvdstate&id='+id+'&state=1&reqURL=/index.php%3Fr%3Dmanager%252Ftvlistings%252Fshowlist%26tv_id%3D'+tvid+'%23tvData_5" class="btn btn-bg btn-primary">启动</a>';
+        }
+        html+='<a href="/index.php?r=app/tvlistings/tvdDel&id=4" class="btn btn-bg btn-primary">删除</a>' +
+            '</td>' +
+            '</tr>';
+        return html;
+    }
+</script>
+
+<script src="/layui/layui.js"></script>
+<link href="/layui/css/layui.css" rel="stylesheet">
+<script>
+    function editData(id,tvid,sort,path,name,state,type,payTime,content) {
+        var html = '<div class="card" id="new">'+
+            '    <div class="card-block">'+
+            '            <div class="form-group field-tvlistings-name required">'+
+            '                <label class="control-label" for="editData-sort">排序</label>'+
+            '                <input class="form-control" value="'+sort+'" type="text" id="editData-sort">'+
+            '            </div>'+
+            '            <div class="form-group field-tvlistings-name required">'+
+            '                <label class="control-label" for="editData-name">名称</label>'+
+            '                <input class="form-control" value="'+name+'" type="text" id="editData-name" >'+
+            '            </div>'+
+            '            <div class="form-group field-tvlistings-name required">'+
+            '                <label class="control-label" for="tvlistingData-path">路径</label>'+
+            '                <div class="avatar">' +
+            '                   <img src="'+path+'" class="img-avatar">' +
+            '                </div>' +
+            '                <span id="tvlistingData-path">'+path+'</span>'+
+            '            </div>'+
+            '            <div class="form-group field-tvlistings-name required">'+
+            '                <label class="control-label" for="tvlistingData-type">类型</label>'+
+            '                <span id="tvlistingData-type">'+type+'</span>'+
+            '            </div>'+
+            '            <div class="form-group field-tvlistings-name required">'+
+            '                <label class="control-label" for="editData-pay_time">播放时间</label>'+
+            '                <input class="form-control" type="text" id="editData-pay_time" value="'+payTime+'">（秒）'+
+            '            </div>'+
+            '            <div class="form-group field-tvlistings-name required">'+
+            '                <label class="control-label">状态</label>'+
+            '                <select  id="editData-state">';
+        if(state==1){
+            html+='<option value="1" checked>激活</option><option value="0">禁用</option>';
+        }else {
+            html+='<option value="1">激活</option><option value="0" checked>禁用</option>';
+        }
+        html+='                    ' +
+            '                    ' +
+            '                </select>' +
+            '            </div>'+
+            '            <div class="form-group field-tvlistings-name required">'+
+            '                <label class="control-label" for="editData-content">介绍</label>'+
+            '                <input class="form-control" id="editData-content" value="'+content+'">'+
+            '            </div>'+
+            '    </div>'+
+            '    <!--<div class="card-footer">'+
+            '        <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick=\'TvlistingsDataAdd('+
+            '                    $("#tvlistingData-sort").val(),'+
+            '                    $("#tvlistingData-name").val(),'+
+            '                    $("#tvlistingData-path").html(),'+
+            '                    $("#tvlistingData-type").html(),'+
+            '                    $("#tvlistingData-pay_time").val(),'+
+            '                    1,'+
+            '                    $("#tvlistingData-content").html()'+
+            '        );\'>'+
+            '    </div>-->'+
+            '</div>';
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            //在这里面输入任何合法的js语句
+            layer.open({
+                type: 1 //Page层类型
+                ,area: ['600px', '700px']
+                ,title: '编辑'
+                ,shade: 0.6 //遮罩透明度
+                ,maxmin: true //允许全屏最小化
+                ,anim: 6 //0-6的动画形式，-1不开启
+                ,btn:['确定']
+                ,content: html
+                ,yes: function(index){
+                    console.log("测试成功");
+                    editAjax(
+                        id,tvid,
+                        $("#editData-sort").val(),
+                        $("#editData-name").val(),
+                        $("#editData-state").val(),
+                        $("#editData-pay_time").val(),
+                        $("#editData-content").val(),
+                    );
+                    layer.close(index);
+                }
+            });
+        });
+    }
+    function editAjax(id,tvid,sort,name,state,payTime,content) {
+        $.ajax({
+            url:"index.php?r=app/tvlistings/editajax",
+            type:"post",
+            data:{
+                "_csrf":"<?= Yii::$app->request->csrfToken ?>","id":id,
+                "tvid":tvid,
+                "sort":sort,
+                "name":name,
+                "state":state,
+                "payTime":payTime,
+                "content":content
+            },
+            success:function (result,status,xhr) {
+                showAjax();
+                console.log(id,tvid,sort,name,state,payTime,content);
             }
         });
     }
