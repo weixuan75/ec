@@ -8,7 +8,7 @@ if (Yii::$app->session->hasFlash('info')) {
 <div class="row">
     <div class="col-md-12">
         <div class="card-footer">
-            <a href="<?=Url::to(['tvlistings/add']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 节 目 </a>
+            <a href="<?=Url::to(['tvlistings/addl']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 节 目 </a>
         </div>
         <div class="card">
             <div class="card-header">

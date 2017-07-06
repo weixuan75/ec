@@ -37,18 +37,11 @@ class TvController extends ConfController {
         }
         $reqURL = Yii::$app->request->get('reqURL');
         $tv_id = Yii::$app->request->get('tv_id');
-        $tvs = Tv::find()->with('tvlistings')->where("id=:id",[':id'=>$tv_id])->one();
-        $tvd = $tvs->tvlistings;
-        if((boolean)$tvd){
-            $tvd = $tvd;
-        }else{
-            $tvd = null;
-        }
+        $tvs = Tv::find()->where("id=:id",[':id'=>$tv_id])->one();
         return $this->render(
             'show',[
             'tvs'=>$tvs,
             'reqURL' => $reqURL,
-            'tv_data' => $tvd,
             'hostURL' => $hostURL,
         ]);
     }
@@ -58,5 +51,39 @@ class TvController extends ConfController {
     public function actionTv(){
         $model = Tv::find()->with('tvlistings')->where("id=1")->one();
         var_dump($model->tvlistings);
+    }
+    public function actionEdit(){
+        $reqURL = Yii::$app->request->get('reqURL');
+        $id = Yii::$app->request->get('id');
+        $tv = Tv::findOne($id);
+        $post = Yii::$app->request->post();
+        if(Yii::$app->request->isPost){
+            $tv->load($post);
+            if ($tv->save()){
+                Yii::$app->session->setFlash('info', '修改成功');
+                $reqURL = (boolean)$reqURL ? $reqURL : ["/manager/tv"];
+                return $this->redirect($reqURL);
+            }
+        }
+        return $this->render(
+            'edit',[
+            'tv'=>$tv,
+            'reqURL' => $reqURL,
+        ]);
+    }
+    public function actionTvstate(){
+        if(!(boolean)Yii::$app->request->get('id')
+            &&!(Yii::$app->request->get('state')==1||Yii::$app->request->get('state')==0)){
+            return $this->redirect(['/manager/tv']);
+        }
+        $id = Yii::$app->request->get('id');
+        $state = Yii::$app->request->get('state');
+        $reqURL = (boolean)Yii::$app->request->get('reqURL') ? Yii::$app->request->get('reqURL'): '/manager/tvlistings';
+        $model = Tv::findOne($id);
+        $model->state = $state;
+        if($model->save()){
+            return $this->redirect($reqURL);
+        }
+        return $this->redirect($reqURL);
     }
 }

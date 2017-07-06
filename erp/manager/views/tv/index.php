@@ -8,11 +8,11 @@ if (Yii::$app->session->hasFlash('info')) {
 <div class="row">
     <div class="col-md-12">
         <div class="card-footer">
-            <a href="<?=Url::to(['tvlistings/add']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 节 目 </a>
+            <a href="<?=Url::to(['tvlistings/add']) ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 添 加 电 视 </a>
         </div>
         <div class="card">
             <div class="card-header">
-                节目列表
+                电视列表
             </div>
             <div class="card-block">
                 <table class="table table-hover table-outline mb-0 hidden-sm-down">
@@ -43,18 +43,18 @@ if (Yii::$app->session->hasFlash('info')) {
                                 <?php
                                 if ((boolean)$manager->state) {
                                     ?>
-                                    <a href="<?= Url::to(['/manager/tvlistings/tvstate', 'id' => $manager->id,'state'=>0,'reqURL'=>(Url::to(['/manager/tvlistings'])."#list_".$manager->id)]) ?>"
+                                    <a href="<?= Url::to(['/manager/tv/tvstate', 'id' => $manager->id,'state'=>0,'reqURL'=>(Url::to(['/manager/tvlistings'])."#list_".$manager->id)]) ?>"
                                        >禁用</a>
                                     <?php
                                 } else {
                                     ?>
-                                    <a href="<?= Url::to(['/manager/tvlistings/tvstate', 'id' => $manager->id,'state'=>1,'reqURL'=>(Url::to(['/manager/tvlistings'])."#list_".$manager->id)]) ?>"
+                                    <a href="<?= Url::to(['/manager/tv/tvstate', 'id' => $manager->id,'state'=>1,'reqURL'=>(Url::to(['/manager/tvlistings'])."#list_".$manager->id)]) ?>"
                                        >启动</a>
                                     <?php
                                 }
                                 ?>
-                                <a href="<?=Url::to(['tvlistings/del', 'id' => $manager->id,'reqURL'=>(Url::to(['/manager/tvlistings'])."#tvData_".$manager->id)]) ?>">删除</a>
-                                <a href="<?=Url::to(['/manager/tvlistings/edit','id'=>$manager->id,'reqURL'=>(Url::to(['/manager/tv/edit'])."#tvData_".$manager->id)]) ?>">编辑</a>
+                                <a href="<?=Url::to(['tv/del', 'id' => $manager->id,'reqURL'=>(Url::to(['/manager/tv'])."#tvData_".$manager->id)]) ?>">删除</a>
+                                <a href="<?=Url::to(['/manager/tv/edit','id'=>$manager->id,'reqURL'=>(Url::to(['/manager/tv/edit'])."#tvData_".$manager->id)]) ?>">编辑</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

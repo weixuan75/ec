@@ -83,7 +83,10 @@ class Tv extends \yii\db\ActiveRecord
         return false;
     }
     public function getTvlistings(){
-        return $this->hasMany(Tvlistings::className(), ['id' => 'id'])
+        return $this->hasMany(Tvlistings::className(), ['tvl_id' => 'id'])
             ->viaTable('ec_tvandtvlistings', ['tv_id' => 'id']);
+    }
+    public function getTvandtvlistings(){
+        return $this->hasMany(Tvandtvlistings::className(), ['tv_id' => 'id']);
     }
 }

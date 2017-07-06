@@ -14,8 +14,6 @@ use yii\helpers\Json;
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keyword" content="">
-    <link rel="shortcut icon" href="img/favicon.png">
-
     <title>后台管理平台</title>
 
     <script src="/js/jquery-3.2.1.min.js"></script>

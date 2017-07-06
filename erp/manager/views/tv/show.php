@@ -32,7 +32,7 @@ use yii\bootstrap\ActiveForm;
                             </thead>
                             <tbody>
                             <tr>
-                                <td><input placeholder="上午3:50 = 0350（格式是24小时制）" type="text" class="form-control" id="day_time_inp" onchange="changS()" value=""></td>
+                                <td><input placeholder="上午3:50 = 0350（格式是24小时制）" type="text" class="form-control" id="day_time_inp" onblur="changS()" value=""></td>
                                 <td>
                                     <select class="form-control" id="tvl_op" onchange="tvlSelect(this)">
                                         <?php
@@ -54,26 +54,29 @@ use yii\bootstrap\ActiveForm;
                         <script>
                             function changS() {
                                 var va = $("#day_time_inp").val();
-                                if(va.indexOf(":")){
-
-                                }
-                                if(va.length>4||va.length<4||va>=2400){
+                                if(va.length>4){
                                     layui.use('layer', function(){
                                         var layer = layui.layer;
                                         layer.msg('格式错误,正确:3:50 = 0350，最大23:59');
                                     });
+                                }else if (va>=2400){
+                                    layui.use('layer', function(){
+                                        var layer = layui.layer;
+                                        layer.msg('格式错误,正确:3:50 = 0350，最大23:59');
+                                    });
+                                }else if (va.slice(2,4)>59){
+                                    var vaone = va.slice(0,2);
+                                    layui.use('layer', function(){
+                                        var layer = layui.layer;
+                                        layer.msg('分钟超出');
+                                    });
+                                    $("#day_time_inp").val(vaone+":00")
+                                }else {
+                                    $("#day_time_inp").val(va.slice(0,2)+":"+va.slice(2,4));
                                 }
                             }
                             function tvlDel(obj){
-                                var num = obj.parentNode.parentNode.parentNode.getElementsByTagName("tr");
-                                if(num.length==1){
-                                    layui.use('layer', function(){
-                                        var layer = layui.layer;
-                                        layer.msg('不可以在删除了！必须存在一个节目');
-                                    });
-                                }else{
-                                    $(obj.parentNode.parentNode).remove();
-                                }
+                                $(obj.parentNode.parentNode).remove();
                             }
                             function TvAdd(obj){
                                 var inp =$(obj.parentNode.parentNode).find("#day_time_inp").val();
@@ -88,14 +91,7 @@ use yii\bootstrap\ActiveForm;
                                             'day_time':inp
                                         },
                                         success:function (result,status,xhr) {
-                                            TvList();
-                                            $("#addTVD").hide();
-                                            alert("result:【"+result.state+"】【"+result.data+"】");
-                                            alert("status:【"+status+"】");
-                                            alert("xhr:【"+xhr+"】");
-                                            $("#tvlistingData-name").val(null);
-                                            $("#tvlistingData-path").html(null);
-                                            $("#tvlistingData-type").html(null);
+                                            Tvlist();
                                         }
                                     });
                                 }else{
@@ -111,7 +107,7 @@ use yii\bootstrap\ActiveForm;
             </div>
             <div class="card-footer">
                 <a href="<?=Url::to(
-                    ['/manager/tvlistings/editl',
+                    ['/manager/tv/edit',
                         'id'=>$tvs->id,
                         "reqURL"=>
                             $reqURL = ((boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']))]); ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>
@@ -124,28 +120,13 @@ use yii\bootstrap\ActiveForm;
         <table class="table table-hover table-outline">
             <thead class="thead-default">
             <tr>
+                <th width="20%">ID</th>
                 <th width="20%">时间</th>
                 <th>节目</th>
                 <th>操作</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td><input placeholder="0350 = 上午3:50（格式是24小时制）" type="text" class="form-control" value=""></td>
-                <td>
-                    <select class="form-control" id="tvl_op" onchange="tvlSelect(this)">
-                        <?php
-                        $tvlist = \app\erp\models\Tvlistings::find()->select(['id','name'])->where("state=1")->all();
-                        foreach ($tvlist as $tl){
-                            echo "<option value='".$tl['id']."'>[".$tl['id']."]".$tl['name']."</option>";
-                        }
-                        ?>
-                    </select>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-bg btn-danger" onclick="tvlDel(this)"> 删 除 </button>
-                </td>
-            </tr>
+            <tbody id="htl">
             </tbody>
         </table>
     </div>
@@ -203,82 +184,87 @@ use yii\bootstrap\ActiveForm;
 </script>
 
 <script>
-    function TvlistingsDataAdd(sort,name,rootPath,type,payTime,pState,content){
+    $(function () {
+        Tvlist();
+    });
+    function Tvlist(){
         $.ajax({
-            url:"index.php?r=app/tvlistings/addtd",
-            type:"post",
-            data:{
-                "_csrf":"<?= Yii::$app->request->csrfToken ?>",
-                "sort":sort,
-                "tv_id":<?=$tvs->id ?>,
-                "name":name,
-                "path":rootPath,
-                "type":type,
-                "pay_time": payTime,
-                "state" : pState,
-                "content":content
-            },
-            success:function (result,status,xhr) {
-                TvList();
-                $("#addTVD").hide();
-                alert("result:【"+result.state+"】【"+result.data+"】");
-                alert("status:【"+status+"】");
-                alert("xhr:【"+xhr+"】");
-                $("#tvlistingData-name").val(null);
-                $("#tvlistingData-path").html(null);
-                $("#tvlistingData-type").html(null);
-//                location.href("index.php?r=app/attachment/addtd");
-            }
-        });
-    }
-    function TvlistingsDataAddmp4(sort,name,rootPath,type,payTime,pState,content){
-        $.ajax({
-            url:"index.php?r=app/tvlistings/addtd",
-            type:"post",
-            data:{
-                "_csrf":"<?= Yii::$app->request->csrfToken ?>",
-                "sort":sort,
-                "tv_id":<?=$tvs->id ?>,
-                "name":name,
-                "path":rootPath,
-                "type":type,
-                "pay_time": payTime,
-                "state" : pState,
-                "content":content
-            },
-            success:function (result,status,xhr) {
-                TvList();
-                $("#addTVD").hide();
-                alert("result:【"+result.state+"】【"+result.data+"】");
-                alert("status:【"+status+"】");
-                alert("xhr:【"+xhr+"】");
-                $("#tvlistingData-name").val(null);
-                $("#tvlistingData-path").html(null);
-                $("#tvlistingData-type").html(null);
-//                location.href("index.php?r=app/attachment/addtd");
-            }
-        });
-    }
-
-    function TvList(){
-        $.ajax({
-            url:"index.php?r=app/tvlistings/tvs",
+            url:"<?=Url::to(['/app/tv/showlist'])?>",
             type:"get",
             data:{
-//                "_csrf":"<?//= Yii::$app->request->csrfToken ?>//",
-                "tv_id":<?=$tvs->id ?>
+                "id":<?=$tvs->id ?>
             },
             success:function (result,status,xhr) {
-                alert(status);
-//                $("#addTVD").hide();
-//                alert("result:【"+result.state+"】【"+result.data+"】");
-//                alert("status:【"+status+"】");
-//                alert("xhr:【"+xhr+"】");
-//                $("#tvlistingData-name").val(null);
-//                $("#tvlistingData-path").html(null);
-//                $("#tvlistingData-type").html(null);
-////                location.href("index.php?r=app/attachment/addtd");
+                var htl = '';
+                for(var i=0;i <result.length;i++){
+                    htl+=Temp(
+                        result[i].id,
+                        result[i].dayTime,
+                        result[i].name);
+                }
+                $("#htl").html(htl);
+                htl = '';
+                console.log(htl);
             }
         });
     }
+    function Tvdel(obj,id){
+        $.ajax({
+            url:"<?=Url::to(['/app/tv/taldel'])?>",
+            type:"get",
+            data:{
+                "id":id
+            },
+            success:function (result,status,xhr) {
+                tvlDel(obj);
+                Tvlist();
+                console.log(result);
+            }
+        });
+    }
+    function Temp(tvlid,dayTime,tvlname) {
+        var tr =' <tr>' +
+            '<td>'+tvlid+'</td>' +
+            '<td>'+dayTime+'</td>' +
+            '<td>'+tvlname+'</td>' +
+            '<td>编辑 <a href="javascript:;" onclick="Tvdel(this,'+tvlid+')" > 删除</a></td>' +
+            '</tr>';
+        return tr;
+    }
+    function editTal(id,daytime,tlId) {
+        
+    }
 </script>
+<div>
+    <td>
+        <input
+                placeholder='上午3:50 = 0350（格式是24小时制）'
+                type='text'
+                class='form-control'
+                id='day_time_inp'
+                onblur='changS()'
+                value=''
+        />
+    </td>
+    <td>
+        <select
+                class='form-control'
+                id='tvl_op'
+                onchange='tvlSelect(this)'
+        >
+            <?php
+            $tvlist = \app\erp\models\Tvlistings::find()
+                ->select(['id','name'])->where('state=1')->all();
+            foreach ($tvlist as $tl){
+                echo '<option value="'
+                    .$tl['id'].
+                    '">['
+                    .$tl['id'].']'.$tl['name'].'</option>';
+            }
+            ?>
+        </select>
+    </td>
+    <td>
+        <button type='button' class='btn btn-bg btn-primary' onclick='TvAdd(this)'> 添 加 </button>
+    </td>
+</div>

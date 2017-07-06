@@ -348,8 +348,8 @@ CREATE TABLE IF NOT EXISTS `ec_user_group` (
 # 用户收藏表
 
 # 电视节目表
-DROP TABLE IF EXISTS `ec_TVListings`;
-CREATE TABLE IF NOT EXISTS `ec_TVListings` (
+DROP TABLE IF EXISTS `ec_tvlistings`;
+CREATE TABLE IF NOT EXISTS `ec_tvlistings` (
   `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(100) NOT NULL COMMENT '名称',
   `ename` varchar(100) NOT NULL COMMENT '英文名称',
@@ -363,13 +363,13 @@ CREATE TABLE IF NOT EXISTS `ec_TVListings` (
   `create_time` bigint DEFAULT NULL COMMENT '创建时间',
   `update_time` bigint DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `TVListings_name` (`name`),
-  UNIQUE KEY `TVListings_ename` (`ename`)
+  UNIQUE KEY `tvlistings_name` (`name`),
+  UNIQUE KEY `tvlistings_ename` (`ename`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='电视节目主单';
 
 # 电视节目表
-DROP TABLE IF EXISTS `ec_TVListings_data`;
-CREATE TABLE IF NOT EXISTS `ec_TVListings_data` (
+DROP TABLE IF EXISTS `ec_tvlistings_data`;
+CREATE TABLE IF NOT EXISTS `ec_tvlistings_data` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `sort` BIGINT NOT NULL COMMENT '排序',
   `tv_id` BIGINT NOT NULL COMMENT '父级ID',
@@ -382,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `ec_TVListings_data` (
   `user_id` BIGINT DEFAULT NULL COMMENT '操作员',
   `create_time` bigint DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `TVListings_name` (`name`)
+  UNIQUE KEY `tvlistings_name` (`name`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='电视节目详细内容';
 # 电视节目单播放情况
 
@@ -438,9 +438,43 @@ CREATE TABLE IF NOT EXISTS `ec_model_product` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='产品参数';
 
 
+Select ec_tv.name,B.name from A inner join B on A.id=B.id
 
+select
+  *
+from
+    ec_tvandtvlistings left join ec_tv on ec_tvandtvlistings.tv_id=ec_tv.id
+   left join ec_tvlistings on ec_tvandtvlistings.tvl_id=ec_tvlistings.id
+   ec_tvlistings right join ec_tvlistings_data on ec_tvlistings.id=ec_tvlistings_data.tv_id
 
+SELECT * FROM
+  ec_tv,ec_tvandtvlistings,ec_tvlistings,ec_tvlistings_data
+WHERE ec_tv.id=ec_tvandtvlistings.tv_id
+AND ec_tvandtvlistings.tvl_id=ec_tvlistings.id
+AND ec_tvlistings.id = ec_tvlistings_data.tv_id
+AND ec_tv.state=1
+AND ec_tv.state=ec_tvlistings.state
+AND ec_tvlistings.state = ec_tvlistings_data.state;
 
-
-
-
+SELECT
+  i.num_iid, i.title, i.price, SUM(iv.user_visits)
+  AS uv,it.buyer_num,it.item_num,it.item_num*i.price
+  AS turnover
+FROM (
+    items AS i
+    RIGHT JOIN
+    item_visit_stats AS iv
+      ON i.num_iid=iv.num_iid
+  )
+  LEFT JOIN (
+              SELECT
+                num_iid,SUM(buyer_num) AS buyer_num,SUM(item_num) AS item_num
+              FROM
+                item_trade_stats
+              WHERE
+                seller_nick="XXXX" AND business_day
+                BETWEEN '2010-08-14' AND '2010-08-15' GROUP BY num_iid
+            )
+    AS it ON it.num_iid=iv.num_iid
+WHERE i.nick="XXXX" AND iv.business_day BETWEEN '2010-08-14' AND '2010-08-15'
+GROUP BY i.num_iid ORDER BY uv DESC
