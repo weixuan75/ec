@@ -51,11 +51,6 @@ use yii\bootstrap\ActiveForm;
                                 </div>
                             </div>
                             <div class="tab-pane" id="profile2" role="tabpanel" aria-expanded="false">
-
-                                <div class="card" id="new">
-                                    <div class="card-header">添加视频</div>
-                                    <div class="card-block">
-                                        <div class="row text-center">
                                             <div class="form-group field-tvlistings-name required">
                                                 <label class="control-label" for="mp4-sort">排序</label>
                                                 <input type="text" id="mp4-sort" value="0">
@@ -77,18 +72,16 @@ use yii\bootstrap\ActiveForm;
                                                 <label class="control-label" for="mp4-content">介绍</label>
                                                 <input id="mp4-content" value="<?=$tvs->name ?>">
                                             </div>
-                                        </div>
-                                    </div>
                                     <div class="card-footer">
                                         <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAddmp4(
-                    $("#mp4-sort").val(),
-                    $("#mp4-name").val(),
-                    $("#mp4-path").val(),
-                    $("#mp4-type").html(),
-                    $("#mp4-pay_time").val(),
-                    1,
-                    $("#mp4-content").html()
-        );'>
+                                                    $("#mp4-sort").val(),
+                                                    $("#mp4-name").val(),
+                                                    $("#mp4-path").val(),
+                                                    $("#mp4-type").html(),
+                                                    $("#mp4-pay_time").val(),
+                                                    1,
+                                                    $("#mp4-content").html()
+                                        );'>
                                     </div>
                                 </div>
                             </div>
@@ -140,16 +133,14 @@ use yii\bootstrap\ActiveForm;
                             </div>
                             <div class="card-footer">
                                 <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAdd(
-                    $("#tvlistingData-sort").val(),
-                    $("#tvlistingData-name").val(),
-
-                    $("#tvlistingData-path").html(),
-                    $("#tvlistingData-type").html(),
-
-                    $("#tvlistingData-pay_time").val(),
-                    1,
-                    $("#tvlistingData-content").html()
-        );'>
+                                            $("#tvlistingData-sort").val(),
+                                            $("#tvlistingData-name").val(),
+                                            $("#tvlistingData-path").html(),
+                                            $("#tvlistingData-type").html(),
+                                            $("#tvlistingData-pay_time").val(),
+                                            1,
+                                            $("#tvlistingData-content").html()
+                                );'>
                             </div>
                         </div>
                     </div>
@@ -160,8 +151,8 @@ use yii\bootstrap\ActiveForm;
                     ['tvlistings/edit',
                         'id'=>$tvs->id,
                         "reqURL"=>
-                            $reqURL = ((boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']))]); ?>" class="btn btn-bg btn-primary"><i class="fa fa-dot-circle-o"></i> 编 辑 节目 </a>
-                <a href="<?=$reqURL = (boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']) ?>" class="btn btn-bg btn-danger"><i class="fa fa-dot-circle-o"></i> 返 回 列 表 </a>
+                            $reqURL = ((boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']))]); ?>" class="btn btn-bg btn-primary"> 编 辑 节 目 </a>
+                <a href="<?=$reqURL = (boolean)$reqURL ? $reqURL : Url::to(['/manager/tvlistings']) ?>" class="btn btn-bg btn-danger"> 返 回 列 表 </a>
             </div>
         </div>
     </div>
@@ -301,17 +292,12 @@ use yii\bootstrap\ActiveForm;
             success:function (result,status,xhr) {
                 TvList();
                 $("#addTVD").hide();
-                alert("result:【"+result.state+"】【"+result.data+"】");
-                alert("status:【"+status+"】");
-                alert("xhr:【"+xhr+"】");
                 $("#tvlistingData-name").val(null);
                 $("#tvlistingData-path").html(null);
                 $("#tvlistingData-type").html(null);
-//                location.href("index.php?r=app/attachment/addtd");
             }
         });
     }
-
     function TvList(){
         $.ajax({
             url:"index.php?r=app/tvlistings/tvs",
@@ -330,7 +316,6 @@ use yii\bootstrap\ActiveForm;
     $(function () {
         showAjax();
     });
-
     function showAjax(){
         $.ajax({
             url:"index.php?r=app/tvlistings/showlist",
@@ -339,19 +324,6 @@ use yii\bootstrap\ActiveForm;
                 "tv_id":<?=$tvs->id ?>,
             },
             success:function (result,status,xhr) {
-                //"id":4,
-                // "sort":"0",
-                // "tv_id":"13",
-                // "name":"b58f8c5494eef01f3e82aae8eafe9925bc317d0c.jpg",
-                // "path":"http://a.com/uploders/image/2017/07/06/175c53c2a44f285c1093f43763a2f42c.jpg",
-                // "type":"image/jpeg",
-                // "pay_time":5,
-                // "state":1,
-                // "content":"",
-                // "user_id":"1",
-                // "create_time":"1499326932"
-
-//                alert("result:【"+result.state+"】【"+result.data+"】");
                 var html = '';
                 for (i=0;i<result.length;i++){
                     html +=tempshowlist(
@@ -365,7 +337,8 @@ use yii\bootstrap\ActiveForm;
                         result[i].pay_time,
                         result[i].user,
                         result[i].create_time,
-                    result[i].content);
+                        result[i].content
+                    );
                 }
                 $("#showlist").html(html);
                 html = '';
@@ -388,7 +361,7 @@ use yii\bootstrap\ActiveForm;
             '<td class="text-center">'+sort+'</td>' +
             '<td class="text-center">' +
             '   <div class="avatar">' +
-            '       <img src="'+path+'" class="img-avatar">' +
+            '       <img src="'+path+'" class="img-rounded" width="150px">' +
             '   </div>' +
             '</td>' +
             '<td class="text-center">'+name+'</td>' +
@@ -432,17 +405,6 @@ use yii\bootstrap\ActiveForm;
             '                <input class="form-control" value="'+name+'" type="text" id="editData-name" >'+
             '            </div>'+
             '            <div class="form-group field-tvlistings-name required">'+
-            '                <label class="control-label" for="tvlistingData-path">路径</label>'+
-            '                <div class="avatar">' +
-            '                   <img src="'+path+'" class="img-avatar">' +
-            '                </div>' +
-            '                <span id="tvlistingData-path">'+path+'</span>'+
-            '            </div>'+
-            '            <div class="form-group field-tvlistings-name required">'+
-            '                <label class="control-label" for="tvlistingData-type">类型</label>'+
-            '                <span id="tvlistingData-type">'+type+'</span>'+
-            '            </div>'+
-            '            <div class="form-group field-tvlistings-name required">'+
             '                <label class="control-label" for="editData-pay_time">播放时间</label>'+
             '                <input class="form-control" type="text" id="editData-pay_time" value="'+payTime+'">（秒）'+
             '            </div>'+
@@ -462,18 +424,10 @@ use yii\bootstrap\ActiveForm;
             '                <label class="control-label" for="editData-content">介绍</label>'+
             '                <input class="form-control" id="editData-content" value="'+content+'">'+
             '            </div>'+
+            '            <div class="form-group field-tvlistings-name required">'+
+            '                   <img src="'+path+'" class="img-thumbnail" width="220px">' +
+            '            </div>'+
             '    </div>'+
-            '    <!--<div class="card-footer">'+
-            '        <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick=\'TvlistingsDataAdd('+
-            '                    $("#tvlistingData-sort").val(),'+
-            '                    $("#tvlistingData-name").val(),'+
-            '                    $("#tvlistingData-path").html(),'+
-            '                    $("#tvlistingData-type").html(),'+
-            '                    $("#tvlistingData-pay_time").val(),'+
-            '                    1,'+
-            '                    $("#tvlistingData-content").html()'+
-            '        );\'>'+
-            '    </div>-->'+
             '</div>';
         layui.use('layer', function(){
             var layer = layui.layer;
@@ -484,7 +438,7 @@ use yii\bootstrap\ActiveForm;
                 ,title: '编辑'
                 ,shade: 0.6 //遮罩透明度
                 ,maxmin: true //允许全屏最小化
-                ,anim: 6 //0-6的动画形式，-1不开启
+                ,anim: 1 //0-6的动画形式，-1不开启
                 ,btn:['确定']
                 ,content: html
                 ,yes: function(index){
@@ -495,7 +449,7 @@ use yii\bootstrap\ActiveForm;
                         $("#editData-name").val(),
                         $("#editData-state").val(),
                         $("#editData-pay_time").val(),
-                        $("#editData-content").val(),
+                        $("#editData-content").val()
                     );
                     layer.close(index);
                 }

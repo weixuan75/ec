@@ -125,8 +125,8 @@ use yii\bootstrap\ActiveForm;
         <?=$form->field($tv,'content')->textInput()?>
     </div>
     <div class="card-footer">
-        <?=Html::submitButton('<i class="fa fa-dot-circle-o"></i> 提 交 ',["class"=>"btn btn-bg btn-primary"])?>
-        <?=Html::resetButton('<i class="fa fa-ban"></i> 取 消 ',["class"=>"btn btn-bg btn-danger"])?>
+        <?=Html::submitButton(' 提 交 ',["class"=>"btn btn-bg btn-primary"])?>
+        <?=Html::resetButton(' 取 消 ',["class"=>"btn btn-bg btn-danger"])?>
     </div>
     <?php
     ActiveForm::end();

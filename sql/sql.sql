@@ -449,7 +449,9 @@ from
 
 SELECT * FROM
   ec_tv,ec_tvandtvlistings,ec_tvlistings,ec_tvlistings_data
-WHERE ec_tv.id=ec_tvandtvlistings.tv_id
+WHERE
+  ec_tv.id=4
+AND ec_tv.id=ec_tvandtvlistings.tv_id
 AND ec_tvandtvlistings.tvl_id=ec_tvlistings.id
 AND ec_tvlistings.id = ec_tvlistings_data.tv_id
 AND ec_tv.state=1

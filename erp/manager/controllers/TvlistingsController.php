@@ -3,6 +3,7 @@
 namespace app\erp\manager\controllers;
 use app\erp\admin\controllers\ConfController;
 use app\erp\models\Tv;
+use app\erp\models\Tvandtvlistings;
 use app\erp\models\Tvlistings;
 use app\erp\models\TvlistingsData;
 use Yii;
@@ -31,22 +32,6 @@ class TvlistingsController extends ConfController {
                 'reqURL' => $reqURL,
             ]);
     }
-//    public function actionAdd(){
-//        $reqURL = Yii::$app->request->get('reqURL');
-//        $tv = new Tv();
-//        $post = Yii::$app->request->post();
-//        if(Yii::$app->request->isPost){
-//            $tv->add($post);
-//            var_dump($tv->errors);
-//            $reqURL = (boolean)$reqURL ? $reqURL : ["/manager/tvlistings/index"];
-////            return $this->redirect($reqURL);
-//        }
-//        return $this->render(
-//            'edit',[
-//            'tv'=>$tv,
-//            'reqURL' => $reqURL,
-//        ]);
-//    }
     public function actionAdd(){
         $reqURL = Yii::$app->request->get('reqURL');
         $tv = new Tvlistings();
@@ -184,13 +169,33 @@ class TvlistingsController extends ConfController {
             return $this->redirect(['/manager/tvlistings']);
         }
         $id = Yii::$app->request->get('id');
-        $state = Yii::$app->request->get('state');
         $reqURL = (boolean)Yii::$app->request->get('reqURL') ? Yii::$app->request->get('reqURL'): '/manager/tvlistings';
         $model = Tvlistings::findOne($id);
-        $model->state = $state;
-        if($model->save()){
+        $tvl = Tvandtvlistings::find()->where("tvl_id=:tvid",[":tvid"=>$id])->all();
+        if(!(boolean)$tvl){
+            if($model->delete()){
+                return $this->redirect($reqURL);
+            }
             return $this->redirect($reqURL);
+        }else{
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                if(!$model->delete()){
+                    throw new \Exception("Tv");
+                }
+                foreach ($tvl as $t){
+                    if(!Tvandtvlistings::findOne($t['id'])->delete()){
+                        throw new \Exception("Tvandtvlistings");
+                    }
+                }
+                $transaction->commit();
+                return $this->redirect($reqURL);
+            }catch (\Exception $e) {
+                $transaction->rollBack();
+                echo "删除失败";
+                var_dump($e);
+            }
+            echo "删除失败";
         }
-        return $this->redirect($reqURL);
     }
 }
