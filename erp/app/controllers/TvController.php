@@ -149,4 +149,8 @@ class TvController extends Controller {
             }
         }
     }
+    public function actionTal(){
+        $this->layout = false;
+        return $this->render("tal");
+    }
 }

@@ -27,7 +27,7 @@ use yii\bootstrap\ActiveForm;
                                 <a class="nav-link active  font-2xl" data-toggle="tab" href="#home2" role="tab" aria-controls="home" aria-expanded="true"><i class="icon-picture icons"></i> 图 片</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link  font-2xl" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile" aria-expanded="false"><i class="icon-film icons "></i> 视 频</a>
+                                <a class="nav-link  font-2xl" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile" aria-expanded="false"><i class="icon-film icons "></i> 外部文件 </a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -65,23 +65,42 @@ use yii\bootstrap\ActiveForm;
                                                 <input type="text" id="mp4-pay_time" value="">（秒）
                                                 <br>
                                                 <label class="control-label" for="mp4-type">类型</label>
-                                                <span id="mp4-type">mp4</span>
-                                                <br>
+                                                <select class="form-control" id="mp4-type">
+                                                    <option value="image/jpeg"> image/jpeg </option>
+                                                    <option value="mp4"> mp4 </option>
+                                                </select>
                                             </div>
                                             <div class="form-group field-tvlistings-name required">
                                                 <label class="control-label" for="mp4-content">介绍</label>
                                                 <input id="mp4-content" value="<?=$tvs->name ?>">
                                             </div>
                                     <div class="card-footer">
-                                        <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAddmp4(
-                                                    $("#mp4-sort").val(),
-                                                    $("#mp4-name").val(),
-                                                    $("#mp4-path").val(),
-                                                    $("#mp4-type").html(),
-                                                    $("#mp4-pay_time").val(),
+                                        <input type="submit" value=" 保 存 " class="btn btn-bg btn-primary" onclick='TvlistingsDataAdd2()'>
+                                        <script>
+                                            function TvlistingsDataAdd2() {
+                                                var mp4_sort = $("#mp4-sort").val();
+                                                var mp4_name = $("#mp4-name").val();
+                                                var mp4_path = $("#mp4-path").val();
+                                                var mp4_type = $("#mp4-type").val();
+                                                var mp4_pay_time = $("#mp4-pay_time").val();
+                                                var mp4_content = $("#mp4-content").html();
+                                                TvlistingsDataAddmp4(
+                                                    mp4_sort,
+                                                    mp4_name,
+                                                    mp4_path,
+                                                    mp4_type,
+                                                    mp4_pay_time,
                                                     1,
-                                                    $("#mp4-content").html()
-                                        );'>
+                                                    mp4_content
+                                                );
+                                                console.log(mp4_sort);
+                                                console.log(mp4_name);
+                                                console.log(mp4_path);
+                                                console.log(mp4_type);
+                                                console.log(mp4_pay_time);
+                                                console.log(mp4_content);
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -383,7 +402,7 @@ use yii\bootstrap\ActiveForm;
         }else {
             html+='<a href="/index.php?r=manager/tvlistings/tvdstate&id='+id+'&state=1&reqURL=/index.php%3Fr%3Dmanager%252Ftvlistings%252Fshowlist%26tv_id%3D'+tvid+'%23tvData_5" class="btn btn-bg btn-primary">启动</a>';
         }
-        html+='<a href="/index.php?r=app/tvlistings/tvdDel&id=4" class="btn btn-bg btn-primary">删除</a>' +
+        html+='<a href="javascript:;" onclick="delAjax('+id+')" class="btn btn-bg btn-primary">删除</a>' +
             '</td>' +
             '</tr>';
         return html;
@@ -393,6 +412,19 @@ use yii\bootstrap\ActiveForm;
 <script src="/layui/layui.js"></script>
 <link href="/layui/css/layui.css" rel="stylesheet">
 <script>
+    function delAjax(id) {
+        $.ajax({
+            url:"index.php?r=app/tvlistings/tvdel",
+            type:"post",
+            data:{
+                "_csrf":"<?= Yii::$app->request->csrfToken ?>",
+                "id":id
+            },
+            success:function (result,status,xhr) {
+                showAjax();
+            }
+        });
+    }
     function editData(id,tvid,sort,path,name,state,type,payTime,content) {
         var html = '<div class="card" id="new">'+
             '    <div class="card-block">'+
@@ -419,6 +451,16 @@ use yii\bootstrap\ActiveForm;
         html+='                    ' +
             '                    ' +
             '                </select>' +
+            '            </div>'+
+            '            <select class="form-control" id="editData-type">'+
+            '                <option value="image/jpeg"';
+        html+='> image/jpeg </option>'+
+            '                <option value="mp4"';
+        html+='> mp4 </option>'+
+            '            </select>'+
+            '            <div class="form-group field-tvlistings-name required">'+
+            '                <label class="control-label" for="editData-url">路径</label>'+
+            '                <input class="form-control" id="editData-url" value="'+path+'">'+
             '            </div>'+
             '            <div class="form-group field-tvlistings-name required">'+
             '                <label class="control-label" for="editData-content">介绍</label>'+
@@ -449,6 +491,8 @@ use yii\bootstrap\ActiveForm;
                         $("#editData-name").val(),
                         $("#editData-state").val(),
                         $("#editData-pay_time").val(),
+                        $("#editData-type").val(),
+                        $("#editData-url").val(),
                         $("#editData-content").val()
                     );
                     layer.close(index);
@@ -456,23 +500,27 @@ use yii\bootstrap\ActiveForm;
             });
         });
     }
-    function editAjax(id,tvid,sort,name,state,payTime,content) {
+    function editAjax(id,tvid,sort,name,state,payTime,ptype,purl,content) {
         $.ajax({
             url:"index.php?r=app/tvlistings/editajax",
             type:"post",
             data:{
-                "_csrf":"<?= Yii::$app->request->csrfToken ?>","id":id,
+                "_csrf":"<?= Yii::$app->request->csrfToken ?>",
+                "id":id,
                 "tvid":tvid,
                 "sort":sort,
                 "name":name,
                 "state":state,
                 "payTime":payTime,
+                "type":ptype,
+                "url":purl,
                 "content":content
             },
             success:function (result,status,xhr) {
                 showAjax();
-                console.log(id,tvid,sort,name,state,payTime,content);
+                console.log(id,tvid,sort,name,state,payTime,purl,content);
             }
         });
     }
+
 </script>

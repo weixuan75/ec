@@ -2,6 +2,7 @@
 
 namespace app\erp\app\controllers;
 use app\erp\models\Sysadmindate;
+use app\erp\models\SysAttachment;
 use app\erp\models\Tvlistings;
 use app\erp\models\TvlistingsData;
 use Yii;
@@ -134,7 +135,9 @@ class TvlistingsController extends Controller {
             $model->sort = $post['sort'];
             $model->name = $post['name'];
             $model->state = $post['state'];
+            $model->type = $post['type'];
             $model->pay_time = $post['payTime'];
+            $model->path = $post['url'];
             $model->content = $post['content'];
             $model->create_time = time();
             if($model->save()){
@@ -155,32 +158,22 @@ class TvlistingsController extends Controller {
         $model->state = $state;
         $model->save();
     }
-    public function actionTvdDel(){
-//        $response = Yii::$app->response;
-//        $response->format = yii\web\Response::FORMAT_JSON;
-//        $model = new TvlistingsData();
-//        $post = Yii::$app->request->post();
-//        if(Yii::$app->request->isPost){
-//            $session = Yii::$app->session;
-//            $redis = Yii::$app->redis;
-//            $userData = Json::decode($redis->get($session['userData']['user']['auth_code']),true);
-//            $userId = $userData['user']['id'];
-//            $model->sort = $post['sort'];
-//            $model->tv_id = $post['tv_id'];
-//            $model->name = $post['name'];
-//            $model->path = $post['path'];
-//            $model->type = $post['type'];
-//            $model->pay_time = $post['pay_time'];
-//            $model->state = $post['state'];
-//            $model->content = $post['content'];
-//            $model->user_id = $userId;
-//            $model->create_time = time();
-//            if($model->save()){
-//                $response->data=['state' => '200','data'=>$model];
-//                Yii::$app->end();
-//            }
-//            $response->data = $model->errors;
-        }
+    public function actionTvdel(){
+        $response = Yii::$app->response;
+        $response->format = yii\web\Response::FORMAT_JSON;
+        $id = Yii::$app->request->post('id');
+        $model = TvlistingsData::findOne($id);
+        $att = SysAttachment::find()->where("url=:url",[':url'=>$model->path])->one();
+        if(!$model->delete()){
+            $model=null;
+            $response->data=[$model,$att];
+        };
+        if(!$att->delete()){
+            $att=null;
+            $response->data=[$model,$att];
+        };
+        $response->data=[$model,$att];
+    }
 
     public function actionShowlist(){
         $response = Yii::$app->response;

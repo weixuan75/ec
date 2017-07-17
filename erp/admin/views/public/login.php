@@ -23,7 +23,6 @@ use yii\bootstrap\ActiveForm;
     <link href="coreui/css/style.css" rel="stylesheet">
 
 </head>
-
 <body class="app flex-row align-items-center">
 <div class="container">
     <div class="row justify-content-center">

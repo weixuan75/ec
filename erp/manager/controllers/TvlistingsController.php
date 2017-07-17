@@ -2,6 +2,7 @@
 
 namespace app\erp\manager\controllers;
 use app\erp\admin\controllers\ConfController;
+use app\erp\models\SysAttachment;
 use app\erp\models\Tv;
 use app\erp\models\Tvandtvlistings;
 use app\erp\models\Tvlistings;
@@ -162,40 +163,5 @@ class TvlistingsController extends ConfController {
                 'tv_data' => $tvd,
                 'hostURL' => $hostURL,
         ]);
-    }
-    public function actionDel(){
-        if(!(boolean)Yii::$app->request->get('id')
-            &&!(Yii::$app->request->get('state')==1||Yii::$app->request->get('state')==0)){
-            return $this->redirect(['/manager/tvlistings']);
-        }
-        $id = Yii::$app->request->get('id');
-        $reqURL = (boolean)Yii::$app->request->get('reqURL') ? Yii::$app->request->get('reqURL'): '/manager/tvlistings';
-        $model = Tvlistings::findOne($id);
-        $tvl = Tvandtvlistings::find()->where("tvl_id=:tvid",[":tvid"=>$id])->all();
-        if(!(boolean)$tvl){
-            if($model->delete()){
-                return $this->redirect($reqURL);
-            }
-            return $this->redirect($reqURL);
-        }else{
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                if(!$model->delete()){
-                    throw new \Exception("Tv");
-                }
-                foreach ($tvl as $t){
-                    if(!Tvandtvlistings::findOne($t['id'])->delete()){
-                        throw new \Exception("Tvandtvlistings");
-                    }
-                }
-                $transaction->commit();
-                return $this->redirect($reqURL);
-            }catch (\Exception $e) {
-                $transaction->rollBack();
-                echo "删除失败";
-                var_dump($e);
-            }
-            echo "删除失败";
-        }
     }
 }
