@@ -22,10 +22,15 @@ use yii\bootstrap\ActiveForm;
                 });
             });
         </script>
+        <?php
+        $arr = \app\erp\models\Menu::find()->select(['id','name'])->orderBy('id')->column();
+
+        var_dump($arr);
+        ?>
         <?=$form->field($menu,'name')->textInput()?>
         <?=$form->field($menu,'ename')->textInput()?>
         <?=$form->field($menu,'menu_pid')->dropDownList(
-            \app\erp\models\Menu::find()->select(['name', 'id'])->orderBy('id')->column(),
+            $option,
             ['prompt'=>'顶级目录']
         )?>
 

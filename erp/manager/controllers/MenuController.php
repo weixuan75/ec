@@ -20,20 +20,23 @@ class MenuController extends ConfController {
     }
     public function actionAdd(){
         $Menu = new Menu();
+        $option = $Menu->getOptions();
         $post = Yii::$app->request->post();
         if(Yii::$app->request->isPost){
-//            $Menu->name = $post['Menu'];
-                $post['Menu']['create_time']=time();
-                $post['Menu']['update_time']=time();
-                var_dump($Menu->load($post));
-                var_dump($Menu->save());
+            $post['Menu']['create_time']=time();
+            $post['Menu']['update_time']=time();
+            $Menu->menu_pid = $post['Menu']['menu_pid'];
+            var_dump($post);
+            if($Menu->load($post)&&$Menu->save()){
+                return $this->redirect(['/manager/menu']);
+            }else{
                 var_dump($Menu->errors);
-//                var_dump($Menu->save());
-//                return $this->redirect(['/manager']);
+            }
         }
         return $this->render(
             'edit',[
-                'menu'=>$Menu
+                'menu'=>$Menu,
+                'option'=>$option
         ]);
     }
 }

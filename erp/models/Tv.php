@@ -52,7 +52,7 @@ class Tv extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => '名称',
+            'name' => '名称111',
             'pay_type' => '播放的方式:0：周，1，日期',
             'weeks' => '周',
             'month' => '月：开始时间，结束时间',

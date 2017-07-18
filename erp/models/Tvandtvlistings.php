@@ -46,7 +46,7 @@ class Tvandtvlistings extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'tv_id' => '电视ID',
-            'tvl_id' => '节目ID',
+            ' ' => '节目ID',
             'day_time' => '播放时间',
             'content' => '介绍',
             'user_id' => '操作员',
